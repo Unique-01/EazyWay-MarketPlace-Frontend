@@ -1,7 +1,7 @@
-const AccountSettings = () => {
+const CustomerAccountSettings = () => {
     return (
         <></>
     );
 };
 
-export default AccountSettings;
+export default CustomerAccountSettings;
