@@ -32,42 +32,63 @@ function App() {
             <Header />
             <Routes>
                 {/* Homepage */}
-                <Route path="/" element={<HomePage/>}/>
+                <Route path="/" element={<HomePage />} />
 
                 {/* Admin Pages */}
-                <Route path="admin" element={<AdminDashboard/>}/>
-                <Route path="category_form" element={<CategoryForm/>}/>
-                <Route path="admin_category_list" element={<AdminCategoryList/>}/>
-                <Route path="customer_list" element = {<CustomerList/>}/>
-                <Route path="customer_detail" element={<CustomerDetail/>}/>
-                <Route path="admin_order_list" element={<OrderList/>}/>
-                <Route path="admin_order_detail" element={<OrderDetail/>}/>
-                <Route path="product_form" element={<ProductForm/>}/>
-                <Route path="admin_product_list" element={<AdminProductList/>}/>
+                <Route path="admin" element={<AdminDashboard />} />
+                <Route path="category_form" element={<CategoryForm />} />
+                <Route
+                    path="admin_category_list"
+                    element={<AdminCategoryList />}
+                />
+                <Route path="customer_list" element={<CustomerList />} />
+                <Route path="customer_detail" element={<CustomerDetail />} />
+                <Route path="admin_order_list" element={<OrderList />} />
+                <Route path="admin_order_detail" element={<OrderDetail />} />
+                <Route path="product_form" element={<ProductForm />} />
+                <Route
+                    path="admin_product_list"
+                    element={<AdminProductList />}
+                />
 
                 {/* Authentication Pages */}
-                <Route path="customer_signup" element={<CustomerSignUp/>}/>
-                <Route path="customer_signup_success" element={<SignUpSuccess/>}/>
-                <Route path="login" element={<LoginForm/>}/>
-                <Route path="login_overview" element={<LoginOverview/>}/>
+                <Route path="customer_signup" element={<CustomerSignUp />} />
+                <Route
+                    path="customer_signup_success"
+                    element={<SignUpSuccess />}
+                />
+                <Route path="login" element={<LoginForm />} />
+                <Route path="login_overview" element={<LoginOverview />} />
 
                 {/* Checkout Pages */}
-                <Route path="checkout" element={<CheckoutPage/>}/>
-                <Route path="shopping_cart" element={<ShoppingCart/>}/>
-                <Route path="checkout_success" element={<CheckoutSuccess/>}/>
-                
+                <Route path="checkout" element={<CheckoutPage />} />
+                <Route path="shopping_cart" element={<ShoppingCart />} />
+                <Route path="checkout_success" element={<CheckoutSuccess />} />
+
                 {/* Customer Dashboard */}
-                <Route path="customer_dashboard" element={<CustomerDashBoard/>}/>
-                <Route path="customer_order_history" element={<CustomerOrderHistory/>}/>
-                <Route path="customer_order_progress" element={<CustomerOrderProgress/>}/>
-                <Route path="customer_account_settings" element={<CustomerAccountSettings/>}/>
+                <Route
+                    path="customer_dashboard"
+                    element={<CustomerDashBoard />}
+                />
+                <Route
+                    path="customer_order_history"
+                    element={<CustomerOrderHistory />}
+                />
+                <Route
+                    path="customer_order_progress"
+                    element={<CustomerOrderProgress />}
+                />
+                <Route
+                    path="customer_account_settings"
+                    element={<CustomerAccountSettings />}
+                />
 
                 {/* Products Pages */}
-                <Route path="product_list" element={<ProductList/>}/>
-                <Route path="product_detail" element={<ProductDetail/>}/>
+                <Route path="product_list" element={<ProductList />} />
+                <Route path="product_detail" element={<ProductDetail />} />
 
                 {/* WishList Page */}
-                <Route path="wishlist" element={<WishList/>}/>
+                <Route path="wishlist" element={<WishList />} />
             </Routes>
         </BrowserRouter>
     );
