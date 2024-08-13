@@ -1,6 +1,12 @@
+import Navbar from "./Navbar/Navbar"
+import TopBar from "./TopBar/TopBar"
+
 const Header = () =>{
     return (
-        <><h1>Hello world</h1></>
+        <>
+        <TopBar/>
+        <Navbar/>
+        </>
     )
 }
 

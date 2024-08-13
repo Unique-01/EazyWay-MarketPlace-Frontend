@@ -1,0 +1,12 @@
+.app-logo{
+    width: 100px;
+}
+.search-form{
+    background-color: #bfbfbf40;
+    width:28em;
+
+}
+.search-input{
+    background-color: transparent !important;
+    line-height: 26px !important;
+}
