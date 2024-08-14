@@ -62,14 +62,14 @@ const Navbar = () => {
                         </ul>
                         <ul class="nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <Link to="home" className="nav-link ">
+                                <Link to="login" className="nav-link ">
                                     Login
                                 </Link>
                             </li>
                             <div className="vl my-2"></div>
                             <li class="nav-item">
-                                <Link to="shop" className="nav-link">
-                                    Shop
+                                <Link to="signup" className="nav-link">
+                                    SignUp
                                 </Link>
                             </li>
                         </ul>
