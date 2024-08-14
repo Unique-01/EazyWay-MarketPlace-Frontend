@@ -1,5 +1,8 @@
-import CategoryForm from "pages/AdminDashboard/Categories/CategoryForm";
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+import "./custom-bootstrap.scss"
+import CategoryForm from "pages/AdminDashboard/Categories/CategoryForm";
 import Header from "components/layout/Header/Header.js";
 import AdminDashboard from "pages/AdminDashboard/Overview/Overview";
 import HomePage from "pages/Home/HomePage";

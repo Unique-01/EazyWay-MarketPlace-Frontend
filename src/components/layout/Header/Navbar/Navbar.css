@@ -1,0 +1,23 @@
+.active {
+    color: #404040 !important;
+}
+.nav-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}
+.vl {
+    background: white !important;
+    width: 1px;
+}
+
+@media only screen and (max-width:600px){
+    .search-form{
+        width: 20em !important;
+        background-color: #ffffff40 !important;
+
+    }
+    .search-form input{
+        color: white !important;
+    }
+}
