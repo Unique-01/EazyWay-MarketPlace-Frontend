@@ -11,3 +11,17 @@ footer{
     background-color: #1A1A1A !important;
 
 }
+.footer-contact{
+    font-size: 12.5px;
+}
+
+.footer-contact a{
+    text-decoration: none;
+}
+
+.footer-payment img{
+    width: 4em;
+}
+.secure-payment{
+    width: 5.5em !important;
+}
