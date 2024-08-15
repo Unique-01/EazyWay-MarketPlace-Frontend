@@ -1,19 +1,9 @@
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import "./custom-bootstrap.scss"
-import CategoryForm from "pages/AdminDashboard/Categories/CategoryForm";
-import Header from "components/layout/Header/Header.js";
-import AdminDashboard from "pages/AdminDashboard/Overview/Overview";
-import HomePage from "pages/Home/HomePage";
+import "./custom-bootstrap.scss";
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AdminCategoryList from "pages/AdminDashboard/Categories/CategoryList";
-import CustomerList from "pages/AdminDashboard/Customer/CustomerList";
-import CustomerDetail from "pages/AdminDashboard/Customer/CustomerDetail";
-import OrderList from "pages/AdminDashboard/Orders/OrderList";
-import OrderDetail from "pages/AdminDashboard/Orders/OrderDetail";
-import ProductForm from "pages/AdminDashboard/Products/ProductForm";
-import AdminProductList from "pages/AdminDashboard/Products/ProductList";
+import AdminLayout from "components/layout/AdminLayout";
 import CustomerSignUp from "pages/Auth/CustomerSignUp/SignUpForm";
 import SignUpSuccess from "pages/Auth/CustomerSignUp/Success";
 import LoginForm from "pages/Auth/Login/LoginForm";
@@ -28,34 +18,28 @@ import CustomerAccountSettings from "pages/CustomerDashboard/AccountSettings";
 import ProductList from "pages/Products/ProductList";
 import ProductDetail from "pages/Products/ProductDetail";
 import WishList from "pages/Wishlist/WishList";
+import HomePage from "pages/Home/HomePage";
+import AdminDashboard from "pages/AdminDashboard/Overview/Overview";
+import CategoryForm from "pages/AdminDashboard/Categories/CategoryForm";
+import AdminCategoryList from "pages/AdminDashboard/Categories/CategoryList";
+import CustomerList from "pages/AdminDashboard/Customer/CustomerList";
+import CustomerDetail from "pages/AdminDashboard/Customer/CustomerDetail";
+import OrderList from "pages/AdminDashboard/Orders/OrderList";
+import OrderDetail from "pages/AdminDashboard/Orders/OrderDetail";
+import ProductForm from "pages/AdminDashboard/Products/ProductForm";
+import AdminProductList from "pages/AdminDashboard/Products/ProductList";
+import NotFoundPage from "pages/NotFound/NotFoundPage";
+import Header from "components/layout/Header/Header";
 import Footer from "components/layout/Footer/Footer";
+import CustomerLayout from "components/layout/CustomerLayout";
 
 function App() {
     return (
         <BrowserRouter>
             <Header />
             <Routes>
-                {/* Homepage */}
+                {/* Public Pages */}
                 <Route path="/" element={<HomePage />} />
-
-                {/* Admin Pages */}
-                <Route path="admin" element={<AdminDashboard />} />
-                <Route path="category_form" element={<CategoryForm />} />
-                <Route
-                    path="admin_category_list"
-                    element={<AdminCategoryList />}
-                />
-                <Route path="customer_list" element={<CustomerList />} />
-                <Route path="customer_detail" element={<CustomerDetail />} />
-                <Route path="admin_order_list" element={<OrderList />} />
-                <Route path="admin_order_detail" element={<OrderDetail />} />
-                <Route path="product_form" element={<ProductForm />} />
-                <Route
-                    path="admin_product_list"
-                    element={<AdminProductList />}
-                />
-
-                {/* Authentication Pages */}
                 <Route path="customer_signup" element={<CustomerSignUp />} />
                 <Route
                     path="customer_signup_success"
@@ -63,38 +47,54 @@ function App() {
                 />
                 <Route path="login" element={<LoginForm />} />
                 <Route path="login_overview" element={<LoginOverview />} />
-
-                {/* Checkout Pages */}
                 <Route path="checkout" element={<CheckoutPage />} />
                 <Route path="shopping_cart" element={<ShoppingCart />} />
                 <Route path="checkout_success" element={<CheckoutSuccess />} />
 
                 {/* Customer Dashboard */}
-                <Route
-                    path="customer_dashboard"
-                    element={<CustomerDashBoard />}
-                />
-                <Route
-                    path="customer_order_history"
-                    element={<CustomerOrderHistory />}
-                />
-                <Route
-                    path="customer_order_progress"
-                    element={<CustomerOrderProgress />}
-                />
-                <Route
-                    path="customer_account_settings"
-                    element={<CustomerAccountSettings />}
-                />
+                <Route path="customer" element={<CustomerLayout />}>
+                    <Route index element={<CustomerDashBoard />} />
+                    <Route
+                        path="order_history"
+                        element={<CustomerOrderHistory />}
+                    />
+                    <Route
+                        path="order_progress"
+                        element={<CustomerOrderProgress />}
+                    />
+                    <Route
+                        path="account_settings"
+                        element={<CustomerAccountSettings />}
+                    />
+                </Route>
 
                 {/* Products Pages */}
-                <Route path="product_list" element={<ProductList />} />
-                <Route path="product_detail" element={<ProductDetail />} />
+                <Route path="products" element={<ProductList />} />
+                <Route path="products/:productId" element={<ProductDetail />} />
 
                 {/* WishList Page */}
                 <Route path="wishlist" element={<WishList />} />
+
+                {/* Admin Pages */}
+                <Route path="admin" element={<AdminLayout />}>
+                    <Route index element={<AdminDashboard />} />
+                    <Route path="categories" element={<AdminCategoryList />} />
+                    <Route path="categories/new" element={<CategoryForm />} />
+                    <Route path="customers" element={<CustomerList />} />
+                    <Route
+                        path="customers/:customerId"
+                        element={<CustomerDetail />}
+                    />
+                    <Route path="orders" element={<OrderList />} />
+                    <Route path="orders/:orderId" element={<OrderDetail />} />
+                    <Route path="products" element={<AdminProductList />} />
+                    <Route path="products/new" element={<ProductForm />} />
+                </Route>
+
+                {/* 404 Page */}
+                <Route path="*" element={<NotFoundPage />} />
             </Routes>
-            <Footer/>
+            <Footer />
         </BrowserRouter>
     );
 }
