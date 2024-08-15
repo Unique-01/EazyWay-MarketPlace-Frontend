@@ -28,6 +28,7 @@ import CustomerAccountSettings from "pages/CustomerDashboard/AccountSettings";
 import ProductList from "pages/Products/ProductList";
 import ProductDetail from "pages/Products/ProductDetail";
 import WishList from "pages/Wishlist/WishList";
+import Footer from "components/layout/Footer/Footer";
 
 function App() {
     return (
@@ -93,6 +94,7 @@ function App() {
                 {/* WishList Page */}
                 <Route path="wishlist" element={<WishList />} />
             </Routes>
+            <Footer/>
         </BrowserRouter>
     );
 }

@@ -1,7 +1,7 @@
 .active {
     color: #404040 !important;
 }
-.nav-link {
+.navbar .nav-link {
     font-size: 14px;
     font-weight: 600;
     color: white;
