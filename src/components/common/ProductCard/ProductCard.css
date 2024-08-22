@@ -1,0 +1,104 @@
+.product-card {
+    max-width: 302px;
+    max-height: 394px;
+    transition: box-shadow 0.5s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.card-body {
+    height: 91px;
+    padding: 15px;
+    position: relative;
+    text-align: left;
+}
+
+.card:hover {
+    box-shadow: 0 0px 3px #00b207;
+}
+
+.overlay-div {
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 20px;
+}
+
+.icon-btn {
+    position: absolute;
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: white;
+    border: 1px solid #ddd;
+    font-size: 1em;
+    padding: 0;
+}
+
+.icon-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.wishlist-overlay {
+    top: 19px;
+    right: 15px;
+}
+
+.eye-overlay {
+    top: 64px;
+    right: 15px;
+}
+
+.cart-btn {
+    position: absolute;
+    right: 15px;
+    bottom: 25px;
+}
+
+.product-card:hover .overlay-div {
+    opacity: 1;
+}
+
+.product-card:hover .product-name {
+    color: #2c742f;
+}
+
+.product-name {
+    font-size: 14px;
+    color: #4d4d4d;
+    margin: 0;
+}
+
+.product-price {
+    font-size: 16px;
+    color: #1a1a1a;
+    margin: 0;
+}
+@media only screen and (max-width: 768px) {
+    .overlay-div {
+        opacity: 1;
+    }
+}
+
+.icon-fill {
+    background-color: #00b207 !important;
+}
+
+.icon-fill path,
+.icon-fill circle {
+    stroke: #fff;
+    fill: #00b207;
+}
