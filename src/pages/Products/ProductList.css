@@ -1,0 +1,14 @@
+.filter{
+    font-size: 13.55px;
+}
+.form-select{
+    width: 10em;
+}
+
+.fs-small{
+    font-size: 13.55px;
+}
+
+a{
+    text-decoration: none !important;
+}
