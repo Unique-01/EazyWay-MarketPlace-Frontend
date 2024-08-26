@@ -1,0 +1,26 @@
+.custom-tabs .nav-link{
+    border: none;
+}
+.custom-tabs{
+    border: none;
+}
+
+.custom-tab {
+    color: var(--bs-secondary);
+    padding: 0 20px 10px;
+    font-size: 12px;
+    transition: color 0.5s ease-in-out, border-bottom 0.5s ease-in-out; 
+}
+
+.active-tab {
+    color: var(--bs-dark);
+    border-bottom: 2px solid var(--bs-primary);   
+    font-weight: 500 !important;
+}
+.tab-content{
+    color: #404040;
+    font-size: 12px;
+    font-weight: 500;
+    padding-top: 10px;
+    line-height: 18px;
+}

@@ -1,0 +1,15 @@
+.selector-btn{
+    border: none;
+    /* font-size: 18px; */
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease-in-out;
+
+}
+.selector-btn:hover{
+    background-color: gainsboro;
+}
