@@ -1,0 +1,37 @@
+.accordion{
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+}
+
+.accordion-item{
+    border: none !important;
+}
+.accordion-button{
+    background: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-weight: 500 ;
+    
+    color: #1A1A1A;
+    font-size: 19.36px;
+}
+
+
+.accordion-button:focus{
+    color: #1A1A1A;
+}
+.accordion-body{
+    font-size: 13.55px;
+    font-weight: 400;
+}
+
+.keyword{
+    background-color: whitesmoke;
+    font-size: 13.55px;
+    font-weight: 400;
+}
+
+.star-icon{
+    margin-right: 4px;
+}
+

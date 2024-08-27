@@ -1,0 +1,51 @@
+[
+    {
+        "id": 1,
+        "name": "Green Cabbage",
+        "price": 14.444,
+        "image": "cabbage.png",
+        "rating":3
+    },
+    {
+        "id": 2,
+        "name": "Big Potatoes",
+        "price": 12.34,
+        "image": "potato.png",
+        "rating":5
+    },
+    {
+        "id": 3,
+        "name": "Yellow Maize",
+        "price": 18.54,
+        "image": "maize.png",
+        "rating":4
+    },
+    {
+        "id": 4,
+        "name": "American Apple",
+        "price": 17.44,
+        "image": "apple.png",
+        "rating":4
+    },
+    {
+        "id": 5,
+        "name": "Bell Pepper",
+        "price": 13.34,
+        "image": "pepper.png",
+        "rating":5
+    },
+    {
+        "id": 6,
+        "name": "Bell Pepper",
+        "price": 13.34,
+        "image": "pepper.png",
+        "rating":5
+    },
+    {
+        "id": 7,
+        "name": "Yellow Maize",
+        "price": 18.54,
+        "image": "maize.png",
+        "rating":4
+    }
+]
