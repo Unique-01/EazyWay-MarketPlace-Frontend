@@ -1,0 +1,28 @@
+.wishlist-cart {
+    font-size: 14px !important;
+    font-weight: 600;
+}
+.btn-muted {
+    background-color: gainsboro !important;
+    border: none;
+}
+.wishlist-product-name,
+.wishlist-product-price {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+.wishlist-cancel {
+    width: 24px;
+    height: 24px;
+    border: 1px solid gray;
+    border-radius: 9999px;
+    font-size: 14px;
+    color: #666666;
+    background: none;
+    transition: all 0.3s;
+}
+
+.wishlist-cancel:hover {
+    background-color: gainsboro;
+}

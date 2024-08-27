@@ -1,0 +1,14 @@
+.table th{
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 100px;
+    text-align: center;
+    
+    /* padding: 3 20px; */
+    /* text-align: center; */
+    /* border: 1px solid gray; */
+}
+
+.table td{
+    text-align: center;
+}
