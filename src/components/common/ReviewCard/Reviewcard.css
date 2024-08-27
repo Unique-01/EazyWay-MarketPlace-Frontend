@@ -1,0 +1,12 @@
+.review-card{
+    font-size: 12px;
+    font-weight: 500;
+    
+}
+.review-name{
+    
+    padding-bottom: -10px !important;
+}
+.review-rating{
+    padding: -10px !important;
+}

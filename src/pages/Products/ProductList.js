@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import ProductData from "./products.json";
 import ProductCard from "components/common/ProductCard";
 
+
 const ProductList = () => {
     const [products, setProducts] = useState([]);
 
@@ -48,6 +49,7 @@ const ProductList = () => {
                     <div className="row row-gap-4 pt-5">
                         {products.map((product, index) => (
                             <div className="col-md-4">
+
                                 <ProductCard key={index} product={product} />
                             </div>
                         ))}
