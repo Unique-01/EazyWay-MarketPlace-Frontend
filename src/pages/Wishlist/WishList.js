@@ -4,7 +4,8 @@ import "./WishList.css";
 
 const WishList = () => {
     return (
-        <div className="container mt-5">
+        <div className="container my-5">
+
             <div className="table-responsive">
                 <table className="table border">
                     <thead>
