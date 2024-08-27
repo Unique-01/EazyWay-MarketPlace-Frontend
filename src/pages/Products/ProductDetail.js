@@ -10,10 +10,12 @@ import { ReactComponent as ShoppingBasket } from "assets/icons/shopping-basket.s
 import { FaRegHeart } from "react-icons/fa";
 import ReviewData from "./review.json";
 import ReviewCard from "components/common/ReviewCard";
+import ProductCard from "components/common/ProductCard";
 
 const ProductDetail = () => {
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
+    const limit = 4;
 
     useEffect(() => {
         const foundProduct = ProductData.find(
@@ -27,7 +29,7 @@ const ProductDetail = () => {
     }
 
     return (
-        <div className="px-3 container">
+        <div className="mb-5 pb-5 container">
             <div className="mx-md-5 row">
                 <div className="col-md-6 ">
                     <div className="d-flex justify-content-end">
@@ -105,10 +107,26 @@ const ProductDetail = () => {
                         {ReviewData.map((review, index) => (
                             <div className="mt-3">
                                 <ReviewCard key={index} review={review} />
-                                <hr className="border-secondary"/>
+                                <hr className="border-secondary" />
                             </div>
                         ))}
                     </div>
+                </div>
+            </div>
+            <div className="mt-4">
+                <h4 className="text-center poppins fw-semibold text-black">
+                    Related Products
+                </h4>
+                <div className="row  pt-3">
+                    {ProductData.filter(
+                        (related) => related.category === product.category
+                    )
+                        .slice(0, limit)
+                        .map((related) => (
+                            <div className="col-md-3">
+                                <ProductCard product={related} />
+                            </div>
+                        ))}
                 </div>
             </div>
         </div>
