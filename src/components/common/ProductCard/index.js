@@ -5,6 +5,7 @@ import { ReactComponent as ShoppingBasket } from "assets/icons/shopping-basket.s
 import useButtonToggle from "hooks/useButtonToggle";
 import "./ProductCard.css";
 import StarRating from "../StarRating";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
     const [isCartToggled, toggleCartButton] = useButtonToggle();
@@ -13,17 +14,21 @@ const ProductCard = ({ product }) => {
 
     return (
         <div className="card product-card">
-            <img
-                src={require(`/src/assets/images/products/${product.image}`)}
-                className="card-img-top"
-                alt={product.name}
-            />
+            <Link to={`/products/${product.id}`}>
+                <img
+                    src={require(`/src/assets/images/products/${product.image}`)}
+                    className="card-img-top"
+                    alt={product.name}
+                />
+            </Link>
             <div className="card-body">
-                <p className="card-title product-name">{product.name}</p>
-                <p className="card-text product-price fw-semibold">
-                    ${product.price}
-                </p>
-                <StarRating rating={product.rating} />
+                <Link to={`/products/${product.id}`}>
+                    <p className="card-title product-name">{product.name}</p>
+                    <p className="card-text product-price fw-semibold">
+                        ${product.price}
+                    </p>
+                    <StarRating rating={product.rating} />
+                </Link>
                 <button
                     onClick={toggleCartButton}
                     className={`icon-btn btn cart-btn p-2 ${

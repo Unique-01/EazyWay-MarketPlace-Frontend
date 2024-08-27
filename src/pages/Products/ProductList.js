@@ -4,7 +4,7 @@ import FilterAccordion from "components/common/FilterAccordion";
 import { useEffect, useState } from "react";
 import ProductData from "./products.json";
 import ProductCard from "components/common/ProductCard";
-import { Link } from "react-router-dom";
+
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -49,12 +49,8 @@ const ProductList = () => {
                     <div className="row row-gap-4 pt-5">
                         {products.map((product, index) => (
                             <div className="col-md-4">
-                                <Link to={`/products/${product.id}`}>
-                                    <ProductCard
-                                        key={index}
-                                        product={product}
-                                    />
-                                </Link>
+
+                                <ProductCard key={index} product={product} />
                             </div>
                         ))}
                     </div>
