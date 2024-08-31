@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Fresh Fruit",
+        "count": 134,
+        "image": "fruit.png"
+    },
+    {
+        "name": "Vegetables",
+        "count": 160,
+        "image": "vegetables.png"
+    },
+    {
+        "name": "Cooking",
+        "count": 54,
+        "image": "cooking.png"
+    },
+    {
+        "name": "Snacks",
+        "count": 47,
+        "image": "snacks.png"
+    },
+    {
+        "name": "Beverages",
+        "count": 43,
+        "image": "beverages.png"
+    },
+    {
+        "name": "Beauty & Health",
+        "count": 38,
+        "image": "beauty.png"
+    },
+    {
+        "name": "Bread & Bakery",
+        "count": 16,
+        "image": "bakery.png"
+    },
+    {
+        "name": "Beverages",
+        "count": 43,
+        "image": "beverages.png"
+    },
+    {
+        "name": "Beauty & Health",
+        "count": 38,
+        "image": "beauty.png"
+    },
+    {
+        "name": "Bread & Bakery",
+        "count": 16,
+        "image": "bakery.png"
+    },
+    {
+        "name": "Snacks",
+        "count": 47,
+        "image": "snacks.png"
+    },
+    {
+        "name": "Beverages",
+        "count": 43,
+        "image": "beverages.png"
+    }
+]
