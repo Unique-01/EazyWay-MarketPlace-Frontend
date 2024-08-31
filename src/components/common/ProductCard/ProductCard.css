@@ -13,14 +13,14 @@
     object-fit: cover;
 }
 
-.card-body {
+.product-card-body {
     height: 91px;
     padding: 15px;
     position: relative;
     text-align: left;
 }
 
-.card:hover {
+.product-card:hover {
     box-shadow: 0 0px 3px #00b207;
 }
 

@@ -1,0 +1,69 @@
+.slick-prev,
+.slick-next {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #fff;
+    z-index: 1;
+    top: -40px; 
+    right: 15px; 
+    transform: translateY(0); /* Remove vertical centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.slick-prev {
+    left: auto; /* Disable left positioning */
+}
+
+.slick-next {
+    left: auto;
+    margin-left: 10px; /* Add margin to separate the buttons */
+}
+
+/* Override the default arrow icons */
+.slick-prev:before,
+.slick-next:before {
+    font-size: 30px;
+    color: #40C545;
+}
+
+/* Position the arrows at the top-right corner */
+.slick-prev {
+    position: absolute;
+    right: 80px; /* Positioning of the left arrow */
+}
+
+.slick-next {
+    position: absolute;
+    right: 20px; /* Positioning of the right arrow */
+}
+
+.testimonial-quote{
+    font-size: 56px;
+    color: #BFECC1;
+}
+.testimonial-feedback{
+    font-size: 14px;
+    font-weight: 400;
+    color: #404040;
+    line-height: 21px;
+}
+.testimonial-name{
+    font-weight: 500;
+    color: black;
+    line-height: 23.24px;
+
+}
+.testimonial-role{
+    color: #999999;
+    font-weight: 400;
+    font-size: 14px;
+}
+.testimonial-heading{
+    font-weight: 600;
+    font-size: 24px ;
+    color: #1A1A1A;
+}

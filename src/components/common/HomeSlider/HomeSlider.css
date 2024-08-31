@@ -1,0 +1,42 @@
+.carousel-caption {
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+}
+
+.carousel-item img{
+    max-height: 450px !important;
+}
+.carousel-caption h1{
+    font-size: 42px;
+    font-weight: 600;
+}
+.lead{
+    color: #BFBFBF;
+    font-weight: 500;
+    border-left: 2px solid #00B207;
+    padding-left: 10px;
+    text-transform: uppercase;
+    font-size: 21px;
+    letter-spacing: 3%;
+    font-family: "Poppins";
+    line-height: 25px;
+}
+.slide-btn{
+    font-size: 14px !important;
+    font-weight: 600;
+}
+
+
+@media screen and (max-width:568px){
+    .carousel-item img{
+        height: 40vh !important;
+    }
+    .carousel-caption{
+        top: 40%;
+        left: 5%;
+    }
+    .carousel-caption h1{
+        font-size: 32px;
+    }
+}

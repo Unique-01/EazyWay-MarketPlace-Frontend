@@ -1,0 +1,41 @@
+.home-category h3 {
+    font-size: 15px;
+    letter-spacing: 2%;
+    font-weight: 600;
+}
+.home-category h4 {
+    font-weight: 600;
+    font-size: 36px;
+    color: #404040;
+}
+.home-feature-product h4 {
+    color: black;
+    font-size: 32px;
+    font-weight: 600;
+}
+.home-feature-product a {
+    color: #00b207;
+    font-size: 15.5px;
+}
+.home-testimonial {
+    background-color: #f2f2f2;
+}
+.category-sidebar-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+.category-sidebar-name {
+    /* font-size: 20px; */
+    color: black;
+    font-weight: 400;
+}
+.category-sidebar-list-item{
+    transition: background-color 0.2s ease-out;
+}
+.category-sidebar-list-item:hover {
+    background-color: #00b207;
+    .category-sidebar-name {
+        color: white;
+        font-weight: 500;
+    }
+}

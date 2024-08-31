@@ -21,7 +21,7 @@ const ProductCard = ({ product }) => {
                     alt={product.name}
                 />
             </Link>
-            <div className="card-body">
+            <div className="card-body product-card-body">
                 <Link to={`/products/${product.id}`}>
                     <p className="card-title product-name">{product.name}</p>
                     <p className="card-text product-price fw-semibold">
