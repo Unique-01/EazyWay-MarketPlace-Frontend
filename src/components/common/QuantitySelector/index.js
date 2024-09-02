@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "./QuantitySelector.css";
 
-const QuantitySelector = ({ onQuantityChange }) => {
+const QuantitySelector = ({price, onQuantityChange }) => {
     const [quantity, setQuantity] = useState(1);
 
     const handleIncrement = () => {
         const newQuantity = quantity + 1;
         setQuantity(newQuantity);
+        onQuantityChange(newQuantity, newQuantity * price);
         // onQuantityChange(newQuantity);
     };
 
@@ -14,6 +15,7 @@ const QuantitySelector = ({ onQuantityChange }) => {
         if (quantity > 1) {
             const newQuantity = quantity - 1;
             setQuantity(newQuantity);
+            onQuantityChange(newQuantity, newQuantity * price);
             // onQuantityChange(newQuantity);
         }
     };

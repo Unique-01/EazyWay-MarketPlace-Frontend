@@ -7,7 +7,7 @@ const WishList = () => {
         <div className="container my-5">
 
             <div className="table-responsive">
-                <table className="table border">
+                <table className="wishlist-table table border">
                     <thead>
                         <tr className="text-uppercase table-head">
                             <th scope="col" className="">
