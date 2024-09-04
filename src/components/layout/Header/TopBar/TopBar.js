@@ -26,10 +26,10 @@ const TopBar = () => {
                     </form>
                 </div>
                 <div className="d-flex justify-content-between gap-4">
-                    <Link to="/">
+                    <Link to="/wishlist">
                         <WishListIcon />
                     </Link>
-                    <Link to="/">
+                    <Link to="/shopping_cart">
                         <CartIcon />
                     </Link>
                     <Link to="/">
