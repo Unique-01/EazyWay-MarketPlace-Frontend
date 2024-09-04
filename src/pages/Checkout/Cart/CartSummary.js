@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const CartSummary = ({ totalPrice }) => {
     return (
         <div className="card mt-4">
@@ -19,9 +21,11 @@ const CartSummary = ({ totalPrice }) => {
                         </span>
                     </p>
                 </div>
-                <button className="btn btn-primary cart-summary-btn w-100 text-white rounded-pill fw-semibold py-2">
+                <Link
+                    to="/checkout"
+                    className="btn btn-primary cart-summary-btn w-100 text-white rounded-pill fw-semibold py-2">
                     Proceed to Checkout
-                </button>
+                </Link>
             </div>
         </div>
     );

@@ -7,11 +7,11 @@ const Navbar = () => {
     return (
         <div>
             <nav
-                class="navbar navbar-expand-lg bg-primary"
+                className="navbar navbar-expand-lg bg-primary"
                 data-bs-theme="dark">
-                <div class="container">
+                <div className="container">
                     <button
-                        class="navbar-toggler btn outline-none"
+                        className="navbar-toggler btn outline-none"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent"
@@ -31,44 +31,44 @@ const Navbar = () => {
                         </form>
                     </div>
                     <div
-                        class="collapse navbar-collapse"
+                        className="collapse navbar-collapse"
                         id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <NavLink to="home" className="nav-link ">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <NavLink to="/" className="nav-link ">
                                     Home
                                 </NavLink>
                             </li>
-                            <li class="nav-item">
-                                <NavLink to="shop" className="nav-link">
+                            <li className="nav-item">
+                                <NavLink to="/products" className="nav-link">
                                     Shop
                                 </NavLink>
                             </li>
-                            <li class="nav-item">
-                                <NavLink to="blog" className="nav-link">
+                            <li className="nav-item">
+                                <NavLink to="/blog" className="nav-link">
                                     Blog
                                 </NavLink>
                             </li>
-                            <li class="nav-item">
-                                <NavLink to="about" className="nav-link">
+                            <li className="nav-item">
+                                <NavLink to="/about" className="nav-link">
                                     About Us
                                 </NavLink>
                             </li>
-                            <li class="nav-item">
-                                <NavLink to="contact" className="nav-link">
+                            <li className="nav-item">
+                                <NavLink to="/contact" className="nav-link">
                                     Contact Us
                                 </NavLink>
                             </li>
                         </ul>
-                        <ul class="nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <Link to="login" className="nav-link ">
+                        <ul className="nav ms-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <Link to="/login" className="nav-link ">
                                     Login
                                 </Link>
                             </li>
                             <div className="vl my-2"></div>
-                            <li class="nav-item">
-                                <Link to="signup" className="nav-link">
+                            <li className="nav-item">
+                                <Link to="/signup" className="nav-link">
                                     SignUp
                                 </Link>
                             </li>
