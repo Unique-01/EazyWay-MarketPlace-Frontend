@@ -1,0 +1,24 @@
+.billing-label{
+    font-size: 12px;
+    font-weight: 500;
+}
+.billing-input{
+    font-size: 12px;
+    height: 40px;
+    font-weight: 500;
+}
+.billing-input::placeholder,.additional-input::placeholder{
+    color: #999999;
+}
+.additional-input{
+    font-size: 12px;
+    font-weight: 400;
+}
+.billing-heading{
+    font-weight: 500;
+    font-size: 20px;
+    color: #1A1A1A;
+}
+.checkout-payment{
+    font-size: 12px;
+}

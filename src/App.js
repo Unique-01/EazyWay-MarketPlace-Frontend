@@ -9,7 +9,7 @@ import SignUpSuccess from "pages/Auth/CustomerSignUp/Success";
 import LoginForm from "pages/Auth/Login/LoginForm";
 import LoginOverview from "pages/Auth/Login/Overview";
 import CheckoutPage from "pages/Checkout/CheckoutPage";
-import ShoppingCart from "pages/Checkout/ShoppingCart";
+import ShoppingCart from "pages/Checkout/Cart/ShoppingCart";
 import CheckoutSuccess from "pages/Checkout/Success";
 import CustomerDashBoard from "pages/CustomerDashboard/Dashboard";
 import CustomerOrderHistory from "pages/CustomerDashboard/OrderHistory";

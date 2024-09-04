@@ -1,4 +1,4 @@
-.table th{
+.wishlist-table th{
     font-size: 12px;
     font-weight: 600;
     padding: 10px 100px;
@@ -9,6 +9,6 @@
     /* border: 1px solid gray; */
 }
 
-.table td{
+.wishlist-table td{
     text-align: center;
 }
