@@ -1,0 +1,35 @@
+.cart-table th {
+    padding: 10px 50px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.cart-table td {
+    text-align: center;
+}
+.cart-item-total-price {
+    font-size: 14px;
+}
+.cart-item * {
+    font-size: 14px !important;
+}
+.coupon-input,
+.coupon-btn {
+    font-size: 12px;
+    padding: 10px 20px;
+}
+.coupon-btn {
+    font-weight: 600;
+}
+.coupon-btn:hover {
+    color: white;
+}
+.cart-summary-body p {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+.cart-summary-btn {
+    font-size: 14px;
+}

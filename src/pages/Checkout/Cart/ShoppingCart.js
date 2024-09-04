@@ -1,6 +1,6 @@
 import CartItems from "pages/Products/products.json";
 import CartItemCard from "./CartItemCard";
-import "./Checkout.css";
+import "./Cart.css";
 import CouponCode from "./CouponCode";
 import CartSummary from "./CartSummary";
 import { useState, useEffect } from "react";
