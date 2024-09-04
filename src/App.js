@@ -4,9 +4,9 @@ import "./custom-bootstrap.scss";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminLayout from "components/layout/AdminLayout";
-import CustomerSignUp from "pages/Auth/CustomerSignUp/SignUpForm";
-import SignUpSuccess from "pages/Auth/CustomerSignUp/Success";
-import LoginForm from "pages/Auth/Login/LoginForm";
+import CustomerSignUp from "pages/Auth/SignUp/CustomerSignUp";
+import SignUpSuccess from "pages/Auth/SignUp/Success";
+import CustomerLogin from "pages/Auth/Login/CustomerLogin";
 import LoginOverview from "pages/Auth/Login/Overview";
 import CheckoutPage from "pages/Checkout/CheckoutPage";
 import ShoppingCart from "pages/Checkout/Cart/ShoppingCart";
@@ -32,6 +32,10 @@ import NotFoundPage from "pages/NotFound/NotFoundPage";
 import Header from "components/layout/Header/Header";
 import Footer from "components/layout/Footer/Footer";
 import CustomerLayout from "components/layout/CustomerLayout";
+import SignUpOverview from "pages/Auth/SignUp/Overview";
+import MerchantLogin from "pages/Auth/Login/MerchantLogin";
+import EmailVerification from "pages/Auth/SignUp/EmailVerification";
+import MerchantSignUp from "pages/Auth/SignUp/MerchantSignUp";
 
 function App() {
     return (
@@ -40,13 +44,17 @@ function App() {
             <Routes>
                 {/* Public Pages */}
                 <Route path="/" element={<HomePage />} />
-                <Route path="customer_signup" element={<CustomerSignUp />} />
+                <Route path="signup" element={<SignUpOverview />} />
+                <Route path="signup/customer" element={<CustomerSignUp />} />
+                <Route path="signup/merchant" element={<MerchantSignUp />} />
+                <Route path="signup/success" element={<SignUpSuccess />} />
                 <Route
-                    path="customer_signup_success"
-                    element={<SignUpSuccess />}
+                    path="signup/verify_email"
+                    element={<EmailVerification />}
                 />
-                <Route path="login" element={<LoginForm />} />
-                <Route path="login_overview" element={<LoginOverview />} />
+                <Route path="login" element={<LoginOverview />} />
+                <Route path="login/customer" element={<CustomerLogin />} />
+                <Route path="login/merchant" element={<MerchantLogin />} />
                 <Route path="checkout" element={<CheckoutPage />} />
                 <Route path="shopping_cart" element={<ShoppingCart />} />
                 <Route path="checkout_success" element={<CheckoutSuccess />} />
