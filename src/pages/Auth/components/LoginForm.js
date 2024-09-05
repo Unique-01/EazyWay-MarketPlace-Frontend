@@ -35,7 +35,9 @@ const LoginForm = () => (
                                         Remember Me
                                     </label>
                                 </div>
-                                <Link className="forget-password">
+                                <Link
+                                    to="/reset_password"
+                                    className="forget-password">
                                     Forget Password
                                 </Link>
                             </div>

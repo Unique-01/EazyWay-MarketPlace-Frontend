@@ -36,6 +36,10 @@ import SignUpOverview from "pages/Auth/SignUp/Overview";
 import MerchantLogin from "pages/Auth/Login/MerchantLogin";
 import EmailVerification from "pages/Auth/SignUp/EmailVerification";
 import MerchantSignUp from "pages/Auth/SignUp/MerchantSignUp";
+import PasswordResetOverview from "pages/Auth/PasswordReset/Overview";
+import PasswordResetVerification from "pages/Auth/PasswordReset/PasswordResetVerification";
+import PasswordResetSuccess from "pages/Auth/PasswordReset/Success";
+import PasswordResetNewPassword from "pages/Auth/PasswordReset/PasswordResetNewPassword";
 
 function App() {
     return (
@@ -55,6 +59,24 @@ function App() {
                 <Route path="login" element={<LoginOverview />} />
                 <Route path="login/customer" element={<CustomerLogin />} />
                 <Route path="login/merchant" element={<MerchantLogin />} />
+
+                <Route
+                    path="reset_password"
+                    element={<PasswordResetOverview />}
+                />
+                <Route
+                    path="reset_password/verification"
+                    element={<PasswordResetVerification />}
+                />
+                <Route
+                    path="reset_password/newPassword"
+                    element={<PasswordResetNewPassword />}
+                />
+                <Route
+                    path="reset_password/success"
+                    element={<PasswordResetSuccess />}
+                />
+
                 <Route path="checkout" element={<CheckoutPage />} />
                 <Route path="shopping_cart" element={<ShoppingCart />} />
                 <Route path="checkout_success" element={<CheckoutSuccess />} />
