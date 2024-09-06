@@ -1,23 +1,41 @@
-import ConfirmationCodeInput from "components/common/ConfirmationCodeInput";
-import { useState } from "react";
-import registrationBanner from "assets/images/registrationImg.svg";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ConfirmationCodeInput from "components/common/ConfirmationCodeInput";
+import ButtonLoading from "components/common/ButtonLoading";
+import registrationBanner from "assets/images/registrationImg.svg";
 
-const OTPVerification = ({ onSubmit }) => {
+const OTPVerification = ({ onSubmit, onResendOTP, length, loading, error }) => {
     const [verificationCode, setVerificationCode] = useState("");
+    const [countdown, setCountdown] = useState(60); // 1-minute countdown
 
+    // Handle OTP code input
     const handleCodeChange = (newCode) => {
         setVerificationCode(newCode);
     };
 
+    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit(verificationCode);
     };
 
+    // Handle resend OTP
+    const handleResendOTP = () => {
+        onResendOTP(); // Function to handle OTP resend
+        setCountdown(60); // Reset the countdown
+    };
+
+    // Countdown effect
+    useEffect(() => {
+        if (countdown > 0) {
+            const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+            return () => clearTimeout(timer); // Clean up the timer
+        }
+    }, [countdown]);
+
     return (
         <div className="row">
-            <div className="col-lg-6 d-none d-lg-block ">
+            <div className="col-lg-6 d-none d-lg-block">
                 <img src={registrationBanner} alt="Banner" className="w-100" />
             </div>
             <div className="col-lg-6">
@@ -28,15 +46,35 @@ const OTPVerification = ({ onSubmit }) => {
                     </p>
                     <form onSubmit={handleSubmit}>
                         <div className="pb-4">
+                            {error && <p className="text-danger">{error}</p>}
                             <ConfirmationCodeInput
                                 onChange={handleCodeChange}
+                                length={length}
+                                disabled={loading}
                             />
                         </div>
                         <button
                             className="btn btn-primary text-white login-btn w-100 rounded-pill"
-                            type="submit">
-                            Submit
+                            type="submit"
+                            disabled={loading}>
+                            Submit {loading && <ButtonLoading />}
                         </button>
+
+                        {error && <p className="text-danger">{error}</p>}
+
+                        {/* Resend OTP button */}
+                        <p className="mt-3 no-account">
+                            Didn't receive the code?{" "}
+                            <button
+                                type="button"
+                                className="btn btn-link p-0"
+                                style={{ fontSize: "12px" }}
+                                onClick={handleResendOTP}
+                                disabled={countdown > 0 || loading}>
+                                Resend OTP {countdown > 0 && `(${countdown}s)`}
+                            </button>
+                        </p>
+
                         <p className="no-account mt-3">
                             Already have an account?{" "}
                             <Link
