@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FaRegArrowAltCircleLeft } from "react-icons/fa";
 
 const Step1 = ({ formData, setFormData, nextStep }) => {
-    const { name, email, phone } = formData;
+    const { firstName, lastName, email } = formData;
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,10 +17,18 @@ const Step1 = ({ formData, setFormData, nextStep }) => {
                 <div className="row row-gap-4 mt-4">
                     <input
                         type="text"
-                        placeholder="Full Name"
+                        placeholder="First Name"
                         className="form-control input"
-                        value={name}
-                        name="name"
+                        value={firstName}
+                        name="firstName"
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Last Name"
+                        className="form-control input"
+                        value={lastName}
+                        name="lastName"
                         onChange={handleChange}
                     />
                     <input
@@ -31,14 +39,7 @@ const Step1 = ({ formData, setFormData, nextStep }) => {
                         name="email"
                         onChange={handleChange}
                     />
-                    <input
-                        type="number"
-                        placeholder="Phone Number"
-                        className="form-control input"
-                        value={phone}
-                        name="phone"
-                        onChange={handleChange}
-                    />
+                    
                     <button
                         className="btn btn-primary text-white login-btn  w-100 rounded-pill"
                         onClick={nextStep}>

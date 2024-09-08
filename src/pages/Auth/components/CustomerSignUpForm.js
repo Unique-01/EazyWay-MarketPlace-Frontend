@@ -23,7 +23,7 @@ const CustomerSignUpForm = ({ onSubmit, error, loading }) => {
     };
 
     return (
-        <div className="">
+        <div className="" style={{ maxWidth: "99%" }}>
             <div className="row g-4">
                 <div className="col-lg-6 d-none d-lg-block ">
                     <img

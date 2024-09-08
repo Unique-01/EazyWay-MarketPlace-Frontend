@@ -24,7 +24,7 @@ const EmailVerification = () => {
     const handleEmailVerificationSubmit = async (otp) => {
         setLoading(true);
         try {
-            await axios.post(`${API_BASE_URL}/otp`, { otp });
+            await axios.post(`${API_BASE_URL}/user/otp`, { otp });
             setLoading(false);
             navigate("/signup/success");
         } catch (error) {
