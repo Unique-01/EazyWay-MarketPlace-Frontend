@@ -14,7 +14,7 @@ apiClient.interceptors.request.use(
     (config) => {
         const authToken =useContext(AuthContext)
         if (authToken) {
-            config.headers["Authorization"] = `Bearer ${authToken}`;
+            config.headers["Authorization"] = authToken;
         }
         return config;
     },

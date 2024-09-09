@@ -4,8 +4,9 @@ import registrationBanner from "assets/images/registrationImg.svg";
 
 const MerchantSignUp = () => {
     const navigate = useNavigate();
+    const privilege = 'merchant'
 
-    const handleSubmit = () => {
+    const handleSubmit = (formData) => {
         navigate("/signup/verify_email");
     };
     return (

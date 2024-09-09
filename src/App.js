@@ -42,135 +42,138 @@ import PasswordResetSuccess from "pages/Auth/PasswordReset/Success";
 import PasswordResetNewPassword from "pages/Auth/PasswordReset/PasswordResetNewPassword";
 import { EmailProvider } from "context/EmailContext";
 import { AuthProvider } from "context/AuthContext";
+import { ProductCategoryProvider } from "context/ProductCategoryContext";
 function App() {
     return (
-        <AuthProvider >
+        <AuthProvider>
             <EmailProvider>
-                <BrowserRouter>
-                    <Header />
-                    <Routes>
-                        {/* Public Pages */}
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="signup" element={<SignUpOverview />} />
-                        <Route
-                            path="signup/customer"
-                            element={<CustomerSignUp />}
-                        />
-                        <Route
-                            path="signup/merchant"
-                            element={<MerchantSignUp />}
-                        />
-                        <Route
-                            path="signup/success"
-                            element={<SignUpSuccess />}
-                        />
-                        <Route
-                            path="signup/verify_email"
-                            element={<EmailVerification />}
-                        />
-                        <Route path="login" element={<LoginOverview />} />
-                        <Route
-                            path="login/customer"
-                            element={<CustomerLogin />}
-                        />
-                        <Route
-                            path="login/merchant"
-                            element={<MerchantLogin />}
-                        />
+                <ProductCategoryProvider>
+                    <BrowserRouter>
+                        <Header />
+                        <Routes>
+                            {/* Public Pages */}
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="signup" element={<SignUpOverview />} />
+                            <Route
+                                path="signup/customer"
+                                element={<CustomerSignUp />}
+                            />
+                            <Route
+                                path="signup/merchant"
+                                element={<MerchantSignUp />}
+                            />
+                            <Route
+                                path="signup/success"
+                                element={<SignUpSuccess />}
+                            />
+                            <Route
+                                path="signup/verify_email"
+                                element={<EmailVerification />}
+                            />
+                            <Route path="login" element={<LoginOverview />} />
+                            <Route
+                                path="login/customer"
+                                element={<CustomerLogin />}
+                            />
+                            <Route
+                                path="login/merchant"
+                                element={<MerchantLogin />}
+                            />
 
-                        <Route
-                            path="reset_password"
-                            element={<PasswordResetOverview />}
-                        />
-                        <Route
-                            path="reset_password/verification"
-                            element={<PasswordResetVerification />}
-                        />
-                        <Route
-                            path="reset_password/newPassword"
-                            element={<PasswordResetNewPassword />}
-                        />
-                        <Route
-                            path="reset_password/success"
-                            element={<PasswordResetSuccess />}
-                        />
+                            <Route
+                                path="reset_password"
+                                element={<PasswordResetOverview />}
+                            />
+                            <Route
+                                path="reset_password/verification"
+                                element={<PasswordResetVerification />}
+                            />
+                            <Route
+                                path="reset_password/newPassword"
+                                element={<PasswordResetNewPassword />}
+                            />
+                            <Route
+                                path="reset_password/success"
+                                element={<PasswordResetSuccess />}
+                            />
 
-                        <Route path="checkout" element={<CheckoutPage />} />
-                        <Route
-                            path="shopping_cart"
-                            element={<ShoppingCart />}
-                        />
-                        <Route
-                            path="checkout_success"
-                            element={<CheckoutSuccess />}
-                        />
+                            <Route path="checkout" element={<CheckoutPage />} />
+                            <Route
+                                path="shopping_cart"
+                                element={<ShoppingCart />}
+                            />
+                            <Route
+                                path="checkout_success"
+                                element={<CheckoutSuccess />}
+                            />
 
-                        {/* Customer Dashboard */}
-                        <Route path="customer" element={<CustomerLayout />}>
-                            <Route index element={<CustomerDashBoard />} />
-                            <Route
-                                path="order_history"
-                                element={<CustomerOrderHistory />}
-                            />
-                            <Route
-                                path="order_progress"
-                                element={<CustomerOrderProgress />}
-                            />
-                            <Route
-                                path="account_settings"
-                                element={<CustomerAccountSettings />}
-                            />
-                        </Route>
+                            {/* Customer Dashboard */}
+                            <Route path="customer" element={<CustomerLayout />}>
+                                <Route index element={<CustomerDashBoard />} />
+                                <Route
+                                    path="order_history"
+                                    element={<CustomerOrderHistory />}
+                                />
+                                <Route
+                                    path="order_progress"
+                                    element={<CustomerOrderProgress />}
+                                />
+                                <Route
+                                    path="account_settings"
+                                    element={<CustomerAccountSettings />}
+                                />
+                            </Route>
 
-                        {/* Products Pages */}
-                        <Route path="products" element={<ProductList />} />
-                        <Route
-                            path="products/:productId"
-                            element={<ProductDetail />}
-                        />
+                            {/* Products Pages */}
+                            <Route path="products" element={<ProductList />} />
+                            <Route
+                                path="products/:productId"
+                                element={<ProductDetail />}
+                            />
 
-                        {/* WishList Page */}
-                        <Route path="wishlist" element={<WishList />} />
+                            {/* WishList Page */}
+                            <Route path="wishlist" element={<WishList />} />
 
-                        {/* Admin Pages */}
-                        <Route path="admin" element={<AdminLayout />}>
-                            <Route index element={<AdminDashboard />} />
-                            <Route
-                                path="categories"
-                                element={<AdminCategoryList />}
-                            />
-                            <Route
-                                path="categories/new"
-                                element={<CategoryForm />}
-                            />
-                            <Route
-                                path="customers"
-                                element={<CustomerList />}
-                            />
-                            <Route
-                                path="customers/:customerId"
-                                element={<CustomerDetail />}
-                            />
-                            <Route path="orders" element={<OrderList />} />
-                            <Route
-                                path="orders/:orderId"
-                                element={<OrderDetail />}
-                            />
-                            <Route
-                                path="products"
-                                element={<AdminProductList />}
-                            />
-                            <Route
-                                path="products/new"
-                                element={<ProductForm />}
-                            />
-                        </Route>
+                            {/* Admin Pages */}
+                            <Route path="admin" element={<AdminLayout />}>
+                                <Route index element={<AdminDashboard />} />
+                                <Route
+                                    path="categories"
+                                    element={<AdminCategoryList />}
+                                />
+                                <Route
+                                    path="categories/new"
+                                    element={<CategoryForm />}
+                                />
+                                <Route
+                                    path="customers"
+                                    element={<CustomerList />}
+                                />
+                                <Route
+                                    path="customers/:customerId"
+                                    element={<CustomerDetail />}
+                                />
+                                <Route path="orders" element={<OrderList />} />
+                                <Route
+                                    path="orders/:orderId"
+                                    element={<OrderDetail />}
+                                />
+                                <Route
+                                    path="products"
+                                    element={<AdminProductList />}
+                                />
+                                <Route
+                                    path="products/new"
+                                    element={<ProductForm />}
+                                />
+                            </Route>
 
-                        {/* 404 Page */}
-                        <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
-                    <Footer />
-                </BrowserRouter>
+                            {/* 404 Page */}
+                            <Route path="*" element={<NotFoundPage />} />
+                        </Routes>
+                        <Footer />
+                    </BrowserRouter>
+                </ProductCategoryProvider>
             </EmailProvider>
         </AuthProvider>
     );
