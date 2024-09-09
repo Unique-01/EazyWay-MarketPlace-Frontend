@@ -1,12 +1,32 @@
 import registrationBanner from "assets/images/registrationImg.svg";
+import axios from "axios";
+import ButtonLoading from "components/common/ButtonLoading";
+import config from "config";
+import { useEmail } from "context/EmailContext";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PasswordResetOverview = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const { setEmail } = useEmail();
+    const [emailInput, setEmailInput] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        navigate("/reset_password/verification");
+        setLoading(true);
+        try {
+            await axios.put(`${config.API_BASE_URL}/user/reset-password`, {
+                email: emailInput,
+            });
+            setEmail(emailInput);
+            setLoading(false);
+            navigate("/reset_password/verification");
+        } catch (error) {
+            setError(error.response.data.message);
+            setLoading(false);
+        }
     };
     return (
         <div>
@@ -24,17 +44,30 @@ const PasswordResetOverview = () => {
                             <h2 className="signIn-heading text-black">
                                 Reset Password
                             </h2>
-                            <form className="row row-gap-4 mt-4">
+                            <form
+                                className="row row-gap-4 mt-4"
+                                onSubmit={handleSubmit}>
+                                {error && (
+                                    <p className="form-error text-danger">
+                                        {error}
+                                    </p>
+                                )}
                                 <input
                                     type="email"
                                     placeholder="Email"
                                     className="form-control input"
+                                    value={emailInput}
+                                    required
+                                    onChange={(e) =>
+                                        setEmailInput(e.target.value)
+                                    }
                                 />
 
                                 <button
                                     className="btn btn-primary text-white login-btn  w-100 rounded-pill"
-                                    onClick={handleSubmit}>
-                                    Submit
+                                    disabled={loading}
+                                    type="submit">
+                                    Submit {loading && <ButtonLoading />}
                                 </button>
                             </form>
                         </div>

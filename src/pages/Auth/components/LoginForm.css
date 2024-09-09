@@ -40,6 +40,6 @@
 .form-error{
     font-size: 12px;
 }
-.error-input{
+.error-input,.error-input:hover,.error-input:focus{
     border: 1px solid red;
 }
