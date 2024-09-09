@@ -1,0 +1,41 @@
+.selector-user-icon {
+    font-size: 47px;
+    opacity: 0.8;
+}
+.selector-merchant-icon {
+    width: 47px;
+    height: 47px;
+}
+.merchant-selector:hover,
+.user-selector:hover {
+    background-color: #40c545;
+    .selector-merchant-icon path {
+        fill: white;
+    }
+    .selector-user-icon path {
+        stroke: white !important;
+    }
+    .selector-text{
+        color: white;
+    }
+}
+
+.user-selector,
+.merchant-selector {
+    transition: all 0.2s;
+    height: 130px;
+    width: 170px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    row-gap: 5px;
+}
+.selector-text{
+    font-size: 20px;
+    font-weight: 600;
+}
+.selector-heading{
+    font-weight: 600;
+    font-size: 27px;
+}

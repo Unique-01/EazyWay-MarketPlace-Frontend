@@ -1,16 +1,10 @@
-import React from "react";
+import Loading from "components/common/Loading";
+import ProductCategoryContext from "context/ProductCategoryContext";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 // import './CategoriesSidebar.css';
 const CategoriesSidebar = () => {
-    const categories = [
-        { name: "Fruits & Vegetables" },
-        { name: "Frozen Foods" },
-        { name: "Creams and Body" },
-        { name: "Dairy and Breakfast" },
-        { name: "Drinks and Juice" },
-        { name: "Seasonings" },
-        { name: "Biscuits and Snacks" },
-    ];
+    const { categories, loading } = useContext(ProductCategoryContext);
 
     return (
         <div className="card categories-sidebar">
@@ -20,16 +14,26 @@ const CategoriesSidebar = () => {
                 </h5>
             </div>
             <ul className="list-group list-group-flush py-2">
-                {categories.map((category, index) => (
-                    <li key={index} className={`list-group-item border-0 category-sidebar-list-item my-1  `}>
-                        <Link to="" className="category-sidebar-name">
-                            {category.name}
-                        </Link>
-                    </li>
-                ))}
-                <li className="list-group-item view-all">
-                    <Link to="">+ View all Categories</Link>
-                </li>
+                {loading ? (
+                    <Loading />
+                ) : (
+                    <>
+                        {categories.map((category, index) => (
+                            <li
+                                key={index}
+                                className={`list-group-item border-0 category-sidebar-list-item my-1  `}>
+                                <Link
+                                    to=""
+                                    className="category-sidebar-name text-capitalize">
+                                    {category.title}
+                                </Link>
+                            </li>
+                        ))}
+                        <li className="list-group-item view-all">
+                            <Link to="">+ View all Categories</Link>
+                        </li>
+                    </>
+                )}
             </ul>
         </div>
     );

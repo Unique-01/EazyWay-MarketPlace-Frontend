@@ -2,8 +2,23 @@ import { NavLink, Link } from "react-router-dom";
 import "./Navbar.css";
 import { FaBars } from "react-icons/fa6";
 import { SearchIcon } from "assets/icons";
+import { useContext, useState } from "react";
+import { AuthContext } from "context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+    const { isAuthenticated, user, logout } = useContext(AuthContext);
+    const [showLogoutAlert, setShowLogoutAlert] = useState(false);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        setShowLogoutAlert(true); 
+        setTimeout(() => {
+            setShowLogoutAlert(false); 
+            navigate("/");
+        }, 3000);
+    };
     return (
         <div>
             <nav
@@ -61,21 +76,39 @@ const Navbar = () => {
                             </li>
                         </ul>
                         <ul className="nav ms-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Link to="/login" className="nav-link ">
-                                    Login
-                                </Link>
-                            </li>
-                            <div className="vl my-2"></div>
-                            <li className="nav-item">
-                                <Link to="/signup" className="nav-link">
-                                    SignUp
-                                </Link>
-                            </li>
+                            {!isAuthenticated ? (
+                                <>
+                                    <li className="nav-item">
+                                        <Link to="/login" className="nav-link ">
+                                            Login
+                                        </Link>
+                                    </li>
+                                    <div className="vl my-2"></div>
+                                    <li className="nav-item">
+                                        <Link to="/signup" className="nav-link">
+                                            SignUp
+                                        </Link>
+                                    </li>
+                                </>
+                            ) : (
+                                <button
+                                    onClick={handleLogout}
+                                    className="nav-link ">
+                                    Logout
+                                </button>
+                            )}
                         </ul>
                     </div>
                 </div>
             </nav>
+            {showLogoutAlert && (
+                <div
+                    class="alert alert-primary text-center p-2 fw-medium  "
+                    style={{ fontSize: "14px" }}
+                    role="alert">
+                    Logout Successful!
+                </div>
+            )}
         </div>
     );
 };
