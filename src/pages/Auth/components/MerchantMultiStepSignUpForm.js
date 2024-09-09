@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaRegArrowAltCircleLeft } from "react-icons/fa";
 import ProductCategoryContext from "context/ProductCategoryContext";
 import Select from "react-select";
+import ButtonLoading from "components/common/ButtonLoading";
 
 const Step1 = ({ formData, setFormData, nextStep }) => {
     const { firstName, lastName, email } = formData;
@@ -244,7 +245,14 @@ const Step2 = ({ formData, setFormData, nextStep, prevStep }) => {
     );
 };
 
-const Step3 = ({ formData, setFormData, prevStep, handleSubmit }) => {
+const Step3 = ({
+    formData,
+    setFormData,
+    prevStep,
+    handleSubmit,
+    loading,
+    error,
+}) => {
     const { username, password, confirmPassword } = formData;
     const [errors, setErrors] = useState({});
 
@@ -276,10 +284,14 @@ const Step3 = ({ formData, setFormData, prevStep, handleSubmit }) => {
     return (
         <div>
             <div className="signUpForm text-center">
-                <button className="text-primary fs-4 btn" onClick={prevStep}>
+                <button
+                    className="text-primary fs-4 btn"
+                    onClick={prevStep}
+                    disabled={loading}>
                     <FaRegArrowAltCircleLeft />
                 </button>
                 <div className="row row-gap-4 mt-4">
+                    {error && <p className="text-danger form-error">{error}</p>}
                     <input
                         type="text"
                         placeholder="Username"
@@ -287,6 +299,7 @@ const Step3 = ({ formData, setFormData, prevStep, handleSubmit }) => {
                         value={username}
                         name="username"
                         onChange={handleChange}
+                        disabled={loading}
                     />
                     <div className="p-0">
                         {errors.password && (
@@ -303,6 +316,7 @@ const Step3 = ({ formData, setFormData, prevStep, handleSubmit }) => {
                             value={password}
                             name="password"
                             onChange={handleChange}
+                            disabled={loading}
                         />
                     </div>
 
@@ -321,13 +335,15 @@ const Step3 = ({ formData, setFormData, prevStep, handleSubmit }) => {
                             value={confirmPassword}
                             name="confirmPassword"
                             onChange={handleChange}
+                            disabled={loading}
                         />
                     </div>
 
                     <button
-                        className="btn btn-primary text-white login-btn w-100 rounded-pill"
-                        onClick={handleNext}>
-                        Sign Up
+                        className={`btn btn-primary text-white login-btn w-100 rounded-pill`}
+                        onClick={handleNext}
+                        disabled={loading}>
+                        Sign Up {loading && <ButtonLoading />}
                     </button>
                 </div>
             </div>
@@ -335,7 +351,7 @@ const Step3 = ({ formData, setFormData, prevStep, handleSubmit }) => {
     );
 };
 
-const MerchantMultiStepSignUpForm = ({ handleFinalSubmit }) => {
+const MerchantMultiStepSignUpForm = ({ handleFinalSubmit, loading, error }) => {
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState({
         firstName: "",
@@ -390,6 +406,8 @@ const MerchantMultiStepSignUpForm = ({ handleFinalSubmit }) => {
                     setFormData={setFormData}
                     prevStep={prevStep}
                     handleSubmit={handleSubmit}
+                    loading={loading}
+                    error={error}
                 />
             );
         default:
