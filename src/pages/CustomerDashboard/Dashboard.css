@@ -1,0 +1,35 @@
+.profilePicture * {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    background-color: gainsboro;
+}
+
+.profileFullName {
+    color: #1a1a1a;
+    font-weight: 500;
+    font-size: 20px;
+}
+.userPrivilege {
+    color: #bfbfbf;
+    font-size: 14px;
+    font-weight: 400;
+}
+.profileEdit {
+    font-size: 12px;
+    font-weight: 500;
+}
+.profileEdit:hover {
+    color: white;
+}
+.profile-info-head {
+    color: #bfbfbf;
+}
+.profile-info-head,
+.profile-info {
+    font-size: 13px;
+    line-height: 14px !important;
+}
+.profile-info-card{
+    padding: 30px 40px 20px 40px !important;
+}

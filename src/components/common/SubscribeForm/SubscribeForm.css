@@ -2,8 +2,9 @@
     width: 30em !important;
 }
 
-@media only screen and (max-width:600px){
+@media only screen and (max-width:450px){
     .subscribe-form{
-        width: 24em !important;
+        width: 100% !important;
     }
 }
+

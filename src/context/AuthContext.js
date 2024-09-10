@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer, useEffect, useState } from "react";
 
 // Create the Auth Context
 export const AuthContext = createContext();
@@ -40,6 +40,7 @@ const initialState = {
 // AuthProvider component to provide the AuthContext to the entire app
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
+    const [loading, setLoading] = useState(true);
 
     // Load user and authToken from localStorage on app load (to persist user session)
     useEffect(() => {
@@ -54,6 +55,7 @@ export const AuthProvider = ({ children }) => {
                 },
             });
         }
+        setLoading(false);
     }, []);
 
     // Login function to store user data and authToken
@@ -77,7 +79,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ ...state, login, logout }}>
+        <AuthContext.Provider value={{ ...state, login, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );
