@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Pagination } from "react-bootstrap";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
+import CustomerOrderDetails from "../OrderDetails";
 
 const OrderTable = ({
     orderList,
@@ -74,7 +75,7 @@ const OrderTable = ({
                                         </td>
                                         <td>
                                             <span className="d-inline-flex align-items-center gap-3">
-                                                {full && <Link>View</Link>}
+                                                {full && <Link to={`/customer/order_history/${order.id}`}>View</Link>}
                                                 <CiSaveDown1
                                                     style={{ fontSize: "20px" }}
                                                 />
