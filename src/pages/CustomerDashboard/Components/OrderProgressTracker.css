@@ -1,0 +1,59 @@
+.progress-tracker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+  }
+  
+  .step {
+    text-align: center;
+    flex: 1;
+    position: relative;
+  }
+  
+  .step::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 4px;
+    width: 100%;
+    background-color: #ddd;
+    z-index: 0;
+    transform: translateX(-50%);
+  }
+  
+  .step.active::before {
+    background-color: #28a745;
+  }
+  
+  .step:first-child::before {
+    display: none;
+  }
+  
+  .circle {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #ddd;
+    border-radius: 50%;
+    z-index: 1;
+    color: white;
+  }
+  
+  .step.active .circle {
+    background-color: #28a745;
+  }
+  
+  p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .step.active p {
+    color: #28a745;
+  }
+  
