@@ -13,7 +13,7 @@ import ShoppingCart from "pages/Checkout/Cart/ShoppingCart";
 import CheckoutSuccess from "pages/Checkout/Success";
 import CustomerDashBoard from "pages/CustomerDashboard/Dashboard";
 import CustomerOrderHistory from "pages/CustomerDashboard/OrderHistory";
-import CustomerOrderProgress from "pages/CustomerDashboard/OrderProgress";
+import CustomerOrderDetails from "pages/CustomerDashboard/OrderDetails";
 import CustomerAccountSettings from "pages/CustomerDashboard/AccountSettings";
 import ProductList from "pages/Products/ProductList";
 import ProductDetail from "pages/Products/ProductDetail";
@@ -43,12 +43,17 @@ import PasswordResetNewPassword from "pages/Auth/PasswordReset/PasswordResetNewP
 import { EmailProvider } from "context/EmailContext";
 import { AuthProvider } from "context/AuthContext";
 import { ProductCategoryProvider } from "context/ProductCategoryContext";
+import AxiosSetup from "api/apiClient";
+
 function App() {
+    
     return (
         <AuthProvider>
+            
             <EmailProvider>
                 <ProductCategoryProvider>
                     <BrowserRouter>
+                    <AxiosSetup/>
                         <Header />
                         <Routes>
                             {/* Public Pages */}
@@ -115,8 +120,8 @@ function App() {
                                     element={<CustomerOrderHistory />}
                                 />
                                 <Route
-                                    path="order_progress"
-                                    element={<CustomerOrderProgress />}
+                                    path="order_history/:orderId"
+                                    element={<CustomerOrderDetails />}
                                 />
                                 <Route
                                     path="account_settings"

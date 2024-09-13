@@ -1,6 +1,7 @@
 import registrationBanner from "assets/images/registrationImg.svg";
 import axios from "axios";
 import ButtonLoading from "components/common/ButtonLoading";
+import HandleApiError from "components/HandleApiError";
 import config from "config";
 import { useEmail } from "context/EmailContext";
 import { useState } from "react";
@@ -21,10 +22,10 @@ const PasswordResetOverview = () => {
                 email: emailInput,
             });
             setEmail(emailInput);
-            setLoading(false);
             navigate("/reset_password/verification");
-        } catch (error) {
-            setError(error.response.data.message);
+        } catch (err) {
+            HandleApiError(err, setError);
+        } finally {
             setLoading(false);
         }
     };

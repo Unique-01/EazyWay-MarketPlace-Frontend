@@ -4,6 +4,7 @@ import PasswordResetNewPassword from "./PasswordResetNewPassword";
 import { useState } from "react";
 import axios from "axios";
 import config from "config";
+import HandleApiError from "components/HandleApiError";
 
 const PasswordResetVerification = () => {
     const [step, setStep] = useState(1);
@@ -28,29 +29,8 @@ const PasswordResetVerification = () => {
             });
 
             navigate("reset_password/success");
-        } catch (error) {
-            console.log(error);
-            if (
-                error.response &&
-                error.response.data &&
-                error.response.data.error
-            ) {
-                const errors = error.response.data.error;
-
-                // If the error array exists, map over it to extract the messages
-                if (Array.isArray(errors)) {
-                    const errorMessages = errors
-                        .map((err) => err.message)
-                        .join(", ");
-                    setError(errorMessages);
-                } else {
-                    // Fallback in case error is not an array
-                    setError("An unknown error occurred.");
-                }
-            } else {
-                // Handle other errors like network issues
-                setError("Something went wrong. Please try again later.");
-            }
+        } catch (err) {
+            HandleApiError(err, setError);
         } finally {
             setLoading(false);
         }

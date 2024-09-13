@@ -1,0 +1,35 @@
+.side-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: #bfbfbf;
+}
+
+.side-nav-link.active {
+    background-color: #bfecc140;
+    color: #1a1a1a !important;
+    border-left: 2px solid #00b207 !important;
+    .side-nav-icon {
+        color: #00b207;
+    }
+}
+.side-nav-link:hover{
+    background-color: #bfecc140;
+}
+@media screen and (max-width: 768px) {
+    .side-nav-link {
+        display: block;
+        font-size: 30px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .side-nav-link {
+        font-size: 16px;
+    }
+}

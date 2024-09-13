@@ -1,4 +1,6 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import { apiClient } from "api/apiClient";
+import config from "config";
+import React, { createContext, useReducer, useEffect, useState } from "react";
 
 // Create the Auth Context
 export const AuthContext = createContext();
@@ -40,6 +42,20 @@ const initialState = {
 // AuthProvider component to provide the AuthContext to the entire app
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("authToken");
+        if (storedToken) {
+            const fetchUser = async () => {
+                const response = await apiClient.get(
+                    `${config.API_BASE_URL}/user`
+                );
+                set_user(response.data.data);
+            };
+            fetchUser();
+        }
+    }, []);
 
     // Load user and authToken from localStorage on app load (to persist user session)
     useEffect(() => {
@@ -54,6 +70,7 @@ export const AuthProvider = ({ children }) => {
                 },
             });
         }
+        setLoading(false);
     }, []);
 
     // Login function to store user data and authToken
@@ -76,8 +93,17 @@ export const AuthProvider = ({ children }) => {
         dispatch({ type: "LOGOUT" });
     };
 
+    const set_user = (userData) => {
+        localStorage.setItem("user", JSON.stringify(userData));
+        dispatch({
+            type: "SET_USER",
+            payload: userData,
+        });
+    };
+
     return (
-        <AuthContext.Provider value={{ ...state, login, logout }}>
+        <AuthContext.Provider
+            value={{ ...state, login, logout, loading, set_user }}>
             {children}
         </AuthContext.Provider>
     );

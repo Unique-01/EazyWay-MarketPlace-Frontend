@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import LoginForm from "../components/LoginForm";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
+import HandleApiError from "components/HandleApiError";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -11,6 +12,9 @@ const CustomerLogin = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const redirect_uri = queryParams.get("redirect_uri");
 
     const handleLogin = async (formData) => {
         setLoading(true);
@@ -19,13 +23,16 @@ const CustomerLogin = () => {
                 `${API_BASE_URL}/user/login`,
                 formData
             );
-            setLoading(false);
             const { token: authToken, data: userData } = response.data;
-            login(userData, authToken);
-            navigate("/");
-        } catch (error) {
-            setError(error.response.data.message);
-            console.log(error);
+            await login(userData, authToken);
+            if (redirect_uri) {
+                navigate(redirect_uri);
+            } else {
+                navigate("/customer");
+            }
+        } catch (err) {
+            HandleApiError(err, setError);
+        } finally {
             setLoading(false);
         }
     };

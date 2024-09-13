@@ -5,6 +5,7 @@ import { useEmail } from "context/EmailContext";
 import { useState } from "react";
 import config from "config";
 import axios from "axios";
+import HandleApiError from "components/HandleApiError";
 
 const MerchantSignUp = () => {
     const { setEmail } = useEmail();
@@ -21,10 +22,10 @@ const MerchantSignUp = () => {
                 privilege,
             });
             setEmail(formData.email);
-            setLoading(false);
             navigate("/signup/verify_email");
-        } catch (error) {
-            setError(error.response.data.message);
+        } catch (err) {
+            HandleApiError(err, setError);
+        } finally {
             setLoading(false);
         }
     };

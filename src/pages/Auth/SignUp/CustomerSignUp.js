@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { useEmail } from "context/EmailContext";
+import HandleApiError from "components/HandleApiError";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 console.log(API_BASE_URL);
@@ -22,11 +23,10 @@ const CustomerSignUp = () => {
                 privilege,
             });
             setEmail(formData.email);
-            setLoading(false);
             navigate("/signup/verify_email");
-        } catch (error) {
-            console.log(error);
-            setError(error.response.data.message);
+        } catch (err) {
+            HandleApiError(err, setError);
+        } finally {
             setLoading(false);
         }
     };

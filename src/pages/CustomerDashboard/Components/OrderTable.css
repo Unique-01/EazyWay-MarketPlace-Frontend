@@ -1,0 +1,47 @@
+.orderStatus{
+    font-size: 12px !important;
+    font-weight: 500;
+}
+.orderStatus span{
+    padding: 10px 15px;
+}
+.order-completed{
+    background-color: #BFECC1;
+    color: #00B207;
+}
+.order-not-completed{
+    background-color: #FFE8BF;
+    color: #FFA500;
+}
+.order-head th{
+    background: #BFECC140 !important;
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 14px;
+    padding: 14px 50px;
+    text-wrap: nowrap;
+}
+
+.order-body td{
+    margin:0px 50px;
+    padding: 16px 0px;
+    font-size: 14px;
+}
+.pagination{
+    justify-content: center;
+    gap: 20px;
+}
+.pagination *{
+    border-radius: 50% !important;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.pagination svg{
+    width: 15px;
+    color: #1A1A1A;
+}
+

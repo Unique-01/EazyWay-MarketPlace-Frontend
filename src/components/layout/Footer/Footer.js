@@ -120,7 +120,7 @@ const Footer = () => {
                             D-EazyWay Marketplace &copy; 2024 All Rights
                             Reserved
                         </p>
-                        <div className="footer-payment d-flex gap-2 gap-md-3 mt-4 mt-lg-0">
+                        <div className="footer-payment d-flex gap-2 flex-wrap gap-md-3 mt-4 mt-lg-0">
                             <div>
                                 <img src={ApplePay} alt="Apple Pay" className=""/>
                             </div>
