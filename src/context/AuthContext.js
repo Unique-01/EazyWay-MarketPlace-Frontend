@@ -1,3 +1,5 @@
+import { apiClient } from "api/apiClient";
+import config from "config";
 import React, { createContext, useReducer, useEffect, useState } from "react";
 
 // Create the Auth Context
@@ -41,6 +43,19 @@ const initialState = {
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("authToken");
+        if (storedToken) {
+            const fetchUser = async () => {
+                const response = await apiClient.get(
+                    `${config.API_BASE_URL}/user`
+                );
+                set_user(response.data.data);
+            };
+            fetchUser();
+        }
+    }, []);
 
     // Load user and authToken from localStorage on app load (to persist user session)
     useEffect(() => {
