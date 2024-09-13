@@ -5,6 +5,7 @@ import UserIcon from "assets/icons/user.svg";
 import { apiClient } from "api/apiClient";
 import config from "config";
 import ButtonLoading from "components/common/ButtonLoading";
+import HandleApiError from "components/HandleApiError";
 
 const AccountSettingsForm = () => {
     const { user, loading, set_user } = useContext(AuthContext);
@@ -66,26 +67,8 @@ const AccountSettingsForm = () => {
             );
             set_user(response.data.data);
             alert("success");
-            console.log(response.data.data);
-        } catch (error) {
-            console.log(error);
-            if (
-                error.response &&
-                error.response.data &&
-                error.response.data.error
-            ) {
-                const errors = error.response.data.error;
-                if (Array.isArray(errors)) {
-                    const errorMessages = errors
-                        .map((err) => err.message)
-                        .join(", ");
-                    setError(errorMessages);
-                } else {
-                    setError("An unknown error occurred.");
-                }
-            } else {
-                setError("Something went wrong. Please try again later.");
-            }
+        } catch (err) {
+            HandleApiError(err, setError);
         } finally {
             setSubmitLoading(false);
         }

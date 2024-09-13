@@ -3,6 +3,7 @@ import OTPVerification from "../components/OtpVerification";
 import axios from "axios";
 import { useState } from "react";
 import { useEmail } from "context/EmailContext";
+import HandleApiError from "components/HandleApiError";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -15,9 +16,8 @@ const EmailVerification = () => {
     const handleResendOTP = async () => {
         try {
             await axios.put(`${API_BASE_URL}/user/resend-otp`, { email });
-        } catch (error) {
-            setError(error.response.data.message);
-            console.log(error);
+        } catch (err) {
+            HandleApiError(err, setError);
         }
     };
 
@@ -25,11 +25,11 @@ const EmailVerification = () => {
         setLoading(true);
         try {
             await axios.post(`${API_BASE_URL}/user/otp`, { otp });
-            setLoading(false);
             navigate("/signup/success");
-        } catch (error) {
-            setError(error.response.data.message);
-            console.log(error);
+        } catch (err) {
+            HandleApiError(err, setError);
+        } finally {
+            setLoading(false);
         }
         navigate("/signup/success");
     };

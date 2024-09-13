@@ -1,7 +1,4 @@
-import { useContext } from "react";
 import AccountSettingsForm from "./Components/AccountSettingsForm";
-import { AuthContext } from "context/AuthContext";
-import { FaUser } from "react-icons/fa";
 import BillingInfo from "pages/Checkout/BillingInfo";
 import ChangePassword from "pages/Auth/components/ChangePassword";
 

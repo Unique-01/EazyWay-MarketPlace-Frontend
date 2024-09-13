@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import config from "config";
 import { useContext } from "react";
 import axios from "axios";
+import HandleApiError from "components/HandleApiError";
 
 const MerchantLogin = () => {
     const { login } = useContext(AuthContext);
@@ -19,13 +20,12 @@ const MerchantLogin = () => {
                 `${config.API_BASE_URL}/user/login`,
                 formData
             );
-            setLoading(false);
             const { token: authToken, data: userData } = response.data;
             login(userData, authToken);
             navigate("/");
-        } catch (error) {
-            setError(error.response.data.message);
-            console.log(error);
+        } catch (err) {
+            HandleApiError(err, setError);
+        } finally {
             setLoading(false);
         }
     };

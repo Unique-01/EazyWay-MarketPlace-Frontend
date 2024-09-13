@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Pagination } from "react-bootstrap";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
-import CustomerOrderDetails from "../OrderDetails";
 
 const OrderTable = ({
     orderList,

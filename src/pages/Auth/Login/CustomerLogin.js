@@ -3,6 +3,7 @@ import LoginForm from "../components/LoginForm";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
+import HandleApiError from "components/HandleApiError";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -19,13 +20,12 @@ const CustomerLogin = () => {
                 `${API_BASE_URL}/user/login`,
                 formData
             );
-            setLoading(false);
             const { token: authToken, data: userData } = response.data;
             login(userData, authToken);
             navigate("/");
-        } catch (error) {
-            setError(error.response.data.message);
-            console.log(error);
+        } catch (err) {
+            HandleApiError(err, setError);
+        } finally {
             setLoading(false);
         }
     };
