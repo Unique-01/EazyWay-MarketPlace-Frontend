@@ -1,7 +1,7 @@
 import "./CategoryCard.css"
 const CategoryCard = ({ category }) => (
     // <div className="py-0 my-0">
-        <div className="card category-card d-flex align-items-center rounded-0">
+        <div className="card category-card d-flex align-items-center">
             <img
                 src={require(`/src/assets/images/category/${category.image}`)}
                 // className="card-img-top"

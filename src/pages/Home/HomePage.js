@@ -9,7 +9,7 @@ import Testimonial from "components/common/Testimonial";
 import CategoriesSidebar from "./CategoriesSidebar";
 
 const HomePage = () => {
-    const limit = 6;
+    const limit = 5;
     return (
         <div>
             <div className="container">
@@ -45,9 +45,9 @@ const HomePage = () => {
                             View All <HiArrowRight />
                         </a>
                     </div>
-                    <div className="row g-0">
+                    <div className="row row-gap-3">
                         {ProductData.slice(0, limit).map((related, index) => (
-                            <div className="col-6 col-md-4 col-lg-2 mx-auto">
+                            <div className="col-6 col-md-4 col-lg mx-auto">
                                 <ProductCard product={related} key={index} />
                             </div>
                         ))}

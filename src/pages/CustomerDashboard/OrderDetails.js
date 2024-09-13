@@ -46,7 +46,7 @@ const CustomerOrderDetails = () => {
                         </div>
                     </div>
                     <div className="card-body">
-                        <div className="row">
+                        <div className="row mb-5">
                             <div className="col-md-8 ">
                                 <div className="row g-0">
                                     <div className="col-md-6">

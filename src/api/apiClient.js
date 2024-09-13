@@ -1,39 +1,94 @@
+// import axios from "axios";
+// // import { useContext } from "react";
+// // import { AuthContext } from "context/AuthContext";
+
+// const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+// // Create an axios instance
+// const apiClient = axios.create({
+//     baseURL: API_BASE_URL, // Replace with your API base URL
+// });
+
+// apiClient.interceptors.request.use(
+//     (config) => {
+//         const authToken = localStorage.getItem("authToken");
+//         if (authToken) {
+//             config.headers["Authorization"] = authToken;
+//         }
+//         return config;
+//     },
+//     (error) => {
+//         return Promise.reject(error);
+//     }
+// );
+
+// apiClient.interceptors.response.use(
+//     (response) => response,
+//     (error) => {
+//         // Handle errors globally, e.g., redirect to login on 401
+//         if (error.response && error.response.status === 401) {
+           
+//         }
+//         return Promise.reject(error);
+//     }
+// );
+
+// export default apiClient;
+
 import axios from "axios";
-import { useContext } from "react";
+import { useNavigate } from "react-router-dom"; 
+import { useContext,useEffect } from "react";
 import { AuthContext } from "context/AuthContext";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-// Create an axios instance
-const apiClient = axios.create({
-    baseURL: API_BASE_URL, // Replace with your API base URL
+export const apiClient = axios.create({
+    baseURL: API_BASE_URL,
 });
 
-// Request interceptor to attach the authToken from localStorage
-apiClient.interceptors.request.use(
-    (config) => {
-        const authToken =useContext(AuthContext)
-        if (authToken) {
-            config.headers["Authorization"] = authToken;
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
+const AxiosSetup = () => {
+    const { logout } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-// Response interceptor (optional) for handling errors globally
-apiClient.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        // Handle errors globally, e.g., redirect to login on 401
-        if (error.response && error.response.status === 401) {
-            // Handle unauthorized access
-            // You might want to redirect to login or show a message
-        }
-        return Promise.reject(error);
-    }
-);
+    useEffect(() => {
+        const setupInterceptors = () => {
+            apiClient.interceptors.request.use(
+                (config) => {
+                    const authToken = localStorage.getItem("authToken");
+                    if (authToken) {
+                        config.headers["Authorization"] = authToken;
+                    }
+                    return config;
+                },
+                (error) => Promise.reject(error)
+            );
 
-export default apiClient;
+            apiClient.interceptors.response.use(
+                (response) => response,
+                async (error) => {
+                    if (error.response) {
+                        // Handle 401 Unauthorized
+                        if (error.response.status === 401) {
+                            logout(); 
+                            navigate("/login"); 
+                        }
+
+                        // Handle 403 Forbidden (account revoked)
+                        if (error.response.status === 403) {
+                            
+                            alert("You do not have the permission to perform this operation");
+                            navigate("/login");
+                            logout(); 
+                        }
+                    }
+
+                    return Promise.reject(error);
+                }
+            );
+        };
+
+        setupInterceptors();
+    }, [logout, navigate]);
+};
+
+export default AxiosSetup;

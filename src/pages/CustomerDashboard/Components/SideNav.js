@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { LuRefreshCcw } from "react-icons/lu";
 import { LuHeart } from "react-icons/lu";
@@ -6,11 +6,20 @@ import { BsFillBasket3Fill } from "react-icons/bs";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbLogout } from "react-icons/tb";
 import "./SideNav.css";
+import { useContext } from "react";
+import { AuthContext } from "context/AuthContext";
 
 const SideNav = () => {
+    const { logout } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        navigate("/");
+        logout();
+    };
     return (
         <div className="card ">
-            <div className="card-header bg-white pb-0 border-primary pt-3 d-none d-lg-block" >
+            <div className="card-header bg-white pb-0 border-primary pt-3 d-none d-lg-block">
                 <h5 className="card-title">Navigation</h5>
             </div>
             <ul className="list-group list-group-flush py-2">
@@ -19,17 +28,20 @@ const SideNav = () => {
                     activeClassName="side-nav-active"
                     end
                     className=" text-capitalize side-nav-link list-group-item border-0">
-                    <MdDashboard className="side-nav-icon" /><span className="d-none d-lg-block"> Dashboard</span>
+                    <MdDashboard className="side-nav-icon" />
+                    <span className="d-none d-lg-block"> Dashboard</span>
                 </NavLink>
                 <NavLink
                     to="/customer/order_history"
                     className=" text-capitalize side-nav-link list-group-item border-0">
-                    <LuRefreshCcw className="side-nav-icon" /> <span className="d-none d-lg-block">Order History</span>
+                    <LuRefreshCcw className="side-nav-icon" />{" "}
+                    <span className="d-none d-lg-block">Order History</span>
                 </NavLink>
                 <NavLink
                     to="/wishlist"
                     className=" text-capitalize side-nav-link list-group-item border-0">
-                    <LuHeart className="side-nav-icon" /> <span className="d-none d-lg-block">Wishlist</span>
+                    <LuHeart className="side-nav-icon" />{" "}
+                    <span className="d-none d-lg-block">Wishlist</span>
                 </NavLink>
                 <NavLink
                     to="/shopping_cart"
@@ -40,14 +52,16 @@ const SideNav = () => {
                 <NavLink
                     to="/customer/account_settings"
                     className=" text-capitalize side-nav-link list-group-item border-0">
-                    <IoSettingsOutline  className="side-nav-icon" />
+                    <IoSettingsOutline className="side-nav-icon" />
                     <span className="d-none d-lg-block">Settings</span>
                 </NavLink>
-                <NavLink
-                    to="/logout"
-                    className=" text-capitalize side-nav-link list-group-item border-0">
-                    <TbLogout  className="side-nav-icon" /> <span className="d-none d-lg-block">Logout</span>
-                </NavLink>
+                <span
+                    onClick={handleLogout}
+                    className=" text-capitalize side-nav-link list-group-item border-0"
+                    style={{ cursor: "pointer" }}>
+                    <TbLogout className="side-nav-icon" />{" "}
+                    <span className="d-none d-lg-block">Logout</span>
+                </span>
             </ul>
         </div>
     );

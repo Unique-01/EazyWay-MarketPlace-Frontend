@@ -78,8 +78,17 @@ export const AuthProvider = ({ children }) => {
         dispatch({ type: "LOGOUT" });
     };
 
+    const set_user = (userData) => {
+        localStorage.setItem("user", JSON.stringify(userData));
+        dispatch({
+            type: "SET_USER",
+            payload: userData,
+        });
+    };
+
     return (
-        <AuthContext.Provider value={{ ...state, login, logout, loading }}>
+        <AuthContext.Provider
+            value={{ ...state, login, logout, loading, set_user }}>
             {children}
         </AuthContext.Provider>
     );

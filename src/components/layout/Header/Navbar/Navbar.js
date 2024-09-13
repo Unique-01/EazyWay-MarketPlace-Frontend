@@ -13,9 +13,9 @@ const Navbar = () => {
 
     const handleLogout = () => {
         logout();
-        setShowLogoutAlert(true); 
+        setShowLogoutAlert(true);
         setTimeout(() => {
-            setShowLogoutAlert(false); 
+            setShowLogoutAlert(false);
             navigate("/");
         }, 3000);
     };
@@ -76,7 +76,7 @@ const Navbar = () => {
                             </li>
                         </ul>
                         <ul className="nav ms-auto mb-2 mb-lg-0">
-                            {!isAuthenticated ? (
+                            {!isAuthenticated && (
                                 <>
                                     <li className="nav-item">
                                         <Link to="/login" className="nav-link ">
@@ -90,12 +90,6 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                 </>
-                            ) : (
-                                <button
-                                    onClick={handleLogout}
-                                    className="nav-link ">
-                                    Logout
-                                </button>
                             )}
                         </ul>
                     </div>

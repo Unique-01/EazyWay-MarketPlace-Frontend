@@ -43,12 +43,17 @@ import PasswordResetNewPassword from "pages/Auth/PasswordReset/PasswordResetNewP
 import { EmailProvider } from "context/EmailContext";
 import { AuthProvider } from "context/AuthContext";
 import { ProductCategoryProvider } from "context/ProductCategoryContext";
+import AxiosSetup from "api/apiClient";
+
 function App() {
+    
     return (
         <AuthProvider>
+            
             <EmailProvider>
                 <ProductCategoryProvider>
                     <BrowserRouter>
+                    <AxiosSetup/>
                         <Header />
                         <Routes>
                             {/* Public Pages */}

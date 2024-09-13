@@ -4,6 +4,9 @@
     transition: all 0.5s;
     /* padding: 0px !important; */
 }
+.category-card:hover {
+    box-shadow: 0 0px 3px #00b207;
+}
 .category-name{
     font-size: 15px !important;
     font-weight: 600;

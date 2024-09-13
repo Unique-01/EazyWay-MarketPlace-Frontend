@@ -27,7 +27,7 @@ const TopBar = () => {
                         <SearchIcon />
                     </form>
                 </div>
-                <div className="d-flex justify-content-between gap-4">
+                <div className="d-flex justify-content-between align-items-center gap-4">
                     <Link to="/wishlist">
                         <WishListIcon />
                     </Link>
@@ -36,12 +36,21 @@ const TopBar = () => {
                     </Link>
                     <Link
                         to={
-                            user && user.privilege === "buyer"
-                                ? "/customer"
-                                : "/merchant"
+                            user
+                                ? user.privilege === "buyer"
+                                    ? "/customer"
+                                    : user.privilege === "merchant"
+                                    ? "/merchant"
+                                    : "/"
+                                : "/login"
                         }>
-                        {user && user.profilePicture ? (
-                            <img src={user.profilePicture} alt="User" />
+                        {user && user.image ? (
+                            <img
+                                src={user.image.url}
+                                alt="User"
+                                className="rounded-circle"
+                                height={40}
+                            />
                         ) : (
                             <UserIcon />
                         )}

@@ -1,6 +1,6 @@
 import { AuthContext } from "context/AuthContext";
 import { useContext } from "react";
-import { FaUser } from "react-icons/fa";
+import UserIcon from "assets/icons/user.svg";
 import "./Dashboard.css";
 import Loading from "components/common/Loading";
 import { Link, Navigate } from "react-router-dom";
@@ -24,12 +24,12 @@ const CustomerDashBoard = () => {
                 <div className="col-md-6">
                     <div className="card profile-card">
                         <div className="card-body d-flex align-items-center flex-column">
-                            <div className="profilePicture pt-3">
-                                {user && user.profilePicture ? (
-                                    <img src={user.profilePicture} alt="User" />
-                                ) : (
-                                    <FaUser />
-                                )}
+                            <div className=" pt-3">
+                                <img
+                                    src={user.image ? user.image.url : UserIcon}
+                                    alt="User"
+                                    className="account-settings-image"
+                                />
                             </div>
                             <h5 className="card-title profileFullName pt-3">
                                 {user.firstName} {user.lastName}
@@ -40,7 +40,7 @@ const CustomerDashBoard = () => {
                                     : "Merchant"}
                             </p>
                             <Link
-                                to=""
+                                to="/customer/account_settings"
                                 className="btn btn-outline-primary rounded-pill profileEdit px-4 py-2">
                                 Edit Profile
                             </Link>
@@ -84,7 +84,11 @@ const CustomerDashBoard = () => {
                 </div>
             </div>
             <div className="">
-                <RecentOrder orderList={OrderList} heading="recent order" limit={4} />
+                <RecentOrder
+                    orderList={OrderList}
+                    heading="recent order"
+                    limit={4}
+                />
             </div>
         </div>
     );
