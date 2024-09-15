@@ -3,7 +3,7 @@ import Totals from "./components/Totals";
 const MerchantDashboard = () => {
     return (
         <div className="py-5">
-            <div>
+            <div style={{minHeight:"100vh"}}> 
                 <Totals
                     sales={"10,550"}
                     orders={"1,200"}
