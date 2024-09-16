@@ -3,6 +3,9 @@ import TopSellingProduct from "./components/TopSellingProduct";
 import Totals from "./components/Totals";
 import products from "pages/Products/products.json";
 import Customers from "pages/Products/review.json";
+import orderList from "pages/CustomerDashboard/order.json";
+import MerchantOrderTable from "./components/MerchantOrderTable";
+import { VscSettings } from "react-icons/vsc";
 
 const MerchantDashboard = () => {
     return (
@@ -24,6 +27,29 @@ const MerchantDashboard = () => {
                     <div className="col-lg-4">
                         <TopCustomers customers={Customers} />
                     </div>
+                </div>
+                <div className="mt-4">
+                    <div className="d-flex bg-white justify-content-between align-items-center p-3">
+                        <h5 className=" m-0 heading text-capitalize">
+                            Recent Orders
+                        </h5>
+                        <div className="d-inline-flex gap-3">
+                            <button className="btn btn-white border filter-btn">
+                                <VscSettings
+                                    className="me-1"
+                                    style={{ fontSize: "16px" }}
+                                />
+                                Filters
+                            </button>
+                            <button className="btn btn-primary text-white filter-btn fw-semibold">
+                                See More
+                            </button>
+                        </div>
+                    </div>
+                    <MerchantOrderTable
+                        orderList={orderList}
+                        itemsPerPage={4}
+                    />
                 </div>
             </div>
         </div>

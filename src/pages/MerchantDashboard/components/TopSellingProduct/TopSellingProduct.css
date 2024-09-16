@@ -42,6 +42,14 @@
         background-color: #BFECC180;
         color: #40C545;
     }
+    
+    .filter-btn{
+        color: #667085;
+        font-size: 13px;
+        font-weight: 500;
+    }
+}
+.pagination-component{
     .pagination{
         gap: 15px;
     }
@@ -49,9 +57,9 @@
         color: #667085;
         font-size: 13px;
     }
-    .filter-btn{
-        color: #667085;
-        font-size: 13px;
-        font-weight: 500;
-    }
+}
+.filter-btn{
+    color: #667085;
+    font-size: 13px;
+    font-weight: 500;
 }
