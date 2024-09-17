@@ -47,6 +47,7 @@ import AxiosSetup from "api/apiClient";
 import MerchantLayout from "components/layout/MerchantLayout";
 import MerchantDashboard from "pages/MerchantDashboard/Dashboard";
 import MerchantProductList from "pages/MerchantDashboard/Products/ProductList";
+import ProductCreate from "pages/MerchantDashboard/Products/ProductCreate";
 
 function App() {
     return (
@@ -156,6 +157,10 @@ function App() {
                                 <Route
                                     path="products"
                                     element={<MerchantProductList />}
+                                />
+                                <Route
+                                    path="products/add"
+                                    element={<ProductCreate />}
                                 />
                             </Route>
                         </Routes>

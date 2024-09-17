@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import { PiExport } from "react-icons/pi";
 import { IoMdAdd } from "react-icons/io";
 import { CgSearch } from "react-icons/cg";
-import { VscSettings } from "react-icons/vsc";
 import Products from "pages/Products/products.json";
 import "./Products.css";
 import MerchantProductTable from "../components/MerchantProductTable";
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 
 const MerchantProductList = () => {
     return (
@@ -17,7 +17,9 @@ const MerchantProductList = () => {
                         <button className="btn export-btn">
                             <PiExport /> Export
                         </button>
-                        <Link className="btn btn-primary text-white">
+                        <Link
+                            to="/merchant/products/add"
+                            className="btn btn-primary text-white">
                             <IoMdAdd /> Add Product
                         </Link>
                     </div>
@@ -36,7 +38,7 @@ const MerchantProductList = () => {
                     <div className="d-flex gap-3">
                         <input type="date" className="form-control" />
                         <button className="btn btn-white bg-white border filter-btn ">
-                            <VscSettings />
+                            <HiOutlineAdjustmentsHorizontal />
                             Filters
                         </button>
                     </div>
