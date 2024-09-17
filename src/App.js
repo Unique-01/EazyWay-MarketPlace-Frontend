@@ -46,7 +46,7 @@ import { ProductCategoryProvider } from "context/ProductCategoryContext";
 import AxiosSetup from "api/apiClient";
 import MerchantLayout from "components/layout/MerchantLayout";
 import MerchantDashboard from "pages/MerchantDashboard/Dashboard";
-
+import MerchantProductList from "pages/MerchantDashboard/Products/ProductList";
 
 function App() {
     return (
@@ -151,8 +151,12 @@ function App() {
                             {/* 404 Page */}
                             <Route path="*" element={<NotFoundPage />} />
 
-                            <Route path="merchant" element={<MerchantLayout/>}>
-                            <Route index element={<MerchantDashboard/>}/>
+                            <Route path="merchant" element={<MerchantLayout />}>
+                                <Route index element={<MerchantDashboard />} />
+                                <Route
+                                    path="products"
+                                    element={<MerchantProductList />}
+                                />
                             </Route>
                         </Routes>
                     </BrowserRouter>

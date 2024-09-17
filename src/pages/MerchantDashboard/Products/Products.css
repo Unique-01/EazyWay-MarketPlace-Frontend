@@ -1,0 +1,28 @@
+.merchant-product-list {
+    .btn {
+        font-weight: 600;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 10px 15px;
+    }
+    .btn svg {
+        font-size: 20px;
+    }
+    .export-btn {
+        background-color: #bfecc1;
+        color: #00b207;
+    }
+    .search-input {
+        font-size: 14px;
+    }
+    .search-input::placeholder {
+        color: #858d9d;
+    }
+    .search-icon{
+        font-size: 20px;
+        color: #667085;
+    }
+   
+}
