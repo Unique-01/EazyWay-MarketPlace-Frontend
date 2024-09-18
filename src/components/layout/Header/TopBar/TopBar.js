@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { CartIcon, SearchIcon, UserIcon, WishListIcon } from "assets/icons";
 import { AuthContext } from "context/AuthContext";
 import { useContext } from "react";
+import { CiSettings } from "react-icons/ci";
+import { FaRegBell } from "react-icons/fa6";
 
 const TopBar = () => {
     const { user } = useContext(AuthContext);
@@ -28,12 +30,31 @@ const TopBar = () => {
                     </form>
                 </div>
                 <div className="d-flex justify-content-between align-items-center gap-4">
-                    <Link to="/wishlist">
-                        <WishListIcon />
-                    </Link>
-                    <Link to="/shopping_cart">
-                        <CartIcon />
-                    </Link>
+                    {user ? (
+                        user.privilege === "buyer" ? (
+                            <>
+                                <Link to="/wishlist">
+                                    <WishListIcon />
+                                </Link>
+                                <Link to="/shopping_cart">
+                                    <CartIcon />
+                                </Link>
+                            </>
+                        ) : user.privilege === "merchant" ? (
+                            <>
+                                <Link to="/wishlist">
+                                    <CiSettings />
+                                </Link>
+                                <Link to="/shopping_cart">
+                                    <FaRegBell />
+                                </Link>
+                            </>
+                        ) : (
+                            ""
+                        )
+                    ) : (
+                        ""
+                    )}
                     <Link
                         to={
                             user

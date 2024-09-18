@@ -28,7 +28,7 @@ const OrderTable = ({
     };
 
     return (
-        <div>
+        <div className="order-table">
             <div className="border rounded">
                 <div className="d-flex justify-content-between align-items-center p-3">
                     <h5 className="text-black fw-semibold text-capitalize">
