@@ -1,15 +1,25 @@
 import { NavLink } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
-import { AiFillProduct } from "react-icons/ai";
 import { GoChecklist } from "react-icons/go";
 import { FaChartLine } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
-import { AiOutlineNodeExpand } from "react-icons/ai";
-import { AiOutlineNodeCollapse } from "react-icons/ai";
+import {
+    AiOutlineNodeCollapse,
+    AiOutlineDollar,
+    AiOutlineNodeExpand,
+    AiFillProduct,
+} from "react-icons/ai";
 import "./SideNav.css";
+import { useContext } from "react";
+import { AuthContext } from "context/AuthContext";
 
 const SideNav = ({ onCollapse, isOpen }) => {
+    const { logout } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        logout();
+    };
     const handleCollapse = () => {
         onCollapse();
     };
@@ -32,7 +42,7 @@ const SideNav = ({ onCollapse, isOpen }) => {
                     className={` d-flex flex-column h-100 bg-white shadow-sm ${
                         isOpen ? "d-block" : "d-none"
                     }`}>
-                    <NavLink to="/merchant" className="nav-link w-100">
+                    <NavLink to="/merchant" end className="nav-link w-100">
                         <MdDashboard className="nav-icon" />
                         <span className="">Dashboard</span>
                     </NavLink>
@@ -62,7 +72,9 @@ const SideNav = ({ onCollapse, isOpen }) => {
                                         </NavLink>
                                     </div>
                                     <div>
-                                        <NavLink className="nav-link w-100">
+                                        <NavLink
+                                            to="merchant/categories"
+                                            className="nav-link w-100">
                                             Categories
                                         </NavLink>
                                     </div>
@@ -75,18 +87,26 @@ const SideNav = ({ onCollapse, isOpen }) => {
                         <GoChecklist className="nav-icon" />
                         <span className="">Orders</span>
                     </NavLink>
-                    <NavLink className="nav-link w-100">
+                    <NavLink
+                        to="/merchant/sales_report"
+                        className="nav-link w-100">
                         <FaChartLine className="nav-icon" />
                         <span className="">Sales Report</span>
                     </NavLink>
-                    <NavLink className="nav-link w-100">
+                    <NavLink to="/merchant/payments" className="nav-link w-100">
+                        <AiOutlineDollar className="nav-icon" />
+                        <span className="">Payment</span>
+                    </NavLink>
+                    <NavLink to="/merchant/settings" className="nav-link w-100">
                         <IoMdSettings className="nav-icon" />
                         <span className="">Settings</span>
                     </NavLink>
-                    <NavLink className="nav-link w-100 mt-auto mb-5">
+                    <button
+                        onClick={handleLogout}
+                        className="nav-link w-100 mt-auto mb-5">
                         <IoLogOut className="nav-icon" />
                         <span className="">Logout</span>
-                    </NavLink>
+                    </button>
                 </div>
             </nav>
         </div>

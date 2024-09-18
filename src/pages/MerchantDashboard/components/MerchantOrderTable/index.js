@@ -133,7 +133,8 @@ const MerchantOrderTable = ({ orderList, itemsPerPage }) => {
                                     </td>
                                     <td>
                                         <div className="action d-flex gap-2">
-                                            <Link>
+                                            <Link
+                                                to={`/merchant/orders/${order.id}`}>
                                                 <BsEye />
                                             </Link>
                                             <Link>

@@ -1,12 +1,17 @@
 .merchant-side-nav {
-    height: 100vh ;
+    height: 100vh;
 
     .active {
-        background-color: #BFECC140;
-        color: #00B207 !important;
+        background-color: #bfecc140;
+        color: #00b207 !important;
         font-weight: 500;
     }
-    .nav-link,.accordion-button{
+    .nav-link:hover,
+    .accordion-button:hover {
+        background-color: #bfecc140;
+    }
+    .nav-link,
+    .accordion-button {
         color: #808080;
         font-weight: 500;
         font-size: 14px;
@@ -15,24 +20,25 @@
         gap: 5px;
         padding: 15px;
     }
-    .nav-icon{
+    .nav-icon {
         font-size: 20px;
     }
-    .accordion-button{
-        padding-left: 14px ;
+    .accordion-button {
+        padding-left: 14px;
     }
-    @media screen and (max-width:500px){
-        .nav-link,.accordion-button{
+    @media screen and (max-width: 500px) {
+        .nav-link,
+        .accordion-button {
             padding-left: 5px;
         }
     }
-    .collapse-btn{
+    .collapse-btn {
         border: none;
         background-color: white;
         font-size: 30px;
-        color: #00B207;
+        color: #00b207;
     }
-    .collapse{
+    .collapse {
         transition: all 0.5s ease-in-out;
     }
 }

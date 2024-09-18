@@ -48,6 +48,9 @@ import MerchantLayout from "components/layout/MerchantLayout";
 import MerchantDashboard from "pages/MerchantDashboard/Dashboard";
 import MerchantProductList from "pages/MerchantDashboard/Products/ProductList";
 import ProductCreate from "pages/MerchantDashboard/Products/ProductCreate";
+import MerchantOrderList from "pages/MerchantDashboard/Orders/OrderList";
+import MerchantOrderDetails from "pages/MerchantDashboard/Orders/OrderDetails";
+import CustomerPayment from "pages/MerchantDashboard/Payments";
 
 function App() {
     return (
@@ -161,6 +164,18 @@ function App() {
                                 <Route
                                     path="products/add"
                                     element={<ProductCreate />}
+                                />
+                                <Route
+                                    path="orders"
+                                    element={<MerchantOrderList />}
+                                />
+                                <Route
+                                    path="orders/:orderId"
+                                    element={<MerchantOrderDetails />}
+                                />
+                                <Route
+                                    path="payments"
+                                    element={<CustomerPayment />}
                                 />
                             </Route>
                         </Routes>
