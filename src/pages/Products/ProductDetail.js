@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
-import ProductData from "./products.json";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Loading from "components/common/Loading";
 import TabComponent from "components/common/TabComponent";
 import "./ProductDetail.css";
@@ -11,18 +10,24 @@ import { FaRegHeart } from "react-icons/fa";
 import ReviewData from "./review.json";
 import ReviewCard from "components/common/ReviewCard";
 import ProductCard from "components/common/ProductCard";
+import MerchantProductContext from "context/MerchantProductContext";
+import picture from "assets/images/eazyWay-logo.png";
 
 const ProductDetail = () => {
     const { productId } = useParams();
+    const { products, loading } = useContext(MerchantProductContext);
     const [product, setProduct] = useState(null);
     const limit = 4;
 
     useEffect(() => {
-        const foundProduct = ProductData.find(
-            (item) => item.id.toString() === productId.toString()
-        );
-        setProduct(foundProduct);
-    }, [productId]);
+        if (!loading) {
+            const foundProduct = products.find(
+                (item) => item._id.toString() === productId.toString()
+            );
+            setProduct(foundProduct);
+            console.log(foundProduct);
+        }
+    }, [productId, loading, products]);
 
     if (!product) {
         return <Loading />;
@@ -33,17 +38,25 @@ const ProductDetail = () => {
             <div className="mx-md-5 row">
                 <div className="col-md-6 ">
                     <div className="d-flex justify-content-end">
-                        <img
-                            src={require(`/src/assets/images/products/${product.image}`)}
-                            alt={product.name}
-                            height={"400px"}
-                        />
+                        {product.image.length > 0 ? (
+                            <img
+                                src={product.image[0].url}
+                                alt={product.title}
+                                height={"400px"}
+                            />
+                        ) : (
+                            <img
+                                src={picture}
+                                alt={product.title}
+                                height={"400px"}
+                            />
+                        )}
                     </div>
                 </div>
                 <div className="col-md-6 ">
                     <div>
                         <h3 className="product-detail-name d-inline-flex align-items-center gap-1">
-                            {product.name}
+                            {product.title}
                             <span
                                 className={`status rounded-pill p-1 ${
                                     product.status === "available"
@@ -60,7 +73,7 @@ const ProductDetail = () => {
                         </div>
                         <div className="mt-3">
                             <span className="poppins fw-medium text-primary">
-                                ${product.price}
+                                ${product.amount}
                             </span>
                         </div>
                         <hr className="border-secondary" />
@@ -84,13 +97,17 @@ const ProductDetail = () => {
                                 <span className="text-black fw-medium">
                                     Category:&nbsp;
                                 </span>
-                                {product.category}
+                                <span className="text-capitalize">
+                                    {product.category.title}
+                                </span>
                             </div>
                             <div className="mt-2">
                                 <span className="text-black fw-medium">
                                     Tag:&nbsp;
                                 </span>
-                                {product.category}
+                                {product.tags.map((tag) => (
+                                    <>{tag}, </>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -118,9 +135,11 @@ const ProductDetail = () => {
                     Related Products
                 </h4>
                 <div className="row  pt-3">
-                    {ProductData.filter(
-                        (related) => related.category === product.category
-                    )
+                    {products
+                        .filter(
+                            (related) =>
+                                related.category._id === product.category._id
+                        )
                         .slice(0, limit)
                         .map((related) => (
                             <div className="col-md-3">

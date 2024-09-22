@@ -1,18 +1,29 @@
 import Loading from "components/common/Loading";
 import { AuthContext } from "context/AuthContext";
+import { NotificationContext } from "context/NotificationContext";
 import SideNav from "pages/CustomerDashboard/Components/SideNav";
 import React, { useContext } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const CustomerLayout = () => {
     const { isAuthenticated, loading } = useContext(AuthContext);
+    const { showNotification } = useContext(NotificationContext);
+
     const location = useLocation();
 
     if (loading) {
         return <Loading />;
     }
     if (!isAuthenticated) {
-        return <Navigate to={`/login/customer?redirect_uri=${location.pathname}`} />;
+        showNotification(
+            "You are not authorized to access this page",
+            "danger"
+        );
+        return (
+            <Navigate
+                to={`/login/customer?redirect_uri=${location.pathname}`}
+            />
+        );
     }
 
     return (

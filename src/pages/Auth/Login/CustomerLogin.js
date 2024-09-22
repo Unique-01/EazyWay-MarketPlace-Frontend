@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import LoginForm from "../components/LoginForm";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
 import HandleApiError from "components/HandleApiError";
+import { NotificationContext } from "context/NotificationContext";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -15,6 +16,7 @@ const CustomerLogin = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const redirect_uri = queryParams.get("redirect_uri");
+    const { showNotification } = useContext(NotificationContext);
 
     const handleLogin = async (formData) => {
         setLoading(true);
@@ -25,6 +27,7 @@ const CustomerLogin = () => {
             );
             const { token: authToken, data: userData } = response.data;
             await login(userData, authToken);
+            showNotification("Login Successful")
             if (redirect_uri) {
                 navigate(redirect_uri);
             } else {

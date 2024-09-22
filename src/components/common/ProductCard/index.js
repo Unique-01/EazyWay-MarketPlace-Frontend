@@ -6,6 +6,7 @@ import useButtonToggle from "hooks/useButtonToggle";
 import "./ProductCard.css";
 import StarRating from "../StarRating";
 import { Link } from "react-router-dom";
+import picture from "assets/images/eazyWay-logo.png";
 
 const ProductCard = ({ product }) => {
     const [isCartToggled, toggleCartButton] = useButtonToggle();
@@ -14,18 +15,26 @@ const ProductCard = ({ product }) => {
 
     return (
         <div className="card product-card">
-            <Link to={`/products/${product.id}`}>
-                <img
-                    src={require(`/src/assets/images/products/${product.image}`)}
-                    className="card-img-top"
-                    alt={product.name}
-                />
+            <Link to={`/products/${product._id}`}>
+                {product.image.length > 0 ? (
+                    <img
+                        src={product.image[0].url}
+                        className="card-img-top"
+                        alt={product.title}
+                    />
+                ) : (
+                    <img
+                        src={picture}
+                        className="card-img-top"
+                        alt={product.title}
+                    />
+                )}
             </Link>
             <div className="card-body product-card-body">
-                <Link to={`/products/${product.id}`}>
-                    <p className="card-title product-name">{product.name}</p>
+                <Link to={`/products/${product._id}`}>
+                    <p className="card-title product-name">{product.title}</p>
                     <p className="card-text product-price fw-semibold">
-                        ${product.price}
+                        ${product.amount}
                     </p>
                     <StarRating rating={product.rating} />
                 </Link>

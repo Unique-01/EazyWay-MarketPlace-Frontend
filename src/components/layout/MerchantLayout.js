@@ -1,9 +1,27 @@
+import Loading from "components/common/Loading";
+import { AuthContext } from "context/AuthContext";
+import { NotificationContext } from "context/NotificationContext";
 import SideNav from "pages/MerchantDashboard/components/SideNav";
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Outlet, useLocation, Navigate } from "react-router-dom";
 
 const MerchantLayout = () => {
     const [isOpen, setIsOpen] = useState(true);
+    const { isAuthenticated, loading, user } = useContext(AuthContext);
+    const { showNotification } = useContext(NotificationContext);
+    const location = useLocation();
+
+    if (loading) {
+        return <Loading />;
+    }
+    if (!isAuthenticated || user.privilege !== "merchant") {
+        showNotification("You are not authorized to access this page", "danger");
+        return (
+            <Navigate
+                to={`/login/merchant?redirect_uri=${location.pathname}`}
+            />
+        );
+    }
 
     const handleSideBarCollapse = () => {
         setIsOpen(!isOpen);

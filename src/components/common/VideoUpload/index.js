@@ -1,12 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import "./VideoUpload.css"; // Import the CSS file
 
-const VideoUpload = () => {
+const VideoUpload = ({ videos, setVideos }) => {
     const { handleSubmit } = useForm();
-    const [videos, setVideos] = useState([]);
     const inputFileRef = useRef(null);
 
     const onDrop = (acceptedFiles) => {
@@ -15,13 +14,14 @@ const VideoUpload = () => {
                 preview: URL.createObjectURL(file),
             })
         );
-        setVideos((prevState) => [...prevState, ...updatedVideos]);
+        // Replace the current video with the new one
+        setVideos(updatedVideos);
     };
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         accept: "video/*",
         onDrop,
-        multiple: true,
+        multiple: false, // Only allow one video
         noClick: true,
     });
 
@@ -32,7 +32,8 @@ const VideoUpload = () => {
                 preview: URL.createObjectURL(file),
             })
         );
-        setVideos((prevState) => [...prevState, ...updatedVideos]);
+        // Replace the current video with the new one
+        setVideos(updatedVideos);
     };
 
     const onSubmit = (data) => {
@@ -42,9 +43,7 @@ const VideoUpload = () => {
 
     const removeVideo = (indexToRemove, event) => {
         event.stopPropagation(); // Prevent click from triggering the dropzone
-        setVideos((prevVideos) =>
-            prevVideos.filter((_, index) => index !== indexToRemove)
-        );
+        setVideos([]); // Clear the video
     };
 
     return (
@@ -55,8 +54,7 @@ const VideoUpload = () => {
                     {...getRootProps()}
                     className={`dropzone-container ${
                         isDragActive ? "dropzone-active" : ""
-                    }`}
-                >
+                    }`}>
                     <input {...getInputProps()} />
 
                     {videos.length === 0 && (
@@ -68,7 +66,9 @@ const VideoUpload = () => {
                     {videos.length > 0 && (
                         <div className="file-preview-container">
                             {videos.map((file, index) => (
-                                <div key={index} style={{ position: "relative" }}>
+                                <div
+                                    key={index}
+                                    style={{ position: "relative" }}>
                                     <video
                                         src={file.preview}
                                         controls
@@ -80,8 +80,7 @@ const VideoUpload = () => {
                                         onClick={(event) =>
                                             removeVideo(index, event)
                                         }
-                                        className="remove-btn"
-                                    >
+                                        className="remove-btn">
                                         &times;
                                     </button>
                                 </div>
@@ -91,13 +90,13 @@ const VideoUpload = () => {
 
                     {/* Button to trigger file input */}
                     <p className="drag-text">
-                        Drag & drop some videos here, or use the button below to select videos
+                        Drag & drop a video here, or use the button below to
+                        select a video
                     </p>
                     <button
                         type="button"
                         onClick={() => inputFileRef.current.click()}
-                        className="add-btn"
-                    >
+                        className="add-btn">
                         Add Video
                     </button>
 
@@ -107,7 +106,6 @@ const VideoUpload = () => {
                         ref={inputFileRef}
                         style={{ display: "none" }}
                         onChange={handleFileSelect}
-                        multiple
                         accept="video/*"
                     />
                 </div>

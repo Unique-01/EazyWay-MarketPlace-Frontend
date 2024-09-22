@@ -6,9 +6,12 @@ import { apiClient } from "api/apiClient";
 import config from "config";
 import ButtonLoading from "components/common/ButtonLoading";
 import HandleApiError from "components/HandleApiError";
+import { NotificationContext } from "context/NotificationContext";
+
 
 const AccountSettingsForm = () => {
     const { user, loading, set_user } = useContext(AuthContext);
+    const { showNotification } = useContext(NotificationContext);
     const [submitLoading, setSubmitLoading] = useState(false);
     const [error, setError] = useState("");
     const [formData, setFormData] = useState({
@@ -66,7 +69,7 @@ const AccountSettingsForm = () => {
                 }
             );
             set_user(response.data.data);
-            alert("success");
+            showNotification("Profile Updated Successfully")
         } catch (err) {
             HandleApiError(err, setError);
         } finally {

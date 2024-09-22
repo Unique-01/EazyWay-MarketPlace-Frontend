@@ -1,11 +1,10 @@
-// import "./MerchantProductTable.css";
 import { useState } from "react";
 import MerchantPagination from "../MerchantPagination";
-import picture from "assets/images/category/bakery.png";
 import { BsEye } from "react-icons/bs";
 import { RiPencilLine } from "react-icons/ri";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import FormattedDate from "components/common/FormattedDate";
 
 const MerchantProductTable = ({ productList, itemsPerPage }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -79,56 +78,78 @@ const MerchantProductTable = ({ productList, itemsPerPage }) => {
                                                 id="select"
                                             />
                                             <div className="d-inline-flex align-items-center gap-1 ">
-                                                <img
-                                                    src={picture}
-                                                    alt={product.name}
-                                                    className="img-fluid rounded"
-                                                    style={{ maxWidth: "50px" }}
-                                                />
+                                                {product.image.length > 0 && (
+                                                    <img
+                                                        src={
+                                                            product.image[0].url
+                                                        }
+                                                        alt={product.title}
+                                                        className="img-fluid rounded"
+                                                        style={{
+                                                            maxWidth: "50px",
+                                                        }}
+                                                    />
+                                                )}
                                                 <div className="order-text fw-normal">
                                                     <span className="item-name">
-                                                        {product.name}
+                                                        {product.title}
                                                     </span>
                                                     <br />
                                                     <span className="other-product fade-color">
-                                                        + 3 Variants
+                                                        +{" "}
+                                                        {
+                                                            product.variations
+                                                                .length
+                                                        }{" "}
+                                                        Variant(s)
                                                     </span>
                                                 </div>
                                             </div>
                                         </span>
                                     </td>
-                                    <td className="order-column" style={{color:"#5C59E8",fontWeight:"600"}}>30220</td>
+                                    <td
+                                        className="order-column"
+                                        style={{
+                                            color: "#5C59E8",
+                                            fontWeight: "600",
+                                        }}>
+                                        {product.sku}
+                                    </td>
                                     <td className="order-text order-column fade-color">
-                                        Bags and Pouch
+                                        {product.category.title}
                                     </td>
                                     <td className="order-text order-column">
-                                        20
+                                        {product.quantity}
                                     </td>
                                     <td className="order-text order-column fade-color">
-                                        ${product.price}
+                                        ${product.amount}
                                     </td>
                                     <td className="">
-                                        <div className="status">
-                                            {product.isAvailable ? (
+                                        <div className="merchant-product-status">
+                                            {product.quantity <= 20 ? (
                                                 <span className="low-stock rounded-pill">
-                                                    In Stock
+                                                    Low Stock
                                                 </span>
                                             ) : (
                                                 <span className="in-stock rounded-pill">
-                                                    Low Stock
+                                                    In Stock
                                                 </span>
                                             )}
                                         </div>
                                     </td>
                                     <td className="order-column fade-color">
-                                        Jun 22, 2024
+                                        <FormattedDate
+                                            date={product.createdAt}
+                                        />
                                     </td>
                                     <td>
                                         <div className="action d-flex gap-2">
-                                            <Link>
+                                            <Link
+                                                to={`/merchant/products/${product._id}`}>
                                                 <BsEye />
                                             </Link>
-                                            <Link>
+                                            <Link
+                                                to={`/merchant/products/${product._id}/edit`}>
                                                 <RiPencilLine />
                                             </Link>
                                             <Link>

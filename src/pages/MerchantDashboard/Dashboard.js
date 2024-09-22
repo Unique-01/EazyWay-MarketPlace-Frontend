@@ -1,26 +1,36 @@
 import TopCustomers from "./components/TopCustomers";
 import TopSellingProduct from "./components/TopSellingProduct";
 import Totals from "./components/Totals";
-import products from "pages/Products/products.json";
+// import products from "pages/Products/products.json";
 import Customers from "pages/Products/review.json";
 import orderList from "pages/CustomerDashboard/order.json";
 import MerchantOrderTable from "./components/MerchantOrderTable";
 import { VscSettings } from "react-icons/vsc";
+import { useContext, useEffect, useState } from "react";
+import MerchantProductContext from "context/MerchantProductContext";
 
 const MerchantDashboard = () => {
+    const { products, loading } = useContext(MerchantProductContext);
+    const [productList, setProductList] = useState([]);
+
+    useEffect(() => {
+        if (!loading) {
+            setProductList(products);
+        }
+    }, [loading, products]);
     return (
         <div className="py-5">
             <div style={{ minHeight: "100vh" }}>
                 <Totals
                     sales={"10,550"}
                     orders={"1,200"}
-                    products={700}
+                    products={productList.length}
                     customers={500}
                 />
                 <div className="row mt-4">
                     <div className="col-lg-8">
                         <TopSellingProduct
-                            productList={products}
+                            productList={productList}
                             itemsPerPage={5}
                         />
                     </div>

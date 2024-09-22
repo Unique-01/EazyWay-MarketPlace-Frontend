@@ -2,12 +2,34 @@ import { Link } from "react-router-dom";
 import { PiExport } from "react-icons/pi";
 import { IoMdAdd } from "react-icons/io";
 import { CgSearch } from "react-icons/cg";
-import Products from "pages/Products/products.json";
 import "./Products.css";
 import MerchantProductTable from "../components/MerchantProductTable";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+import { useContext, useEffect, useState } from "react";
+import MerchantProductContext from "context/MerchantProductContext";
 
 const MerchantProductList = () => {
+    const { products, loading } = useContext(MerchantProductContext);
+    const [productList, setProductList] = useState([]);
+    const [searchQuery, setSearchQuery] = useState(""); // State for search input
+
+    useEffect(() => {
+        if (!loading) {
+            setProductList(products);
+        }
+    }, [loading, products]);
+
+    // Function to handle search input change
+    const handleSearch = (event) => {
+        const query = event.target.value.toLowerCase(); // Convert to lowercase for case-insensitive search
+        setSearchQuery(query);
+    };
+
+    // Filter the product list based on search query
+    const filteredProducts = productList.filter(
+        (product) => product.title.toLowerCase().includes(searchQuery.trim()) // Adjust this to match your product's name or any other property
+    );
+
     return (
         <div className="merchant-product-list py-4 mb-5 inter">
             <div>
@@ -32,6 +54,8 @@ const MerchantProductList = () => {
                                 type="text"
                                 className="search-input form-control shadow-none border-0 bg-transparent"
                                 placeholder="Search product . . ."
+                                value={searchQuery}
+                                onChange={handleSearch} // Trigger search on input change
                             />
                         </div>
                     </form>
@@ -45,7 +69,7 @@ const MerchantProductList = () => {
                 </div>
                 <div className="mt-4">
                     <MerchantProductTable
-                        productList={Products}
+                        productList={filteredProducts} // Use filtered products
                         itemsPerPage={10}
                     />
                 </div>

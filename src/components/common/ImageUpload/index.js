@@ -1,13 +1,27 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { LuImage } from "react-icons/lu";
 import "./ImageUpload.css"; // Import the CSS file
 
-const ImageUpload = () => {
-    const { register, handleSubmit } = useForm();
-    const [images, setImages] = useState([]);
+const ImageUpload = ({
+    images,
+    setImages,
+    defaultImages,
+    removeExistingImage,
+}) => {
+    const { handleSubmit } = useForm();
     const inputFileRef = useRef(null);
+    // const [defaultImages,setDefaultImages] = useState([])
+
+    // useEffect(() => {
+    //     if (defaultImages && defaultImages.length > 0) {
+    //         const prevImages = defaultImages.map((image) => ({
+    //             preview: image.url,
+    //         }));
+    //         setImages(prevImages);
+    //     }
+    // }, [defaultImages, setImages]);
 
     const onDrop = (acceptedFiles) => {
         const updatedImages = acceptedFiles.map((file) =>
@@ -58,14 +72,42 @@ const ImageUpload = () => {
                     }`}>
                     <input {...getInputProps()} />
 
-                    {images.length === 0 && (
+                    {/* {images.length === 0 && (
+                        <div className="image-placeholder rounded-circle d-flex justify-content-center align-items-center">
+                            <LuImage className="icon-style rounded" />
+                        </div>
+                    )} */}
+                    {images.length === 0 && defaultImages.length === 0 && (
                         <div className="image-placeholder rounded-circle d-flex justify-content-center align-items-center">
                             <LuImage className="icon-style rounded" />
                         </div>
                     )}
 
-                    {images.length > 0 && (
+                    {/* {images.length > 0 && ( */}
                         <div className="image-preview-container">
+                            {defaultImages.map((file, index) => (
+                                <div
+                                    key={index}
+                                    style={{ position: "relative" }}>
+                                    <img
+                                        src={file.preview}
+                                        alt="Existing Preview"
+                                        className="image-preview"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={(event) =>
+                                            removeExistingImage(
+                                                index,
+                                                file.id,
+                                                event
+                                            )
+                                        }
+                                        className="remove-btn">
+                                        &times;
+                                    </button>
+                                </div>
+                            ))}
                             {images.map((file, index) => (
                                 <div
                                     key={index}
@@ -87,7 +129,7 @@ const ImageUpload = () => {
                                 </div>
                             ))}
                         </div>
-                    )}
+                    {/* )} */}
 
                     {/* Button to trigger file input */}
                     <p className="drag-text">

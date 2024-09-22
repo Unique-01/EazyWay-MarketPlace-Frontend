@@ -1,23 +1,40 @@
 import { LiaTimesSolid } from "react-icons/lia";
-import { IoMdAdd } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { FaRegSave } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import ProductForm from "../components/ProductForm";
-import { useContext, useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import ButtonLoading from "components/common/ButtonLoading";
 import axios from "axios";
 import config from "config";
 import HandleApiError from "components/HandleApiError";
 import { apiClient } from "api/apiClient";
 import MerchantProductContext from "context/MerchantProductContext";
+import { useParams } from "react-router-dom";
 import { NotificationContext } from "context/NotificationContext";
+import { useNavigate } from "react-router-dom";
 
-const ProductCreate = () => {
+const ProductUpdate = () => {
     const [submit, setSubmit] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const { addOrUpdateProduct } = useContext(MerchantProductContext);
+    const { productId } = useParams();
+    const {
+        products,
+        loading: productLoading,
+        addOrUpdateProduct,
+    } = useContext(MerchantProductContext);
+    const [formData, setFormData] = useState();
     const { showNotification } = useContext(NotificationContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!productLoading) {
+            const product = products.find(
+                (product) => productId === product._id
+            );
+            setFormData({ ...product, category: product.category._id });
+        }
+    }, [productLoading, productId, products]);
 
     const isSubmitted = () => {
         setSubmit(true);
@@ -25,16 +42,18 @@ const ProductCreate = () => {
 
     const handleSubmit = async (formData, images, videos, setFormData) => {
         setLoading(true);
+        const newFormData = { ...formData };
+        newFormData.image = [...formData.image.map((img) => img._id)]; // Incase user removes image present before.
 
         const updateImageArray = (newImages) => {
-            setFormData((prevState) => ({
-                ...prevState,
-                image: newImages,
-            }));
+            newFormData.image = [
+                ...formData.image.map((img) => img._id),
+                ...(Array.isArray(newImages) ? newImages : [newImages]),
+            ];
         };
 
         try {
-            if (images) {
+            if (images.length > 0) {
                 const imageData = new FormData();
                 images.forEach((file) => {
                     imageData.append("intendedFile[]", file);
@@ -50,10 +69,11 @@ const ProductCreate = () => {
                         },
                     }
                 );
-                console.log(imageResponse.data.data);
+                console.log(imageResponse.data);
                 updateImageArray(imageResponse.data.data);
+                console.log(newFormData);
             }
-            if (videos) {
+            if (videos.length > 0) {
                 const videoData = new FormData();
                 videos.forEach((file) => {
                     videoData.append("intendedFile", file);
@@ -73,14 +93,15 @@ const ProductCreate = () => {
                 setFormData({ ...formData, video: videoResponse.data.data });
             }
 
-            const formResponse = await apiClient.post(
-                `${config.API_BASE_URL}/product/manage-product`,
-                formData
+            const formResponse = await apiClient.put(
+                `${config.API_BASE_URL}/product/manage-product?product=${productId}`,
+                newFormData
             );
 
+            // After successful update, update the product in the context
             addOrUpdateProduct(formResponse.data.data);
-            navigate("/merchant/products");
-            showNotification("Product Added Successfully");
+            showNotification("Product Updated Successfully");
+            navigate(`/merchant/products/${productId}`)
 
             console.log(formResponse);
         } catch (err) {
@@ -88,13 +109,15 @@ const ProductCreate = () => {
             console.log(err);
         } finally {
             setLoading(false);
+            setSubmit(false);
         }
     };
+
     return (
         <div className="product-form inter py-4 mb-5">
             <div>
                 <div className="d-flex justify-content-between">
-                    <h5>Add Product</h5>
+                    <h5>Edit Product</h5>
                     <div className="d-inline-flex gap-3">
                         <Link
                             to="/merchant/products"
@@ -105,7 +128,7 @@ const ProductCreate = () => {
                             onClick={isSubmitted}
                             disabled={loading}
                             className="btn btn-primary text-white">
-                            <IoMdAdd /> Add Product{" "}
+                            <FaRegSave /> Save Product{" "}
                             {loading && <ButtonLoading />}
                         </button>
                     </div>
@@ -115,6 +138,7 @@ const ProductCreate = () => {
                     isSubmitted={submit}
                     loading={loading}
                     error={error}
+                    prevFormData={formData}
                     setSubmit={setSubmit}
                 />
             </div>
@@ -122,4 +146,4 @@ const ProductCreate = () => {
     );
 };
 
-export default ProductCreate;
+export default ProductUpdate;

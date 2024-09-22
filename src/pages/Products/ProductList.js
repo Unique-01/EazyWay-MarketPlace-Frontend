@@ -1,17 +1,24 @@
 import { LuSettings2 } from "react-icons/lu";
 import "./ProductList.css";
 import FilterAccordion from "components/common/FilterAccordion";
-import { useEffect, useState } from "react";
-import ProductData from "./products.json";
+import { useContext, useEffect, useState } from "react";
 import ProductCard from "components/common/ProductCard";
-
+import MerchantProductContext from "context/MerchantProductContext";
+import Loading from "components/common/Loading";
 
 const ProductList = () => {
-    const [products, setProducts] = useState([]);
+    const { products, loading } = useContext(MerchantProductContext);
+    const [productList, setProductList] = useState([]);
 
     useEffect(() => {
-        setProducts(ProductData);
-    }, []);
+        if (!loading) {
+            setProductList(products);
+        }
+    }, [products, loading]);
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <div className="container mt-5 poppins mb-5 pb-5">
@@ -47,9 +54,8 @@ const ProductList = () => {
                         </div>
                     </div>
                     <div className="row row-gap-4 pt-5">
-                        {products.map((product, index) => (
+                        {productList.map((product, index) => (
                             <div className="col-md-4">
-
                                 <ProductCard key={index} product={product} />
                             </div>
                         ))}

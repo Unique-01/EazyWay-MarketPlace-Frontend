@@ -1,7 +1,8 @@
 import LoginForm from "../components/LoginForm";
 import { AuthContext } from "context/AuthContext";
+import { NotificationContext } from "context/NotificationContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import config from "config";
 import { useContext } from "react";
 import axios from "axios";
@@ -12,6 +13,10 @@ const MerchantLogin = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const redirect_uri = queryParams.get("redirect_uri");
+    const { showNotification } = useContext(NotificationContext);
 
     const handleLogin = async (formData) => {
         setLoading(true);
@@ -21,8 +26,14 @@ const MerchantLogin = () => {
                 formData
             );
             const { token: authToken, data: userData } = response.data;
-            login(userData, authToken);
-            navigate("/");
+            await login(userData, authToken);
+            showNotification("Login Successful");
+
+            if (redirect_uri) {
+                navigate(redirect_uri);
+            } else {
+                navigate("/merchant");
+            }
         } catch (err) {
             HandleApiError(err, setError);
         } finally {

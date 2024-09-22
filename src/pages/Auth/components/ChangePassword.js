@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import PasswordInput from "./PasswordInput";
 import { apiClient } from "api/apiClient";
 import config from "config";
 import HandleApiError from "components/HandleApiError";
 import ButtonLoading from "components/common/ButtonLoading";
+import { NotificationContext } from "context/NotificationContext";
+
 
 const ChangePassword = () => {
     const [loading, setLoading] = useState(false);
     const [validateError, setValidateError] = useState(false);
     const [error, setError] = useState("");
+    const { showNotification } = useContext(NotificationContext);
+
     const initialFormState = {
         oldPassword: "",
         newPassword: "",
@@ -35,7 +39,8 @@ const ChangePassword = () => {
                 `${config.API_BASE_URL}/user/update-password`,
                 formData
             );
-            alert("Password Changed Successfully");
+            showNotification("Password Changed Successfully")
+
         } catch (err) {
             console.log(err);
             HandleApiError(err, setError);

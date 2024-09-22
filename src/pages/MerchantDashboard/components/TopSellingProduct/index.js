@@ -27,7 +27,13 @@ const TopSellingProduct = ({ productList, itemsPerPage }) => {
                     <h5 className=" m-0 heading text-capitalize">
                         Top Selling Product
                     </h5>
-                    <button className="btn btn-white border filter-btn"><VscSettings className="me-1" style={{fontSize:"16px"}} />Filters</button>
+                    <button className="btn btn-white border filter-btn">
+                        <VscSettings
+                            className="me-1"
+                            style={{ fontSize: "16px" }}
+                        />
+                        Filters
+                    </button>
                 </div>
                 <div className="table-responsive">
                     <table className=" table">
@@ -55,19 +61,21 @@ const TopSellingProduct = ({ productList, itemsPerPage }) => {
                                 <tr className="align-middle px-0" key={index}>
                                     <td className="ps-4">
                                         <div className="d-inline-flex align-items-center gap-3 ">
-                                            <img
-                                                src={require(`/src/assets/images/products/${product.image}`)}
-                                                alt={product.name}
-                                                className="img-fluid"
-                                                style={{ maxWidth: "50px" }}
-                                            />
+                                            {product.image.length > 0 && (
+                                                <img
+                                                    src={product.image[0].url}
+                                                    alt={product.title}
+                                                    className="img-fluid"
+                                                    style={{ maxWidth: "50px" }}
+                                                />
+                                            )}
                                             <div className="product-text fw-normal">
                                                 <span className="item-name">
-                                                    {product.name}
+                                                    {product.title}
                                                 </span>
                                                 <br />
                                                 <span className="sku">
-                                                    SKU: 30283
+                                                    SKU: {product.sku}
                                                 </span>
                                             </div>
                                         </div>
@@ -76,20 +84,20 @@ const TopSellingProduct = ({ productList, itemsPerPage }) => {
                                         401
                                     </td>
                                     <td className="product-text product-column">
-                                        ${product.price}
+                                        ${product.amount}
                                     </td>
                                     <td className="product-text product-column">
                                         ${product.price}
                                     </td>
                                     <td className="product-column">
-                                        <div className="status">
-                                            {product.isAvailable ? (
+                                        <div className="merchant-product-status">
+                                            {product.quantity <= 20 ? (
                                                 <span className="low-stock rounded-pill">
-                                                    In Stock
+                                                    Low Stock
                                                 </span>
                                             ) : (
                                                 <span className="in-stock rounded-pill">
-                                                    Low Stock
+                                                    In Stock
                                                 </span>
                                             )}
                                         </div>
