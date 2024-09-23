@@ -1,14 +1,14 @@
-import HomeSlider from "components/common/HomeSlider";
-import CategoryCard from "components/common/CategoryCard";
+import HomeSlider from "pages/Home/components/HomeSlider";
+import CategoryCard from "shared/components/CategoryCard";
 import "./Home.css";
 import { HiArrowRight } from "react-icons/hi";
-import ProductCard from "components/common/ProductCard";
-import Testimonial from "components/common/Testimonial";
-import CategoriesSidebar from "./CategoriesSidebar";
+import ProductCard from "shared/components/ProductCard";
+import Testimonial from "pages/Home/components/Testimonial";
+import CategoriesSidebar from "./components/CategoriesSidebar";
 import { useContext, useEffect, useState } from "react";
-import ProductCategoryContext from "context/ProductCategoryContext";
-import ProductContext from "context/ProductContext";
-import Loading from "components/common/Loading";
+import ProductCategoryContext from "shared/context/ProductCategoryContext";
+import ProductContext from "shared/context/ProductContext";
+import Loading from "shared/components/Loading";
 
 const HomePage = () => {
     const limit = 5;
