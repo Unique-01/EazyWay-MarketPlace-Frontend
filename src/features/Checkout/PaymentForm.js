@@ -13,7 +13,9 @@ import { useNavigate } from "react-router-dom";
 import ButtonLoading from "shared/components/ButtonLoading";
 
 const stripePK = process.env.REACT_APP_STRIPE_PK;
+
 console.log("Stripe key:", stripePK);
+
 const stripePromise = loadStripe(stripePK);
 
 const CheckoutForm = ({ clientSecret, carts }) => {
@@ -75,6 +77,7 @@ const CheckoutForm = ({ clientSecret, carts }) => {
                     {error && (
                         <div className="alert alert-danger mt-3">{error}</div>
                     )}
+
                     {clientSecret && <PaymentElement />}
 
                     <button
