@@ -11,7 +11,6 @@ import { useCart } from "shared/context/CartContext";
 import { useNavigate } from "react-router-dom";
 import ButtonLoading from "shared/components/ButtonLoading";
 
-
 const CheckoutForm = ({ clientSecret, carts }) => {
     const [error, setError] = useState(""); // State to hold error messages
     const stripe = useStripe();
