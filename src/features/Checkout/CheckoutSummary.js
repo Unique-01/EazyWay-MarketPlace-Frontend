@@ -1,14 +1,14 @@
-import { useState } from "react";
+// import { useState } from "react";
 
 const CheckoutSummary = ({ totalPrice, onSubmit }) => {
-    const [selectedPayment, setSelectedPayment] = useState("");
+    // const [selectedPayment, setSelectedPayment] = useState("");
 
-    const handlePaymentChange = (e) => {
-        setSelectedPayment(e.target.value);
-    };
+    // const handlePaymentChange = (e) => {
+    //     setSelectedPayment(e.target.value);
+    // };
 
     const handleSubmit = () => {
-        onSubmit(selectedPayment);
+        onSubmit();
     };
 
     return (
@@ -32,7 +32,7 @@ const CheckoutSummary = ({ totalPrice, onSubmit }) => {
                         </span>
                     </p>
                 </div>
-                <div>
+                {/* <div>
                     <h5>Select Payment Method</h5>
                     <div className="mb-3">
                         <form>
@@ -94,7 +94,7 @@ const CheckoutSummary = ({ totalPrice, onSubmit }) => {
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> */}
                 <button
                     onClick={handleSubmit}
                     className="btn btn-primary cart-summary-btn w-100 text-white rounded-pill fw-semibold py-2">

@@ -9,10 +9,8 @@ const CheckoutPage = () => {
     const { cartTotal } = useCart();
     const navigate = useNavigate();
 
-    const handleSubmit = (selectedPayment) => {
-        if (selectedPayment === "card") {
-            navigate("/checkout/payment");
-        }
+    const handleSubmit = () => {
+        navigate("/checkout/payment");
     };
     return (
         <div className="container">
