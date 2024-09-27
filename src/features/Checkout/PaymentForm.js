@@ -5,18 +5,11 @@ import {
     useStripe,
     useElements,
 } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import { apiClient } from "shared/api/apiClient";
 import config from "config";
 import { useCart } from "shared/context/CartContext";
 import { useNavigate } from "react-router-dom";
 import ButtonLoading from "shared/components/ButtonLoading";
-
-const stripePK = process.env.REACT_APP_STRIPE_PK;
-
-console.log("Stripe key:", stripePK);
-
-const stripePromise = loadStripe(stripePK);
 
 const CheckoutForm = ({ clientSecret, carts }) => {
     const [error, setError] = useState(""); // State to hold error messages
@@ -99,7 +92,7 @@ const CheckoutForm = ({ clientSecret, carts }) => {
 };
 
 // Wrapper component to fetch clientSecret and pass it to Elements
-const CheckoutWrapper = () => {
+const CheckoutWrapper = ({stripePromise}) => {
     const { cartItems, loading: cartLoading } = useCart();
     const [clientSecret, setClientSecret] = useState("");
     const [carts, setCarts] = useState([]);
