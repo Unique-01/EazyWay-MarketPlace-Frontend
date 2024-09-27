@@ -1,21 +1,42 @@
-import HomeSlider from "components/common/HomeSlider";
-import CategoryData from "./category.json";
-import CategoryCard from "components/common/CategoryCard";
+import HomeSlider from "pages/Home/components/HomeSlider";
+import CategoryCard from "shared/components/CategoryCard";
 import "./Home.css";
 import { HiArrowRight } from "react-icons/hi";
-import ProductData from "pages/Products/products.json";
-import ProductCard from "components/common/ProductCard";
-import Testimonial from "components/common/Testimonial";
-import CategoriesSidebar from "./CategoriesSidebar";
+import ProductCard from "shared/components/ProductCard";
+import Testimonial from "pages/Home/components/Testimonial";
+import CategoriesSidebar from "./components/CategoriesSidebar";
+import { useContext, useEffect, useState } from "react";
+import ProductCategoryContext from "shared/context/ProductCategoryContext";
+import ProductContext from "shared/context/ProductContext";
+import Loading from "shared/components/Loading";
 
 const HomePage = () => {
     const limit = 5;
+    const { categories, loading: categoryLoading } = useContext(
+        ProductCategoryContext
+    );
+    const [categoryList, setCategoryList] = useState([]);
+    const { products, loading: productsLoading } = useContext(ProductContext);
+    const [productList, setProductList] = useState([]);
+
+    useEffect(() => {
+        if (!categoryLoading) {
+            setCategoryList(categories);
+        }
+    }, [categories, categoryLoading]);
+
+    useEffect(() => {
+        if (!productsLoading) {
+            setProductList(products);
+        }
+    }, [productsLoading, products]);
+
     return (
         <div>
             <div className="container">
                 <div className="row">
                     <div className="col-lg-3 d-none d-lg-block">
-                        <CategoriesSidebar/>
+                        <CategoriesSidebar />
                     </div>
                     <div className="col-lg-9">
                         <HomeSlider />
@@ -27,7 +48,8 @@ const HomePage = () => {
                         <h4>Shop by Top Categories</h4>
                     </div>
                     <div className="row row-gap-4">
-                        {CategoryData.map((category) => (
+                        {categoryLoading && <Loading />}
+                        {categoryList.map((category) => (
                             <div className="col-6 col-md-4 col-lg-2">
                                 <CategoryCard category={category} />
                             </div>
@@ -46,9 +68,10 @@ const HomePage = () => {
                         </a>
                     </div>
                     <div className="row row-gap-3">
-                        {ProductData.slice(0, limit).map((related, index) => (
+                        {productsLoading && <Loading />}
+                        {productList.slice(0, limit).map((product, index) => (
                             <div className="col-6 col-md-4 col-lg mx-auto">
-                                <ProductCard product={related} key={index} />
+                                <ProductCard product={product} key={index} />
                             </div>
                         ))}
                     </div>
@@ -56,7 +79,7 @@ const HomePage = () => {
             </div>
             <div className="home-testimonial">
                 <div className="container">
-                <Testimonial />
+                    <Testimonial />
                 </div>
             </div>
         </div>

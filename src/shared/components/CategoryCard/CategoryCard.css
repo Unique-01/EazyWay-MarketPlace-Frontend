@@ -1,0 +1,24 @@
+.category-card{
+    max-height: 180px ;
+    /* max-width: 150px; */
+    transition: all 0.5s;
+    /* padding: 0px !important; */
+}
+.category-card:hover {
+    box-shadow: 0 0px 3px #00b207;
+}
+.category-name{
+    font-size: 15px !important;
+    font-weight: 600;
+    transition: all 0.5s;
+}
+.category-card:hover{
+    .category-name{
+        color: #40C545;
+    }
+}
+
+.category-card img{
+    max-height: 130px;
+    max-width:100%;
+}
