@@ -1,4 +1,16 @@
-const CheckoutSummary = ({ totalPrice }) => {
+import { useState } from "react";
+
+const CheckoutSummary = ({ totalPrice, onSubmit }) => {
+    const [selectedPayment, setSelectedPayment] = useState("");
+
+    const handlePaymentChange = (e) => {
+        setSelectedPayment(e.target.value);
+    };
+
+    const handleSubmit = () => {
+        onSubmit(selectedPayment);
+    };
+
     return (
         <div className="card mt-4">
             <div className="cart-summary-body card-body">
@@ -29,6 +41,8 @@ const CheckoutSummary = ({ totalPrice }) => {
                                     type="radio"
                                     className="form-check-input"
                                     name="payment"
+                                    value="cash"
+                                    onChange={handlePaymentChange}
                                 />
                                 <label
                                     htmlFor="cashPayment"
@@ -41,6 +55,22 @@ const CheckoutSummary = ({ totalPrice }) => {
                                     type="radio"
                                     className="form-check-input"
                                     name="payment"
+                                    value="card"
+                                    onChange={handlePaymentChange}
+                                />
+                                <label
+                                    htmlFor="cardPayment"
+                                    className="form-check-label checkout-payment">
+                                    Card
+                                </label>
+                            </div>
+                            <div className="form-check">
+                                <input
+                                    type="radio"
+                                    className="form-check-input"
+                                    name="payment"
+                                    value="paypal"
+                                    onChange={handlePaymentChange}
                                 />
                                 <label
                                     htmlFor="paypalPayment"
@@ -53,6 +83,8 @@ const CheckoutSummary = ({ totalPrice }) => {
                                     type="radio"
                                     className="form-check-input"
                                     name="payment"
+                                    value="amazon"
+                                    onChange={handlePaymentChange}
                                 />
                                 <label
                                     htmlFor="amazonPayment"
@@ -63,7 +95,9 @@ const CheckoutSummary = ({ totalPrice }) => {
                         </form>
                     </div>
                 </div>
-                <button className="btn btn-primary cart-summary-btn w-100 text-white rounded-pill fw-semibold py-2">
+                <button
+                    onClick={handleSubmit}
+                    className="btn btn-primary cart-summary-btn w-100 text-white rounded-pill fw-semibold py-2">
                     Checkout
                 </button>
             </div>

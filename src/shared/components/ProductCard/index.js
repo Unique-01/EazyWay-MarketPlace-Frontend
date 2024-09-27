@@ -7,11 +7,15 @@ import "./ProductCard.css";
 import StarRating from "../StarRating";
 import { Link } from "react-router-dom";
 import picture from "assets/images/eazyWay-logo.png";
+import { useCart } from "shared/context/CartContext";
+import { useWishlist } from "shared/context/WishListContext";
 
 const ProductCard = ({ product }) => {
     const [isCartToggled, toggleCartButton] = useButtonToggle();
     const [isWishListToggled, toggleWishListButton] = useButtonToggle();
     const [isEyeToggled, toggleEyeButton] = useButtonToggle();
+    const { addToCart, isInCart, removeFromCart } = useCart();
+    const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
     return (
         <div className="card product-card">
@@ -39,18 +43,26 @@ const ProductCard = ({ product }) => {
                     <StarRating rating={product.rating} />
                 </Link>
                 <button
-                    onClick={toggleCartButton}
+                    onClick={
+                        isInCart(product._id)
+                            ? () => removeFromCart(product._id)
+                            : () => addToCart(product._id)
+                    }
                     className={`icon-btn btn cart-btn p-2 ${
-                        isCartToggled ? "icon-fill" : ""
+                        isInCart(product._id) ? "icon-fill" : ""
                     }`}>
                     <ShoppingBasket className="cart-icon" />
                 </button>
             </div>
             <div className="overlay-div">
                 <button
-                    onClick={toggleWishListButton}
+                    onClick={
+                        isInWishlist(product._id)
+                            ? () => removeFromWishlist(product._id)
+                            : () => addToWishlist(product)
+                    }
                     className={`icon-btn btn wishlist-overlay ${
-                        isWishListToggled
+                        isInWishlist(product._id)
                             ? "bg-primary text-white"
                             : "text-dark"
                     }`}>

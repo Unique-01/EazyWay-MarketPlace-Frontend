@@ -8,6 +8,7 @@ const CategoryCard = ({ category }) => (
                 src={category.image.url}
                 // className="card-img-top"
                 alt={category.title}
+                className=""
             />
         ) : (
             <img

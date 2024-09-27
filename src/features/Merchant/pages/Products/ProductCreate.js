@@ -26,11 +26,12 @@ const ProductCreate = () => {
     const handleSubmit = async (formData, images, videos, setFormData) => {
         setLoading(true);
 
+        const newFormData = { ...formData };
         const updateImageArray = (newImages) => {
-            setFormData((prevState) => ({
-                ...prevState,
-                image: newImages,
-            }));
+            
+            newFormData.image = [
+                ...(Array.isArray(newImages) ? newImages : [newImages]),
+            ];
         };
 
         try {
@@ -75,7 +76,7 @@ const ProductCreate = () => {
 
             const formResponse = await apiClient.post(
                 `${config.API_BASE_URL}/product/manage-product`,
-                formData
+                newFormData
             );
 
             addOrUpdateProduct(formResponse.data.data);

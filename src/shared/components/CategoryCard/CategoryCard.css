@@ -20,4 +20,5 @@
 
 .category-card img{
     max-height: 130px;
+    max-width:100%;
 }

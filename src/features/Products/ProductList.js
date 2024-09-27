@@ -5,9 +5,10 @@ import { useContext, useEffect, useState } from "react";
 import ProductCard from "shared/components/ProductCard";
 import MerchantProductContext from "shared/context/MerchantProductContext";
 import Loading from "shared/components/Loading";
+import ProductContext from "shared/context/ProductContext";
 
 const ProductList = () => {
-    const { products, loading } = useContext(MerchantProductContext);
+    const { products, loading } = useContext(ProductContext);
     const [productList, setProductList] = useState([]);
 
     useEffect(() => {

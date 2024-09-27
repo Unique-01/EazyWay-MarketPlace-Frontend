@@ -12,10 +12,11 @@ import ReviewCard from "features/Products/components/ReviewCard";
 import ProductCard from "shared/components/ProductCard";
 import MerchantProductContext from "shared/context/MerchantProductContext";
 import picture from "assets/images/eazyWay-logo.png";
+import ProductContext from "shared/context/ProductContext";
 
 const ProductDetail = () => {
     const { productId } = useParams();
-    const { products, loading } = useContext(MerchantProductContext);
+    const { products, loading } = useContext(ProductContext);
     const [product, setProduct] = useState(null);
     const limit = 4;
 
