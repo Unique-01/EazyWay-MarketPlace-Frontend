@@ -49,6 +49,11 @@ import { ProductProvider } from "shared/context/ProductContext";
 import { CartProvider } from "shared/context/CartContext";
 import { WishlistProvider } from "shared/context/WishListContext";
 import PaymentForm from "features/Checkout/PaymentForm";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePK = process.env.REACT_APP_STRIPE_PK;
+// console.log("Stripe key:", stripePK);
+const stripePromise = loadStripe(stripePK);
 
 function App() {
     return (
@@ -144,7 +149,11 @@ function App() {
                                                     <Route
                                                         path="checkout/payment"
                                                         element={
-                                                            <PaymentForm />
+                                                            <PaymentForm
+                                                                stripePromise={
+                                                                    stripePromise
+                                                                }
+                                                            />
                                                         }
                                                     />
                                                     <Route
