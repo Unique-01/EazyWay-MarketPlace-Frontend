@@ -1,20 +1,46 @@
 import { useParams } from "react-router-dom";
-import Orders from "./order.json";
 import { Link } from "react-router-dom";
 import "./OrderDetails.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "shared/context/AuthContext";
 import Loading from "shared/components/Loading";
 import OrderProductTable from "./Components/OrderProductTable";
+import { useCustomerOrder } from "./context/OrderContext";
+import NotFoundPage from "pages/NotFound/NotFoundPage";
+import FormattedDate from "shared/components/FormattedDate";
 
 const CustomerOrderDetails = () => {
     const { user, loading } = useContext(AuthContext);
     const { orderId } = useParams();
+    const { orders, loading: orderLoading } = useCustomerOrder();
+    const [orderList, setOrderList] = useState();
+    const [order, setOrder] = useState();
 
-    const order = Orders.find((order) => order.id === orderId);
+    useEffect(() => {
+        if (!orderLoading) {
+            setOrderList(orders);
+        }
+    }, [orders, orderLoading]);
 
-    if (loading) {
+    useEffect(() => {
+        if (!orderLoading) {
+            if (orderList) {
+                const matchedOrder = orderList.find(
+                    (order) => order._id === orderId
+                );
+
+                setOrder(matchedOrder);
+                console.log(matchedOrder);
+            }
+        }
+    }, [orderList, orderId, orderLoading]);
+
+    if (loading || orderLoading) {
         return <Loading />;
+    }
+
+    if (!order) {
+        return <NotFoundPage />;
     }
 
     return (
@@ -29,11 +55,12 @@ const CustomerOrderDetails = () => {
                                 </p>
                                 <p className="dot"></p>
                                 <p className="order-details-date">
-                                    {order.date}
+                                    <FormattedDate date={order.createdAt} />
                                 </p>
                                 <p className="dot"></p>
                                 <p className="order-details-item-no">
-                                    {order.total}
+                                    ${order.amount}&nbsp;(
+                                    {order.carts.length} Products)
                                 </p>
                             </div>
                             <p>
@@ -56,27 +83,26 @@ const CustomerOrderDetails = () => {
                                             </div>
                                             <div className="card-body">
                                                 <p className="user-name">
-                                                    {user.firstName} &nbsp;
-                                                    {user.lastName}
+                                                    {user.extras.firstName}{" "}
+                                                    &nbsp;
+                                                    {user.extras.lastName}
                                                 </p>
                                                 <p className="order-address">
-                                                    {user && user.billingInfo
-                                                        ? user.billingInfo
-                                                        : " 4140 Parker Rd. Allentown, New Mexico 31134"}
+                                                    {user.extras &&
+                                                        user.extras
+                                                            .streetAddress}
                                                 </p>
                                                 <p className="email-head">
                                                     email
                                                 </p>
                                                 <p className="email">
-                                                    {user.email}
+                                                    {user.extras.email}
                                                 </p>
                                                 <p className="phone-head">
                                                     phone
                                                 </p>
                                                 <p className="phone">
-                                                    {user && user.telephone
-                                                        ? user.telephone
-                                                        : "(671) 555-0110"}
+                                                    {user.extras.telephone}
                                                 </p>
                                             </div>
                                         </div>
@@ -88,27 +114,26 @@ const CustomerOrderDetails = () => {
                                             </div>
                                             <div className="card-body">
                                                 <p className="user-name">
-                                                    {user.firstName} &nbsp;
-                                                    {user.lastName}
+                                                    {user.extras.firstName}{" "}
+                                                    &nbsp;
+                                                    {user.extras.lastName}
                                                 </p>
                                                 <p className="order-address">
-                                                    {user && user.billingInfo
-                                                        ? user.billingInfo
-                                                        : " 4140 Parker Rd. Allentown, New Mexico 31134"}
+                                                    {user.extras &&
+                                                        user.extras
+                                                            .streetAddress}
                                                 </p>
                                                 <p className="email-head">
                                                     email
                                                 </p>
                                                 <p className="email">
-                                                    {user.email}
+                                                    {user.extras.email}
                                                 </p>
                                                 <p className="phone-head">
                                                     phone
                                                 </p>
                                                 <p className="phone">
-                                                    {user && user.telephone
-                                                        ? user.telephone
-                                                        : "(671) 555-0110"}
+                                                    {user.extras.telephone}
                                                 </p>
                                             </div>
                                         </div>
@@ -121,15 +146,15 @@ const CustomerOrderDetails = () => {
                                         <div>
                                             <p>
                                                 <span className="order-id-head">
-                                                    order id:
+                                                    order id: {"\t"}
                                                 </span>
-                                                <br />
+                                                {/* <br /> */}
                                                 <span className="order-id">
-                                                    #{order.id}
+                                                    {order.itemId}
                                                 </span>
                                             </p>
                                         </div>
-                                        <span className="vr"></span>
+                                        {/* <span className="vr"></span>
                                         <div>
                                             <p>
                                                 <span className="order-id-head">
@@ -140,7 +165,7 @@ const CustomerOrderDetails = () => {
                                                     Paypal
                                                 </span>
                                             </p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <div className="card-body">
                                         <div className="d-flex justify-content-between pt-2">
@@ -149,10 +174,10 @@ const CustomerOrderDetails = () => {
                                             </span>
                                             <br />
                                             <span className="subtotal">
-                                                ${order.total}
+                                                ${order.amount}
                                             </span>
                                         </div>
-                                        <hr className="mt-2" />
+                                        {/* <hr className="mt-2" />
                                         <div className="d-flex justify-content-between pt-2">
                                             <span className="subtotal-head">
                                                 Discount:
@@ -161,7 +186,7 @@ const CustomerOrderDetails = () => {
                                             <span className="subtotal">
                                                 20%
                                             </span>
-                                        </div>
+                                        </div> */}
                                         <hr className="mt-2" />
                                         <div className="d-flex justify-content-between pt-2">
                                             <span className="subtotal-head">
@@ -175,14 +200,17 @@ const CustomerOrderDetails = () => {
                                         <hr className="mt-2" />
                                         <div className="d-flex justify-content-between pt-2">
                                             <p className="total-head">Total</p>
-                                            <p className="text-primary total"> ${order.total}</p>
+                                            <p className="text-primary total">
+                                                {" "}
+                                                ${order.amount}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="p-0 m-0 ">
-                            <OrderProductTable/>
+                            <OrderProductTable orderProduct={order.carts} />
                         </div>
                     </div>
                 </div>

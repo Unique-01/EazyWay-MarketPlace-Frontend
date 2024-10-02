@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Pagination } from "react-bootstrap";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
+import FormattedDate from "shared/components/FormattedDate";
 
 const OrderTable = ({
     orderList,
@@ -58,9 +59,16 @@ const OrderTable = ({
                                     <tr
                                         className="align-middle text-center "
                                         key={index}>
-                                        <td className="">#{order.id}</td>
-                                        <td className="">{order.date}</td>
-                                        <td>{order.total}</td>
+                                        <td className="">{order.itemId}</td>
+                                        <td className="">
+                                            <FormattedDate
+                                                date={order.createdAt}
+                                            />
+                                        </td>
+                                        <td>
+                                            ${order.amount}&nbsp;(
+                                            {order.carts.length} Products)
+                                        </td>
                                         <td className="orderStatus">
                                             {order.isCompleted ? (
                                                 <span className="order-completed rounded-pill">
@@ -74,7 +82,12 @@ const OrderTable = ({
                                         </td>
                                         <td>
                                             <span className="d-inline-flex align-items-center gap-3">
-                                                {full && <Link to={`/customer/order_history/${order.id}`}>View</Link>}
+                                                {full && (
+                                                    <Link
+                                                        to={`/customer/order_history/${order._id}`}>
+                                                        View
+                                                    </Link>
+                                                )}
                                                 <CiSaveDown1
                                                     style={{ fontSize: "20px" }}
                                                 />

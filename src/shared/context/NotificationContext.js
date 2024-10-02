@@ -1,12 +1,12 @@
 // context/NotificationContext.js
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 export const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
     const [notification, setNotification] = useState(null);
 
-    const showNotification = (message, type = 'success') => {
+    const showNotification = (message, type = "success") => {
         setNotification({ message, type });
         setTimeout(() => {
             setNotification(null);
@@ -14,8 +14,11 @@ export const NotificationProvider = ({ children }) => {
     };
 
     return (
-        <NotificationContext.Provider value={{ notification, showNotification }}>
+        <NotificationContext.Provider
+            value={{ notification, showNotification }}>
             {children}
         </NotificationContext.Provider>
     );
 };
+
+export const useNotification = () => useContext(NotificationContext);

@@ -1,6 +1,9 @@
 // import { useState } from "react";
 
+import { useCart } from "shared/context/CartContext";
+
 const CheckoutSummary = ({ totalPrice, onSubmit }) => {
+    const { cartItems } = useCart();
     // const [selectedPayment, setSelectedPayment] = useState("");
 
     // const handlePaymentChange = (e) => {
@@ -97,6 +100,7 @@ const CheckoutSummary = ({ totalPrice, onSubmit }) => {
                 </div> */}
                 <button
                     onClick={handleSubmit}
+                    disabled={cartItems.length < 1}
                     className="btn btn-primary cart-summary-btn w-100 text-white rounded-pill fw-semibold py-2">
                     Checkout
                 </button>

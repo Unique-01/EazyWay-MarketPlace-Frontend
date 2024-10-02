@@ -6,7 +6,7 @@ import React, { useContext } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const CustomerLayout = () => {
-    const { isAuthenticated, loading } = useContext(AuthContext);
+    const { isAuthenticated, loading, user } = useContext(AuthContext);
     const { showNotification } = useContext(NotificationContext);
 
     const location = useLocation();
@@ -14,7 +14,7 @@ const CustomerLayout = () => {
     if (loading) {
         return <Loading />;
     }
-    if (!isAuthenticated) {
+    if (!isAuthenticated || user.privilege !== "buyer") {
         showNotification(
             "You are not authorized to access this page",
             "danger"

@@ -1,6 +1,12 @@
 import { apiClient } from "shared/api/apiClient";
 import config from "config";
-import React, { createContext, useReducer, useEffect, useState } from "react";
+import React, {
+    createContext,
+    useReducer,
+    useEffect,
+    useState,
+    useContext,
+} from "react";
 
 // Create the Auth Context
 export const AuthContext = createContext();
@@ -108,3 +114,5 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
+
+export const useAuth = () => useContext(AuthContext);
