@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useCart } from "shared/context/CartContext";
 
 const CartSummary = ({ totalPrice }) => {
+    const { cartItems } = useCart();
     return (
         <div className="card mt-4">
             <div className="cart-summary-body card-body">
@@ -22,7 +24,8 @@ const CartSummary = ({ totalPrice }) => {
                     </p>
                 </div>
                 <Link
-                    to="/checkout"
+                    to={cartItems.length > 0 ? "/checkout" : ""}
+                    
                     className="btn btn-primary cart-summary-btn w-100 text-white rounded-pill fw-semibold py-2">
                     Proceed to Checkout
                 </Link>

@@ -46,7 +46,11 @@ const SideNav = ({ onCollapse, isOpen }) => {
                         <MdDashboard className="nav-icon" />
                         <span className="">Dashboard</span>
                     </NavLink>
-                    <div className="accordion" id="accordionExample">
+                    <NavLink to="/merchant/products" className="nav-link w-100">
+                        <AiFillProduct className="nav-icon" />
+                        Product List
+                    </NavLink>
+                    {/* <div className="accordion" id="accordionExample">
                         <div className="accordion-item">
                             <div className="accordion-header">
                                 <button
@@ -64,13 +68,7 @@ const SideNav = ({ onCollapse, isOpen }) => {
                                 id="collapseOne"
                                 className="accordion-collapse collapse">
                                 <div className="accordion-body">
-                                    <div>
-                                        <NavLink
-                                            to="/merchant/products"
-                                            className="nav-link w-100">
-                                            Product List
-                                        </NavLink>
-                                    </div>
+                                    <div></div>
                                     <div>
                                         <NavLink
                                             to="merchant/categories"
@@ -81,7 +79,7 @@ const SideNav = ({ onCollapse, isOpen }) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     <NavLink to="/merchant/orders" className="nav-link w-100">
                         <GoChecklist className="nav-icon" />

@@ -1,41 +1,57 @@
 import TopCustomers from "../components/TopCustomers";
 import TopSellingProduct from "../components/TopSellingProduct";
 import Totals from "../components/Totals";
-// import products from "features/Products/products.json";
-import Customers from "features/Products/review.json";
-import orderList from "features/Customer/order.json";
 import MerchantOrderTable from "../components/MerchantOrderTable";
 import { VscSettings } from "react-icons/vsc";
-import { useContext, useEffect, useState } from "react";
-import MerchantProductContext from "shared/context/MerchantProductContext";
+import { useEffect, useState } from "react";
+import { useDashboardStat } from "../context/DashboardStatContext";
+import { useMerchantOrder } from "../context/MerchantOrderContext";
 
 const MerchantDashboard = () => {
-    const { products, loading } = useContext(MerchantProductContext);
-    const [productList, setProductList] = useState([]);
+    const [totals, setTotals] = useState({});
+    const [customers, setCustomers] = useState([]);
+    const [topSellingProducts, setTopSellingProducts] = useState([]);
+    const { orders, loading: orderLoading } = useMerchantOrder();
+    const [orderList, setOrderList] = useState([]);
+    const {
+        card,
+        topSelling,
+        salesUsers,
+        loading: statLoading,
+    } = useDashboardStat();
+    useEffect(() => {
+        if (!statLoading) {
+            setTotals(card);
+            setCustomers(salesUsers);
+            setTopSellingProducts(topSelling);
+            console.log(topSelling);
+        }
+    }, [statLoading, card, salesUsers, topSelling]);
 
     useEffect(() => {
-        if (!loading) {
-            setProductList(products);
+        if (!orderLoading) {
+            setOrderList(orders);
         }
-    }, [loading, products]);
+    }, [orderLoading, orders]);
+
     return (
         <div className="py-5">
             <div style={{ minHeight: "100vh" }}>
                 <Totals
-                    sales={"10,550"}
-                    orders={"1,200"}
-                    products={productList.length}
-                    customers={500}
+                    sales={totals.sales}
+                    orders={totals.orders}
+                    products={totals.products}
+                    customers={totals.customers}
                 />
                 <div className="row mt-4">
                     <div className="col-lg-8">
                         <TopSellingProduct
-                            productList={productList}
+                            productList={topSellingProducts}
                             itemsPerPage={5}
                         />
                     </div>
                     <div className="col-lg-4">
-                        <TopCustomers customers={Customers} />
+                        <TopCustomers customers={customers} />
                     </div>
                 </div>
                 <div className="mt-4">

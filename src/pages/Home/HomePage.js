@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from "react";
 import ProductCategoryContext from "shared/context/ProductCategoryContext";
 import ProductContext from "shared/context/ProductContext";
 import Loading from "shared/components/Loading";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
     const limit = 5;
@@ -61,11 +62,11 @@ const HomePage = () => {
                         <h4 className="home-feature-product">
                             Featured Products
                         </h4>
-                        <a
-                            href=" "
+                        <Link
+                            to="/products"
                             className="d-inline-flex align-items-center gap-2">
                             View All <HiArrowRight />
-                        </a>
+                        </Link>
                     </div>
                     <div className="row row-gap-3">
                         {productsLoading && <Loading />}

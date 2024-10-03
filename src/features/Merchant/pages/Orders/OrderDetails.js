@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import Orders from "features/Customer/order.json";
 import { PiExport } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { HiOutlineNewspaper } from "react-icons/hi2";
@@ -12,11 +11,31 @@ import { IoIosPhonePortrait } from "react-icons/io";
 import { RiVerifiedBadgeLine } from "react-icons/ri";
 import { TfiLocationPin } from "react-icons/tfi";
 import MerchantOrderProduct from "../../components/MerchantOrderProduct";
+import { useMerchantOrder } from "features/Merchant/context/MerchantOrderContext";
+import { useEffect, useState } from "react";
+import Loading from "shared/components/Loading";
+import NotFoundPage from "pages/NotFound/NotFoundPage";
+import FormattedDate from "shared/components/FormattedDate";
 
 const MerchantOrderDetails = () => {
     const { orderId } = useParams();
+    const { orders, loading: orderLoading } = useMerchantOrder();
+    // const [orderList, setOrderList] = useState([]);
+    const [order, setOrder] = useState({});
 
-    const order = Orders.find((order) => order.id === orderId);
+    useEffect(() => {
+        if (!orderLoading) {
+            setOrder(orders.find((order) => order._id === orderId));
+        }
+    }, [orders, orderLoading, orderId]);
+
+    if (orderLoading) {
+        return <Loading />;
+    }
+
+    if (!order) {
+        return <NotFoundPage />;
+    }
 
     return (
         <div className="merchant-orders inter py-4">
@@ -24,8 +43,8 @@ const MerchantOrderDetails = () => {
                 <div className="d-flex justify-content-between">
                     <h5>Order Details</h5>
                     <div className="d-inline-flex gap-3">
-                        <button className="btn btn-light bg-white text-muted">
-                            Processing
+                        <button className="btn btn-light bg-white text-capitalize text-muted">
+                            {order.statusText}
                         </button>
                         <button className="btn export-btn">
                             <PiExport /> Export
@@ -45,7 +64,7 @@ const MerchantOrderDetails = () => {
                                 <div className="card border-0 shadow-sm">
                                     <div className="card-body">
                                         <h6 className="mb-3">
-                                            Order #{order.id}
+                                            Order {order.itemId}
                                         </h6>
                                         <div className="d-flex justify-content-between align-items-center order-text mb-3">
                                             <span className="d-inline-flex gap-2 align-items-center">
@@ -54,7 +73,11 @@ const MerchantOrderDetails = () => {
                                                 </div>
                                                 Added
                                             </span>
-                                            <span>{order.date}</span>
+                                            <span>
+                                                <FormattedDate
+                                                    date={order.createdAt}
+                                                />
+                                            </span>
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center order-text mb-3">
                                             <span className="d-inline-flex gap-2 align-items-center">
@@ -63,7 +86,7 @@ const MerchantOrderDetails = () => {
                                                 </div>
                                                 Payment Method
                                             </span>
-                                            <span>{order.date}</span>
+                                            <span>{order.paymentMethod}</span>
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center order-text">
                                             <span className="d-inline-flex gap-2 align-items-center">
@@ -88,16 +111,23 @@ const MerchantOrderDetails = () => {
                                                 </div>
                                                 Customer
                                             </span>
-                                            <span>{order.date}</span>
+                                            <span>
+                                                {order.user &&
+                                                    order.user.firstName +
+                                                        " " +
+                                                        order.user.lastName}
+                                            </span>
                                         </div>
-                                        <div className="d-flex justify-content-between align-items-center order-text mb-3">
+                                        <div className="d-flex justify-content-between align-items-center order-text mb-3 flex-wrap">
                                             <span className="d-inline-flex gap-2 align-items-center">
                                                 <div className="icon">
                                                     <MdOutlineMail />
                                                 </div>
-                                                Email
+                                                Email &nbsp;
                                             </span>
-                                            <span>{order.date}</span>
+                                            <span>
+                                                {order.user && order.user.email}
+                                            </span>
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center order-text">
                                             <span className="d-inline-flex gap-2 align-items-center">
@@ -106,14 +136,17 @@ const MerchantOrderDetails = () => {
                                                 </div>
                                                 Phone
                                             </span>
-                                            <span>{order.date}</span>
+                                            <span>
+                                                {order.user &&
+                                                    order.user.telephone}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="mt-4">
-                            <MerchantOrderProduct />
+                            <MerchantOrderProduct order={order} />
                         </div>
                     </div>
                     <div className="col-md-4">
@@ -163,7 +196,8 @@ const MerchantOrderDetails = () => {
                                         </span>
                                         <br />
                                         <span>
-                                            sdjk fsdkfj skdfklsdj kljds kfjls
+                                            {order.user?.extras &&
+                                                order.user.extras.streetAddress}
                                         </span>
                                     </div>
                                 </div>
@@ -178,7 +212,8 @@ const MerchantOrderDetails = () => {
                                         </span>
                                         <br />
                                         <span>
-                                            sdjk fsdkfj skdfklsdj kljds kfjls
+                                            {order.user?.extras &&
+                                                order.user.extras.streetAddress}
                                         </span>
                                     </div>
                                 </div>

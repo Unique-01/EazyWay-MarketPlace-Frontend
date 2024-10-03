@@ -1,21 +1,27 @@
 import { AuthContext } from "shared/context/AuthContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserIcon from "assets/icons/user.svg";
 import "./Dashboard.css";
 import Loading from "shared/components/Loading";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import RecentOrder from "./Components/OrderTable";
-import OrderList from "./order.json";
+// import OrderList from "./order.json";
+import { useCustomerOrder } from "./context/OrderContext";
 
 const CustomerDashBoard = () => {
-    const { user, isAuthenticated, loading } = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
+    const [orderList, setOrderList] = useState([]);
+    const { orders, loading: orderLoading } = useCustomerOrder();
+
+    useEffect(() => {
+        if (!orderLoading) {
+            setOrderList(orders);
+            console.log(orders);
+        }
+    }, [orderLoading, orders]);
 
     if (loading) {
         return <Loading />;
-    }
-
-    if (!isAuthenticated) {
-        return <Navigate to="/login" />;
     }
 
     return (
@@ -55,23 +61,21 @@ const CustomerDashBoard = () => {
                                     BILLING INFORMATION
                                 </p>
                                 <p className="profile-info">
-                                    {user && user.billingInfo
-                                        ? user.billingInfo
-                                        : " 4140 Parker Rd. Allentown, New Mexico 31134"}
+                                    {user.extras && user.extras.streetAddress}
                                 </p>
                             </div>
                             <div>
                                 <p className="profile-info-head">EMAIL</p>
-                                <p className="profile-info">{user.email}</p>
+                                <p className="profile-info">
+                                    {user.extras && user.extras.email}
+                                </p>
                             </div>
                             <div>
                                 <p className="profile-info-head">
                                     PHONE NUMBER
                                 </p>
                                 <p className="profile-info">
-                                    {user && user.telephone
-                                        ? user.telephone
-                                        : "(671) 555-0110"}
+                                    {user.extras && user.extras.telephone}
                                 </p>
                             </div>
                             <Link
@@ -85,7 +89,7 @@ const CustomerDashBoard = () => {
             </div>
             <div className="">
                 <RecentOrder
-                    orderList={OrderList}
+                    orderList={orderList}
                     heading="recent order"
                     limit={4}
                 />

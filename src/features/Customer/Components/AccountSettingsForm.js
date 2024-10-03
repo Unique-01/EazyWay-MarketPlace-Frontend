@@ -8,7 +8,6 @@ import ButtonLoading from "shared/components/ButtonLoading";
 import HandleApiError from "shared/components/HandleApiError";
 import { NotificationContext } from "shared/context/NotificationContext";
 
-
 const AccountSettingsForm = () => {
     const { user, loading, set_user } = useContext(AuthContext);
     const { showNotification } = useContext(NotificationContext);
@@ -28,7 +27,7 @@ const AccountSettingsForm = () => {
             setFormData((prevFormData) => ({
                 ...prevFormData,
                 ...user,
-                image: user.image.playback_url,
+                image: user.image ? user.image.playback_url : "",
             }));
         }
     }, [loading, user]);
@@ -69,7 +68,7 @@ const AccountSettingsForm = () => {
                 }
             );
             set_user(response.data.data);
-            showNotification("Profile Updated Successfully")
+            showNotification("Profile Updated Successfully");
         } catch (err) {
             HandleApiError(err, setError);
         } finally {
