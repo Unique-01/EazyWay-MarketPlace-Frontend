@@ -9,24 +9,23 @@ import config from "config";
 import { useAuth } from "shared/context/AuthContext";
 import { apiClient } from "shared/api/apiClient";
 
-const CustomerOrderContext = createContext();
+const PaymentContext = createContext();
 
-export const CustomerOrderProvider = ({ children }) => {
-    const [orders, setOrders] = useState([]);
+export const PaymentProvider = ({ children }) => {
+    const [payments, setPayment] = useState([]);
     const [loading, setLoading] = useState(true);
     const { user, loading: userLoading } = useAuth();
-    const fetchOrders = useCallback(async () => {
-        if (!userLoading && user && user.privilege === "buyer") {
+    const fetchPayments = useCallback(async () => {
+        if (!userLoading && user && user.privilege === "merchant") {
             try {
                 const response = await apiClient.get(
-                    `${config.API_BASE_URL}/product/order`
+                    `${config.API_BASE_URL}/product/payment/merchant`
                 );
-                const orderResponse = response.data.data.docs;
-                const sortedOrders = [...orderResponse].sort(
+                const paymentResponse = response.data.data.docs;
+                const sortedPayment = [...paymentResponse].sort(
                     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                 );
-
-                setOrders(sortedOrders);
+                setPayment(sortedPayment);
             } catch (error) {
                 console.error("Error fetching orders:", error);
             } finally {
@@ -36,16 +35,16 @@ export const CustomerOrderProvider = ({ children }) => {
     }, [userLoading, user]);
 
     useEffect(() => {
-        fetchOrders();
-    });
+        fetchPayments();
+    }, [fetchPayments]);
 
     return (
-        <CustomerOrderContext.Provider value={{ orders, loading, fetchOrders }}>
+        <PaymentContext.Provider value={{ payments, loading, fetchPayments }}>
             {children}
-        </CustomerOrderContext.Provider>
+        </PaymentContext.Provider>
     );
 };
 
-export const useCustomerOrder = () => useContext(CustomerOrderContext);
+export const usePayment = () => useContext(PaymentContext);
 
-export default CustomerOrderContext;
+export default PaymentContext;

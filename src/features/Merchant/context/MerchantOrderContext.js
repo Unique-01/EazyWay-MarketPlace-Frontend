@@ -9,23 +9,23 @@ import config from "config";
 import { useAuth } from "shared/context/AuthContext";
 import { apiClient } from "shared/api/apiClient";
 
-const CustomerOrderContext = createContext();
+const MerchantOrderContext = createContext();
 
-export const CustomerOrderProvider = ({ children }) => {
+export const MerchantOrderProvider = ({ children }) => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const { user, loading: userLoading } = useAuth();
     const fetchOrders = useCallback(async () => {
-        if (!userLoading && user && user.privilege === "buyer") {
+        if (!userLoading && user && user.privilege === "merchant") {
             try {
                 const response = await apiClient.get(
-                    `${config.API_BASE_URL}/product/order`
+                    `${config.API_BASE_URL}/product/order/merchant`
                 );
                 const orderResponse = response.data.data.docs;
                 const sortedOrders = [...orderResponse].sort(
                     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                 );
-
+                console.log(sortedOrders)
                 setOrders(sortedOrders);
             } catch (error) {
                 console.error("Error fetching orders:", error);
@@ -37,15 +37,15 @@ export const CustomerOrderProvider = ({ children }) => {
 
     useEffect(() => {
         fetchOrders();
-    });
+    },[fetchOrders]);
 
     return (
-        <CustomerOrderContext.Provider value={{ orders, loading, fetchOrders }}>
+        <MerchantOrderContext.Provider value={{ orders, loading, fetchOrders }}>
             {children}
-        </CustomerOrderContext.Provider>
+        </MerchantOrderContext.Provider>
     );
 };
 
-export const useCustomerOrder = () => useContext(CustomerOrderContext);
+export const useMerchantOrder = () => useContext(MerchantOrderContext);
 
-export default CustomerOrderContext;
+export default MerchantOrderContext;

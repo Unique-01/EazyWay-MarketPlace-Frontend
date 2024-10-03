@@ -2,9 +2,18 @@ import { PiExport } from "react-icons/pi";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import "./Orders.css";
 import MerchantOrderTable from "../../components/MerchantOrderTable";
-import Orders from "features/Customer/order.json";
+import { useMerchantOrder } from "features/Merchant/context/MerchantOrderContext";
+import { useEffect, useState } from "react";
 
 const MerchantOrderList = () => {
+    const { orders, loading: orderLoading } = useMerchantOrder();
+    const [orderList, setOrderList] = useState([]);
+
+    useEffect(() => {
+        if (!orderLoading) {
+            setOrderList(orders);
+        }
+    }, [orderLoading, orders]);
     return (
         <div className="merchant-orders py-4">
             <div>
@@ -23,7 +32,10 @@ const MerchantOrderList = () => {
                     </button>
                 </div>
                 <div className="mt-4">
-                    <MerchantOrderTable orderList={Orders} itemsPerPage={10} />
+                    <MerchantOrderTable
+                        orderList={orderList}
+                        itemsPerPage={10}
+                    />
                 </div>
             </div>
         </div>

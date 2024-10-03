@@ -1,10 +1,10 @@
 import "./MerchantOrderTable.css";
 import { useState } from "react";
 import MerchantPagination from "../MerchantPagination";
-import picture from "assets/images/category/bakery.png";
 import { BsEye } from "react-icons/bs";
 import { RiPencilLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import FormattedDate from "shared/components/FormattedDate";
 
 const MerchantOrderTable = ({ orderList, itemsPerPage }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -69,7 +69,9 @@ const MerchantOrderTable = ({ orderList, itemsPerPage }) => {
                         </thead>
                         <tbody className="body mt-5 pt-5">
                             {currentOrders.map((order, index) => (
-                                <tr className="align-middle px-0" key={index}>
+                                <tr
+                                    className="align-middle px-0"
+                                    key={order._id}>
                                     <td className="ps-4 order-column">
                                         <span className="d-flex  gap-2 align-items-center">
                                             <input
@@ -80,46 +82,62 @@ const MerchantOrderTable = ({ orderList, itemsPerPage }) => {
                                             <span
                                                 htmlFor="select"
                                                 className="form-check-label order-id">
-                                                #{order.id}
+                                                {order.itemId}
                                             </span>
                                         </span>
                                     </td>
                                     <td>
                                         <div className="d-inline-flex align-items-center gap-1 ">
                                             <img
-                                                src={picture}
-                                                alt={order.name}
+                                                src={
+                                                    order.carts[0].product
+                                                        .image &&
+                                                    order.carts[0].product.image
+                                                        .url
+                                                }
+                                                alt={"product"}
                                                 className="img-fluid rounded"
                                                 style={{ maxWidth: "50px" }}
                                             />
                                             <div className="order-text fw-normal">
                                                 <span className="item-name">
-                                                    Handmade pouch
+                                                    {
+                                                        order.carts[0].product
+                                                            .title
+                                                    }
                                                 </span>
                                                 <br />
                                                 <span className="other-product fade-color">
-                                                    + 3 other products
+                                                    {order.carts.length > 1
+                                                        ? `+ ${order.carts.length} other products`
+                                                        : ""}
                                                 </span>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="order-text order-column fade-color">
-                                        {order.date}
+                                        <FormattedDate date={order.createdAt} />
                                     </td>
                                     <td className="order-text order-column">
                                         <div>
-                                            <div>John Doe</div>
+                                            <div>
+                                                {order.user.firstName +
+                                                    " " +
+                                                    order.user.lastName}
+                                            </div>
                                             <div className="customer-mail fade-color">
-                                                johndoe@gmail.com
+                                                {order.user.email}
                                             </div>
                                         </div>
                                     </td>
                                     <td className="order-text order-column fade-color">
-                                        $1000
+                                        ${order.amount}
                                     </td>
                                     <td className="fade-color">Mastercard</td>
                                     <td className="order-column">
-                                        <div className="status">
+                                        {order.statusText}
+                                        {/* <div className="status">
+                                            
                                             {order.Completed ? (
                                                 <span className="low-stock rounded-pill">
                                                     In Stock
@@ -129,12 +147,12 @@ const MerchantOrderTable = ({ orderList, itemsPerPage }) => {
                                                     Low Stock
                                                 </span>
                                             )}
-                                        </div>
+                                        </div> */}
                                     </td>
                                     <td>
                                         <div className="action d-flex gap-2">
                                             <Link
-                                                to={`/merchant/orders/${order.id}`}>
+                                                to={`/merchant/orders/${order._id}`}>
                                                 <BsEye />
                                             </Link>
                                             <Link>

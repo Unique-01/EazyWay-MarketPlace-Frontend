@@ -10,6 +10,7 @@ import config from "config";
 import { useCart } from "shared/context/CartContext";
 import { useNavigate } from "react-router-dom";
 import ButtonLoading from "shared/components/ButtonLoading";
+import { useCustomerOrder } from "features/Customer/context/OrderContext";
 
 const CheckoutForm = ({ clientSecret, carts }) => {
     const [error, setError] = useState(""); // State to hold error messages
@@ -18,6 +19,7 @@ const CheckoutForm = ({ clientSecret, carts }) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { resetCart } = useCart();
+    const { fetchOrders } = useCustomerOrder();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -50,6 +52,7 @@ const CheckoutForm = ({ clientSecret, carts }) => {
                 );
                 console.log(response.data.message);
                 navigate("/checkout/success");
+                fetchOrders();
                 resetCart();
             } catch (finalizeError) {
                 setError("Error finalizing payment, please try again."); // Show backend error to user
@@ -92,7 +95,7 @@ const CheckoutForm = ({ clientSecret, carts }) => {
 };
 
 // Wrapper component to fetch clientSecret and pass it to Elements
-const CheckoutWrapper = ({stripePromise}) => {
+const CheckoutWrapper = ({ stripePromise }) => {
     const { cartItems, loading: cartLoading } = useCart();
     const [clientSecret, setClientSecret] = useState("");
     const [carts, setCarts] = useState([]);

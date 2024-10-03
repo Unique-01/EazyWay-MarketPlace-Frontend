@@ -1,15 +1,15 @@
 // import "./CustomerPayment.css";
 import { useEffect, useState } from "react";
 import MerchantPagination from "../../components/MerchantPagination";
-import picture from "assets/images/category/bakery.png";
 import { BsEye } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import Customers from "features/Products/review.json";
 import "./Payments.css";
+import { usePayment } from "features/Merchant/context/PaymentContext";
 
 const CustomerPayment = () => {
     const [customers, setCustomers] = useState([]);
+    const { payments, loading: paymentLoading } = usePayment();
     const itemsPerPage = 5;
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -21,11 +21,13 @@ const CustomerPayment = () => {
     const endIdx = Math.min(currentPage * itemsPerPage, totalItems);
 
     // Get the orders for the current page
-    const currentProducts = customers.slice(startIdx - 1, endIdx);
+    const currentPayment = customers.slice(startIdx - 1, endIdx);
 
     useEffect(() => {
-        setCustomers(Customers);
-    }, []);
+        if (!paymentLoading) {
+            setCustomers(payments);
+        }
+    }, [paymentLoading, payments]);
 
     // Handle page change
     const handlePageChange = (pageNumber) => {
@@ -77,43 +79,62 @@ const CustomerPayment = () => {
                                 </tr>
                             </thead>
                             <tbody className="body mt-5 pt-5">
-                                {currentProducts.map((customer, index) => (
+                                {currentPayment.map((customer, index) => (
                                     <tr
                                         className="align-middle px-0"
                                         key={index}>
                                         <td className="ps-4 order-column">
                                             <div className="d-inline-flex align-items-center gap-1 ">
                                                 <img
-                                                    src={picture}
-                                                    alt={customer.name}
+                                                    src={
+                                                        customer.user.image &&
+                                                        customer.user.image.url
+                                                    }
+                                                    alt={
+                                                        customer.user.firstName
+                                                    }
                                                     className="img-fluid rounded"
                                                     style={{ maxWidth: "50px" }}
                                                 />
                                                 <div className="order-text fw-normal">
-                                                    {customer.name}
+                                                    {customer.user.firstName}
+                                                    &nbsp;
+                                                    {customer.user.lastName}
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="order-column fade-color">
-                                            ola@gmail.com
+                                            {customer.user.email}
                                         </td>
-                                        <td className="order-text order-column fade-color">
-                                            Paypal
+                                        <td className="order-text order-column fade-color text-capitalize">
+                                            {customer.paymentMethod}
                                         </td>
                                         <td className="order-text order-column fade-color">
                                             <div>
-                                                <span>17.08.2022</span>
+                                                <span>
+                                                    {new Date(
+                                                        customer.createdAt
+                                                    ).toLocaleDateString(
+                                                        "de-DE"
+                                                    )}
+                                                </span>
                                                 <br />
                                                 <span className="small text-end">
-                                                    10:00AM
+                                                    {new Date(
+                                                        customer.createdAt
+                                                    ).toLocaleTimeString(
+                                                        "en-GB",
+                                                        { hour12: true }
+                                                    )}
                                                 </span>
                                             </div>
                                         </td>
                                         <td className="order-text order-column fade-color">
-                                            $240
+                                            ${customer.amount}
                                         </td>
-                                        <td className="order-column">
-                                            <div className="status">
+                                        <td className="order-column order-text ">
+                                            {customer.statusText}
+                                            {/* <div className="status">
                                                 {customer.isAvailable ? (
                                                     <span className="low-stock rounded-pill">
                                                         Active
@@ -123,7 +144,7 @@ const CustomerPayment = () => {
                                                         Processing
                                                     </span>
                                                 )}
-                                            </div>
+                                            </div> */}
                                         </td>
 
                                         <td>

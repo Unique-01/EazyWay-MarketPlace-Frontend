@@ -126,7 +126,28 @@ const MerchantProductTable = ({ productList, itemsPerPage }) => {
                                     </td>
                                     <td className="">
                                         <div className="merchant-product-status">
-                                            {product.quantity <= 20 ? (
+                                            {product.availType ===
+                                            "published" ? (
+                                                product.quantity <= 20 ? (
+                                                    <span className="text-danger rounded-pill">
+                                                        Low Stock
+                                                    </span>
+                                                ) : (
+                                                    <span className="in-stock rounded-pill">
+                                                        In Stock
+                                                    </span>
+                                                )
+                                            ) : product.availType ===
+                                              "in-review" ? (
+                                                <span className="low-stock rounded-pill">
+                                                    In review
+                                                </span>
+                                            ) : (
+                                                <span className="bg-light text-secondary rounded-pill">
+                                                    Draft
+                                                </span>
+                                            )}
+                                            {/* {product.quantity <= 20 ? (
                                                 <span className="low-stock rounded-pill">
                                                     Low Stock
                                                 </span>
@@ -134,7 +155,7 @@ const MerchantProductTable = ({ productList, itemsPerPage }) => {
                                                 <span className="in-stock rounded-pill">
                                                     In Stock
                                                 </span>
-                                            )}
+                                            )} */}
                                         </div>
                                     </td>
                                     <td className="order-column fade-color">

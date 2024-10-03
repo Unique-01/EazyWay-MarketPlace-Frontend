@@ -35,11 +35,13 @@ const OrderTable = ({
                     <h5 className="text-black fw-semibold text-capitalize">
                         {heading}
                     </h5>
-                    <Link
-                        to="/customer/order_history"
-                        className="poppins small">
-                        View All
-                    </Link>
+                    {!full && (
+                        <Link
+                            to="/customer/order_history"
+                            className="poppins small">
+                            View All
+                        </Link>
+                    )}
                 </div>
                 <div className="table-responsive">
                     <table className=" table table-borderless">

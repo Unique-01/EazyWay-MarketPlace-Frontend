@@ -17,7 +17,6 @@ export const CartProvider = ({ children }) => {
             setCartItems(JSON.parse(storedCart));
             setLoading(false);
         }
-        console.log(storedCart);
         setIsMounted(true);
     }, []);
 
