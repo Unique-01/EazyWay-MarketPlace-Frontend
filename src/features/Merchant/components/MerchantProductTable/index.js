@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import MerchantPagination from "../MerchantPagination";
 import { BsEye } from "react-icons/bs";
 import { RiPencilLine } from "react-icons/ri";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import FormattedDate from "shared/components/FormattedDate";
+import { NotificationContext } from "shared/context/NotificationContext";
+import HandleApiError from "shared/components/HandleApiError";
+import { apiClient } from "shared/api/apiClient";
+import config from "config";
+import ConfirmDeleteModal from "shared/components/ConfirmDelete";
 
 const MerchantProductTable = ({ productList, itemsPerPage }) => {
+    const [showModal, setShowModal] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState({});
+    const { showNotification } = useContext(NotificationContext);
+    const [deleteLoading, setDeleteLoading] = useState(false);
+    const [error, setError] = useState("");
+
     const [currentPage, setCurrentPage] = useState(1);
     const totalItems = productList.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -23,8 +34,32 @@ const MerchantProductTable = ({ productList, itemsPerPage }) => {
         setCurrentPage(pageNumber);
     };
 
+    const handleDelete = (item) => {
+        setItemToDelete(item);
+        setShowModal(true);
+    };
+
+    const handleClose = () => setShowModal(false);
+
+    const handleConfirmDelete = async () => {
+        setDeleteLoading(true);
+        try {
+            await apiClient.delete(
+                `${config.API_BASE_URL}/product/manage-product?product=${itemToDelete._id}`
+            );
+            showNotification("Product deleted Successfully");
+        } catch (err) {
+            HandleApiError(err, setError);
+        } finally {
+            setDeleteLoading(false);
+        }
+        console.log(`Deleted item: ${itemToDelete}`);
+        setShowModal(false);
+    };
+
     return (
         <div className="merchant-order-table inter">
+            {error && <p className="text-danger">{error}</p>}
             <div className="bg-white rounded shadow-sm">
                 <div className="table-responsive">
                     <table className="table">
@@ -173,9 +208,13 @@ const MerchantProductTable = ({ productList, itemsPerPage }) => {
                                                 to={`/merchant/products/${product._id}/edit`}>
                                                 <RiPencilLine />
                                             </Link>
-                                            <Link>
+                                            <button
+                                                className="border-0 bg-white text-danger"
+                                                onClick={() =>
+                                                    handleDelete(product)
+                                                }>
                                                 <FaRegTrashAlt />
-                                            </Link>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -191,6 +230,13 @@ const MerchantProductTable = ({ productList, itemsPerPage }) => {
                     totalPages={totalPages}
                     currentPage={currentPage}
                     handlePageChange={handlePageChange}
+                />
+                <ConfirmDeleteModal
+                    show={showModal}
+                    handleClose={handleClose}
+                    handleConfirm={handleConfirmDelete}
+                    item={itemToDelete}
+                    loading={deleteLoading}
                 />
             </div>
         </div>

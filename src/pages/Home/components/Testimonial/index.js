@@ -79,7 +79,7 @@ const TestimonialCarousel = () => {
             <h4 className=" ps-2 testimonial-heading poppins">Client Testimonials</h4>
             <Slider {...settings}>
                 {testimonials.map((testimonial, index) => (
-                    <div className="px-2 pt-4">
+                    <div className="px-2 pt-4" key={index}>
                         <TestimonialCard
                             key={index}
                             testimonial={testimonial}

@@ -3,6 +3,7 @@ import Slider1 from "assets/images/slider/slider-1.webp";
 import Slider2 from "assets/images/slider/slider-2.webp";
 import Slider3 from "assets/images/slider/slider-3.webp";
 import { HiArrowRight } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const HomeSlider = () => {
     const CarouselCaption = ({ className = "" }) => (
@@ -15,12 +16,12 @@ const HomeSlider = () => {
                         <br /> 48% off
                     </p>
                     <div className="poppins mt-4 ">
-                    <a
-                        href="#your-link"
+                    <Link
+                        to="/products"
                         className="btn btn-primary rounded-pill text-white slide-btn p-2 px-3">
                         Shop now <HiArrowRight />
 
-                    </a>
+                    </Link>
                     </div>
                 </div>
             </div>

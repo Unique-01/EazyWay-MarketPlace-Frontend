@@ -1,14 +1,20 @@
-.filter{
+.filter {
     font-size: 13.55px;
 }
-.form-select{
+.form-select {
     width: 10em;
 }
 
-.fs-small{
+.fs-small {
     font-size: 13.55px;
 }
 
-a{
+a {
     text-decoration: none !important;
+}
+.product-list {
+    .pagination {
+        justify-content: center;
+        gap: 20px;
+    }
 }
