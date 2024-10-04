@@ -28,7 +28,7 @@ export const CartProvider = ({ children }) => {
     }, [cartItems, isMounted]);
 
     // Add item to cart
-    const addToCart = (id) => {
+    const addToCart = (id, quantity) => {
         setCartItems((prevItems) => {
             const existingItem = prevItems.find((item) => item.product === id);
             if (existingItem) {
@@ -38,7 +38,11 @@ export const CartProvider = ({ children }) => {
                         : item
                 );
             } else {
-                return [...prevItems, { product: id, quantity: 1 }];
+                if (quantity) {
+                    return [...prevItems, { product: id, quantity: quantity }];
+                } else {
+                    return [...prevItems, { product: id, quantity: 1 }];
+                }
             }
         });
     };
@@ -81,7 +85,7 @@ export const CartProvider = ({ children }) => {
                 updateCartTotal,
                 cartTotal,
                 loading,
-                resetCart
+                resetCart,
             }}>
             {children}
         </CartContext.Provider>

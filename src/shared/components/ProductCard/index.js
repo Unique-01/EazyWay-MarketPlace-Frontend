@@ -1,8 +1,6 @@
 import React from "react";
-import { AiOutlineEye } from "react-icons/ai";
 import { FaRegHeart } from "react-icons/fa6";
 import { ReactComponent as ShoppingBasket } from "assets/icons/shopping-basket.svg";
-import useButtonToggle from "shared/hooks/useButtonToggle";
 import "./ProductCard.css";
 import StarRating from "../StarRating";
 import { Link } from "react-router-dom";
@@ -11,9 +9,6 @@ import { useCart } from "shared/context/CartContext";
 import { useWishlist } from "shared/context/WishListContext";
 
 const ProductCard = ({ product }) => {
-    const [isCartToggled, toggleCartButton] = useButtonToggle();
-    const [isWishListToggled, toggleWishListButton] = useButtonToggle();
-    const [isEyeToggled, toggleEyeButton] = useButtonToggle();
     const { addToCart, isInCart, removeFromCart } = useCart();
     const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
@@ -68,13 +63,13 @@ const ProductCard = ({ product }) => {
                     }`}>
                     <FaRegHeart className="overlay-icon" />
                 </button>
-                <button
+                {/* <button
                     onClick={toggleEyeButton}
                     className={`icon-btn btn eye-overlay ${
                         isEyeToggled ? "bg-primary text-white" : "text-dark"
                     }`}>
                     <AiOutlineEye className="overlay-icon" />
-                </button>
+                </button> */}
             </div>
         </div>
     );

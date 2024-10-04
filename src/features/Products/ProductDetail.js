@@ -13,11 +13,17 @@ import ProductCard from "shared/components/ProductCard";
 import MerchantProductContext from "shared/context/MerchantProductContext";
 import picture from "assets/images/eazyWay-logo.png";
 import ProductContext from "shared/context/ProductContext";
+import NotFoundPage from "pages/NotFound/NotFoundPage";
+import { useCart } from "shared/context/CartContext";
+import { useWishlist } from "shared/context/WishListContext";
 
 const ProductDetail = () => {
     const { productId } = useParams();
     const { products, loading } = useContext(ProductContext);
     const [product, setProduct] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+    const { addToCart, isInCart } = useCart();
+    const { addToWishlist, isInWishlist } = useWishlist();
     const limit = 4;
 
     useEffect(() => {
@@ -30,9 +36,15 @@ const ProductDetail = () => {
         }
     }, [productId, loading, products]);
 
-    if (!product) {
+    if (loading) {
         return <Loading />;
     }
+    if (!product) {
+        return <NotFoundPage />;
+    }
+    const handleQuantityChange = (newQuantity) => {
+        setQuantity(newQuantity);
+    };
 
     return (
         <div className="mb-5 pb-5 container">
@@ -79,15 +91,25 @@ const ProductDetail = () => {
                         </div>
                         <hr className="border-secondary" />
                         <div className="d-flex align-items-center gap-2">
-                            <QuantitySelector />
+                            <QuantitySelector
+                                onQuantityChange={handleQuantityChange}
+                            />
                             {/* <div className="text-white"> */}
-                            <button className="btn btn-primary w-100 justify-content-center gap-2 product-detail-cart-btn rounded-pill text-white d-flex align-items-center py-1">
+                            <button
+                                disabled={isInCart(product._id)}
+                                className="btn btn-primary w-100 justify-content-center gap-2 product-detail-cart-btn rounded-pill text-white d-flex align-items-center py-1"
+                                onClick={() =>
+                                    addToCart(product._id, quantity)
+                                }>
                                 Add to Cart{" "}
                                 <ShoppingBasket className="add-to-cart-icon" />
                             </button>
                             {/* </div> */}
                             <div>
-                                <button className="text-primary product-detail-wishlist">
+                                <button
+                                    disabled={isInWishlist(product._id)}
+                                    className="text-primary product-detail-wishlist"
+                                    onClick={() => addToWishlist(product)}>
                                     <FaRegHeart />
                                 </button>
                             </div>
@@ -116,7 +138,7 @@ const ProductDetail = () => {
                 <div className="col-md-6 px-md-3 mt-4 mt-md-0">
                     <TabComponent description={product.description} />
                 </div>
-                <div className="col-md-6">
+                {/* <div className="col-md-6">
                     <div className="d-flex justify-content-between align-items-center product-detail-review poppins">
                         <h4 className="">Reviews</h4>
                         <a href=" ">View All</a>
@@ -129,7 +151,7 @@ const ProductDetail = () => {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div> */}
             </div>
             <div className="mt-4">
                 <h4 className="text-center poppins fw-semibold text-black">
