@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     Elements,
     PaymentElement,
@@ -8,9 +8,12 @@ import {
 import { apiClient } from "shared/api/apiClient";
 import config from "config";
 import { useCart } from "shared/context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import ButtonLoading from "shared/components/ButtonLoading";
 import { useCustomerOrder } from "features/Customer/context/OrderContext";
+import { NotificationContext } from "shared/context/NotificationContext";
+import { useAuth } from "shared/context/AuthContext";
+import Loading from "shared/components/Loading";
 
 const CheckoutForm = ({ clientSecret, carts }) => {
     const [error, setError] = useState(""); // State to hold error messages
@@ -99,6 +102,9 @@ const CheckoutWrapper = ({ stripePromise }) => {
     const { cartItems, loading: cartLoading } = useCart();
     const [clientSecret, setClientSecret] = useState("");
     const [carts, setCarts] = useState([]);
+    const { isAuthenticated, user, loading: userLoading } = useAuth();
+    const { showNotification } = useContext(NotificationContext);
+    const location = useLocation();
 
     // Fetch the clientSecret from /initialize when cartItems are available
     useEffect(() => {
@@ -123,6 +129,29 @@ const CheckoutWrapper = ({ stripePromise }) => {
             initializePayment();
         }
     }, [cartItems, cartLoading]);
+
+    useEffect(() => {
+        if (!userLoading) {
+            if (!isAuthenticated || user.privilege !== "buyer") {
+                showNotification(
+                    "You are not authorized to access this page",
+                    "danger"
+                );
+            }
+        }
+    }, [isAuthenticated, user, showNotification, userLoading]);
+
+    if (userLoading) {
+        return <Loading />;
+    }
+
+    if (!isAuthenticated || user.privilege !== "buyer") {
+        return (
+            <Navigate
+                to={`/login/customer?redirect_uri=${location.pathname}`}
+            />
+        );
+    }
 
     const options = { clientSecret };
 

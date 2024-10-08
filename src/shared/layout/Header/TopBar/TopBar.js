@@ -30,30 +30,24 @@ const TopBar = () => {
                     </form>
                 </div>
                 <div className="d-flex justify-content-between align-items-center gap-4">
-                    {user ? (
-                        user.privilege === "buyer" ? (
-                            <>
-                                <Link to="/wishlist">
-                                    <WishListIcon />
-                                </Link>
-                                <Link to="/shopping_cart">
-                                    <CartIcon />
-                                </Link>
-                            </>
-                        ) : user.privilege === "merchant" ? (
-                            <>
-                                <Link to="/wishlist">
-                                    <CiSettings />
-                                </Link>
-                                <Link to="/shopping_cart">
-                                    <FaRegBell />
-                                </Link>
-                            </>
-                        ) : (
-                            ""
-                        )
+                    {user && user.privilege === "merchant" ? (
+                        <>
+                            <Link to="/wishlist">
+                                <CiSettings />
+                            </Link>
+                            <Link to="/shopping_cart">
+                                <FaRegBell />
+                            </Link>
+                        </>
                     ) : (
-                        ""
+                        <>
+                            <Link to="/wishlist">
+                                <WishListIcon />
+                            </Link>
+                            <Link to="/shopping_cart">
+                                <CartIcon />
+                            </Link>
+                        </>
                     )}
                     <Link
                         to={

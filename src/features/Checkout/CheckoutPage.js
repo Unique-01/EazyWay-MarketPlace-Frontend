@@ -3,11 +3,41 @@ import AdditionalCheckoutInfo from "./AdditionCheckoutInfo";
 import BillingInfo from "./BillingInfo";
 import "./Checkout.css";
 import CheckoutSummary from "./CheckoutSummary";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "shared/context/AuthContext";
+import { useContext, useEffect } from "react";
+import { NotificationContext } from "shared/context/NotificationContext";
+import Loading from "shared/components/Loading";
 
 const CheckoutPage = () => {
+    const { isAuthenticated, user, loading: userLoading } = useAuth();
+    const { showNotification } = useContext(NotificationContext);
+    const location = useLocation();
     const { cartTotal } = useCart();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!userLoading) {
+            if (!isAuthenticated  || user.privilege !== "buyer") {
+                showNotification(
+                    "You are not authorized to access this page",
+                    "danger"
+                );
+            }
+        }
+    }, [isAuthenticated, user, showNotification, userLoading]);
+
+    if (userLoading) {
+        return <Loading />;
+    }
+
+    if (!isAuthenticated || user.privilege !== "buyer") {
+        return (
+            <Navigate
+                to={`/login/customer?redirect_uri=${location.pathname}`}
+            />
+        );
+    }
 
     const handleSubmit = () => {
         navigate("/checkout/payment");
