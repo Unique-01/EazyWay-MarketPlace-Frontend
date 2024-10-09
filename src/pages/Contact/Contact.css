@@ -1,0 +1,20 @@
+.contact {
+    .icon {
+        font-size: 50px;
+        color: #2c742f;
+    }
+    .my-border {
+        border: 1px solid #40c545;
+    }
+    input,
+    textarea {
+        font-size: 13px;
+    }
+    input::placeholder,
+    textarea::placeholder {
+        color: #666666;
+    }
+    .btn {
+        font-size: 14px;
+    }
+}

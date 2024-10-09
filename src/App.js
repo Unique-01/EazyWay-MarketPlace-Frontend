@@ -54,6 +54,7 @@ import { CustomerOrderProvider } from "features/Customer/context/OrderContext";
 import { DashboardStatProvider } from "features/Merchant/context/DashboardStatContext";
 import { MerchantOrderProvider } from "features/Merchant/context/MerchantOrderContext";
 import { PaymentProvider } from "features/Merchant/context/PaymentContext";
+import Contact from "pages/Contact/Contact";
 
 const stripePK = process.env.REACT_APP_STRIPE_PK;
 // console.log("Stripe key:", stripePK);
@@ -165,6 +166,12 @@ function App() {
                                                                         path="checkout"
                                                                         element={
                                                                             <CheckoutPage />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path="contact"
+                                                                        element={
+                                                                            <Contact />
                                                                         }
                                                                     />
                                                                     <Route
