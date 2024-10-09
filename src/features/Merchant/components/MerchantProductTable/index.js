@@ -10,8 +10,13 @@ import HandleApiError from "shared/components/HandleApiError";
 import { apiClient } from "shared/api/apiClient";
 import config from "config";
 import ConfirmDeleteModal from "shared/components/ConfirmDelete";
+import MerchantProductContext from "shared/context/MerchantProductContext";
+import ButtonLoading from "shared/components/ButtonLoading";
 
 const MerchantProductTable = ({ productList, itemsPerPage }) => {
+    const { moreLoading, hasNextPage, loadMore } = useContext(
+        MerchantProductContext
+    );
     const [showModal, setShowModal] = useState(false);
     const [itemToDelete, setItemToDelete] = useState({});
     const { showNotification } = useContext(NotificationContext);
@@ -231,6 +236,16 @@ const MerchantProductTable = ({ productList, itemsPerPage }) => {
                     currentPage={currentPage}
                     handlePageChange={handlePageChange}
                 />
+                {totalPages === currentPage && (
+                    <div className="text-center mb-2">
+                        <button
+                            className="btn btn-primary text-white"
+                            onClick={loadMore}
+                            disabled={moreLoading || !hasNextPage}>
+                            Load More {moreLoading && <ButtonLoading />}
+                        </button>
+                    </div>
+                )}
                 <ConfirmDeleteModal
                     show={showModal}
                     handleClose={handleClose}

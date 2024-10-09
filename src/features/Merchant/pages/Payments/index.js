@@ -6,10 +6,17 @@ import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./Payments.css";
 import { usePayment } from "features/Merchant/context/PaymentContext";
+import ButtonLoading from "shared/components/ButtonLoading";
 
 const CustomerPayment = () => {
     const [customers, setCustomers] = useState([]);
-    const { payments, loading: paymentLoading } = usePayment();
+    const {
+        payments,
+        loading: paymentLoading,
+        moreLoading,
+        hasNextPage,
+        loadMore,
+    } = usePayment();
     const itemsPerPage = 5;
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -171,6 +178,17 @@ const CustomerPayment = () => {
                         currentPage={currentPage}
                         handlePageChange={handlePageChange}
                     />
+
+                    {totalPages === currentPage && (
+                        <div className="text-center mb-2">
+                            <button
+                                className="btn btn-primary text-white"
+                                onClick={loadMore}
+                                disabled={moreLoading || !hasNextPage}>
+                                Load More {moreLoading && <ButtonLoading />}
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

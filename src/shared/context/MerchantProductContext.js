@@ -9,6 +9,9 @@ export const MerchantProductProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const { user, loading: userLoading } = useContext(AuthContext);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [moreLoading, setMoreLoading] = useState(false);
+    const [hasNextPage, setHasNextPage] = useState(false);
 
     useEffect(() => {
         // Fetch product products from the backend (once)
@@ -19,6 +22,9 @@ export const MerchantProductProvider = ({ children }) => {
                         const response = await apiClient.get(
                             `${config.API_BASE_URL}/product/manage-product`
                         );
+
+                        setCurrentPage(response.data.data.page);
+                        setHasNextPage(response.data.data.hasNextPage);
                         const productResponse = response.data.data.docs;
 
                         const sortedProducts = [...productResponse].sort(
@@ -60,9 +66,41 @@ export const MerchantProductProvider = ({ children }) => {
         });
     };
 
+    const loadMore = async () => {
+        setMoreLoading(true);
+        if (!hasNextPage) {
+            return;
+        }
+        try {
+            const response = await apiClient.get(
+                `${config.API_BASE_URL}/product/manage-product?page=${
+                    currentPage + 1
+                }`
+            );
+            console.log(response.data);
+            setHasNextPage(response.data.data.hasNextPage);
+            setProducts((prevProducts) => [
+                ...prevProducts,
+                ...response.data.data.docs,
+            ]);
+        } catch (err) {
+            console.log("Error fetching more products:", err);
+        } finally {
+            setMoreLoading(false);
+        }
+    };
+
     return (
         <MerchantProductContext.Provider
-            value={{ products, loading, setProducts, addOrUpdateProduct }}>
+            value={{
+                products,
+                loading,
+                setProducts,
+                addOrUpdateProduct,
+                loadMore,
+                moreLoading,
+                hasNextPage,
+            }}>
             {children}
         </MerchantProductContext.Provider>
     );

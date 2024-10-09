@@ -30,7 +30,7 @@ const MerchantDashboard = () => {
 
     useEffect(() => {
         if (!orderLoading) {
-            setOrderList(orders);
+            setOrderList(orders.slice(0, 8));
         }
     }, [orderLoading, orders]);
 
@@ -75,6 +75,7 @@ const MerchantDashboard = () => {
                     <MerchantOrderTable
                         orderList={orderList}
                         itemsPerPage={4}
+                        full={false}
                     />
                 </div>
             </div>
