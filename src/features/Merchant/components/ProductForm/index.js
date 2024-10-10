@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import ProductCategoryContext from "shared/context/ProductCategoryContext";
 import GeneralInformation from "./components/GeneralInformation";
 import MediaUpload from "./components/MediaUpload";
@@ -11,6 +11,34 @@ import StatusSelect from "./components/StatusSelect";
 import TagsInputField from "./components/TagsInputField";
 import { v4 as uuidv4 } from "uuid"; // Import uuid for generating unique ids
 
+const validationRules = {
+    title: {
+        required: true,
+        minLength: 5,
+        maxLength: 100,
+    },
+    amount: {
+        required: true,
+        pattern: /^\d+(\.\d{2})?$/,
+    },
+    category: {
+        required: true,
+    },
+    quantity: {
+        required: true,
+        pattern: /^\d+$/,
+    },
+    description: {
+        required: true,
+        minLength: 20,
+    },
+    sku: {
+        required: true,
+    },
+    barcode: {
+        required: true,
+    },
+};
 const ProductForm = ({
     onSubmit,
     isSubmitted,
@@ -25,6 +53,16 @@ const ProductForm = ({
     const [images, setImages] = useState([]);
     const [videos, setVideos] = useState([]);
     const [defaultImages, setDefaultImages] = useState([]);
+    const [errors, setErrors] = useState({
+        title: "",
+        amount: "",
+        category: "",
+        quantity: "",
+        description: "",
+        sku: "",
+        barcode: "",
+    });
+
     const [formData, setFormData] = useState({
         title: "",
         amount: "",
@@ -43,7 +81,7 @@ const ProductForm = ({
         },
         sku: "",
         barcode: "",
-        availType: "",
+        availType: "draft",
         variations: [],
     });
 
@@ -81,22 +119,89 @@ const ProductForm = ({
         }));
     };
 
+    const validateForm = useCallback((formData) => {
+        if (!formData) {
+            return {};
+        }
+        const errors = {}; // Initialize an empty errors object
+
+        for (const fieldName in validationRules) {
+            const rule = validationRules[fieldName];
+            const value = formData[fieldName];
+
+            if (rule.required && !value) {
+                errors[fieldName] = "This field is required.";
+            } else if (
+                rule.minLength &&
+                value &&
+                value.length < rule.minLength
+            ) {
+                errors[
+                    fieldName
+                ] = `Minimum length is ${rule.minLength} characters.`;
+            } else if (rule.pattern && value && !rule.pattern.test(value)) {
+                errors[fieldName] = "Invalid format.";
+            }
+        }
+
+        setErrors(errors);
+        // setErrors((prevErrors) => ({ ...prevErrors, ...errors }));
+        return Object.keys(errors).length === 0; // Return true if no errors
+    }, []);
     useEffect(() => {
         if (isSubmitted) {
-            const cleanFormData = {
-                ...formData,
-                variations: formData.variations.map(({ id, ...rest }) => rest),
-            };
-            // Call the onSubmit function with cleaned data
-            onSubmit(cleanFormData, images, videos, setFormData);
-            // onSubmit(formData, images, videos, setFormData);
-
+            const isFormValid = validateForm(formData);
+            if (isFormValid) {
+                const cleanFormData = {
+                    ...formData,
+                    variations: formData.variations.map(
+                        ({ id, ...rest }) => rest
+                    ),
+                };
+                // Call the onSubmit function with cleaned data
+                onSubmit(cleanFormData, images, videos, setFormData);
+            }
             setSubmit(false);
+
+            // onSubmit(formData, images, videos, setFormData);
         }
-    }, [isSubmitted, onSubmit, formData, images, videos, setSubmit]);
+    }, [
+        isSubmitted,
+        onSubmit,
+        formData,
+        images,
+        videos,
+        setSubmit,
+        validateForm,
+    ]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        let errorMessage = "";
+        const validationRule = validationRules[name];
+
+        if (validationRule) {
+            if (validationRule.required && !value) {
+                errorMessage = "This field is required.";
+            } else if (
+                validationRule.minLength &&
+                value.length < validationRule.minLength
+            ) {
+                errorMessage = `Minimum length is ${validationRule.minLength} characters.`;
+            } else if (
+                validationRule.pattern &&
+                !validationRule.pattern.test(value)
+            ) {
+                errorMessage = "Invalid format.";
+            } else {
+                errorMessage = undefined;
+            }
+        }
+
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: errorMessage,
+        }));
 
         if (["height", "width", "length", "weight"].includes(name)) {
             setFormData((prevData) => ({
@@ -135,6 +240,7 @@ const ProductForm = ({
                             formData={formData}
                             handleInputChange={handleInputChange}
                             loading={loading}
+                            errors={errors}
                         />
                         <MediaUpload
                             images={images}
@@ -148,11 +254,13 @@ const ProductForm = ({
                             formData={formData}
                             handleInputChange={handleInputChange}
                             loading={loading}
+                            errors={errors}
                         />
                         <Inventory
                             formData={formData}
                             handleInputChange={handleInputChange}
                             loading={loading}
+                            errors={errors}
                         />
                         <div className=" bg-white shadow-sm p-4 rounded mb-4">
                             <h6 className="mb-3">Variation</h6>
@@ -177,6 +285,7 @@ const ProductForm = ({
                             selectedCategory={formData.category}
                             handleChange={handleInputChange}
                             loading={loading}
+                            errors={errors}
                         />
                         <TagsInputField
                             tags={formData.tags}
