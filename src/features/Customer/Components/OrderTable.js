@@ -50,6 +50,13 @@ const OrderTable = ({
                             View All
                         </Link>
                     )}
+                    {!full && (
+                        <Link
+                            to="/customer/order_history"
+                            className="poppins small">
+                            View All
+                        </Link>
+                    )}
                 </div>
                 <div className="table-responsive">
                     <table className=" table table-borderless">
@@ -79,6 +86,16 @@ const OrderTable = ({
                                             ${order.amount}&nbsp;(
                                             {order.carts.length} Products)
                                         </td>
+                                        <td className="">{order.itemId}</td>
+                                        <td className="">
+                                            <FormattedDate
+                                                date={order.createdAt}
+                                            />
+                                        </td>
+                                        <td>
+                                            ${order.amount}&nbsp;(
+                                            {order.carts.length} Products)
+                                        </td>
                                         <td className="orderStatus">
                                             {order.isCompleted ? (
                                                 <span className="order-completed rounded-pill">
@@ -92,6 +109,12 @@ const OrderTable = ({
                                         </td>
                                         <td>
                                             <span className="d-inline-flex align-items-center gap-3">
+                                                {full && (
+                                                    <Link
+                                                        to={`/customer/order_history/${order._id}`}>
+                                                        View
+                                                    </Link>
+                                                )}
                                                 {full && (
                                                     <Link
                                                         to={`/customer/order_history/${order._id}`}>

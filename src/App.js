@@ -159,6 +159,30 @@ function App() {
                                                                         <PasswordResetSuccess />
                                                                     }
                                                                 />
+                                                                <Route
+                                                                    path="reset_password"
+                                                                    element={
+                                                                        <PasswordResetOverview />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/verification"
+                                                                    element={
+                                                                        <PasswordResetVerification />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/newPassword"
+                                                                    element={
+                                                                        <PasswordResetNewPassword />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/success"
+                                                                    element={
+                                                                        <PasswordResetSuccess />
+                                                                    }
+                                                                />
 
                                                                 <Route
                                                                     element={
