@@ -44,7 +44,7 @@ export const CustomerOrderProvider = ({ children }) => {
 
     useEffect(() => {
         fetchOrders();
-    });
+    }, [fetchOrders]);
 
     const loadMore = async () => {
         setMoreLoading(true);

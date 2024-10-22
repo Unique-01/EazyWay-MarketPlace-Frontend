@@ -1,4 +1,4 @@
-import AccountSettingsForm from "./Components/AccountSettingsForm";
+import AccountSettingsForm from "shared/components/AccountSettingsForm";
 import BillingInfo from "features/Checkout/BillingInfo";
 import ChangePassword from "features/Auth/components/ChangePassword";
 import { useState } from "react";

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import "./Payments.css";
 import { usePayment } from "features/Merchant/context/PaymentContext";
 import ButtonLoading from "shared/components/ButtonLoading";
+import Loading from "shared/components/Loading";
 
 const CustomerPayment = () => {
     const [customers, setCustomers] = useState([]);
@@ -86,62 +87,73 @@ const CustomerPayment = () => {
                                 </tr>
                             </thead>
                             <tbody className="body mt-5 pt-5">
-                                {currentPayment.map((customer, index) => (
-                                    <tr
-                                        className="align-middle px-0"
-                                        key={index}>
-                                        <td className="ps-4 order-column">
-                                            <div className="d-inline-flex align-items-center gap-1 ">
-                                                <img
-                                                    src={
-                                                        customer.user.image &&
-                                                        customer.user.image.url
-                                                    }
-                                                    alt={
-                                                        customer.user.firstName
-                                                    }
-                                                    className="img-fluid rounded"
-                                                    style={{ maxWidth: "50px" }}
-                                                />
-                                                <div className="order-text fw-normal">
-                                                    {customer.user.firstName}
-                                                    &nbsp;
-                                                    {customer.user.lastName}
+                                {paymentLoading ? (
+                                    <Loading />
+                                ) : (
+                                    currentPayment.map((customer, index) => (
+                                        <tr
+                                            className="align-middle px-0"
+                                            key={index}>
+                                            <td className="ps-4 order-column">
+                                                <div className="d-inline-flex align-items-center gap-1 ">
+                                                    <img
+                                                        src={
+                                                            customer.user
+                                                                .image &&
+                                                            customer.user.image
+                                                                .url
+                                                        }
+                                                        alt={
+                                                            customer.user
+                                                                .firstName
+                                                        }
+                                                        className="img-fluid rounded"
+                                                        style={{
+                                                            maxWidth: "50px",
+                                                        }}
+                                                    />
+                                                    <div className="order-text fw-normal">
+                                                        {
+                                                            customer.user
+                                                                .firstName
+                                                        }
+                                                        &nbsp;
+                                                        {customer.user.lastName}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td className="order-column fade-color">
-                                            {customer.user.email}
-                                        </td>
-                                        <td className="order-text order-column fade-color text-capitalize">
-                                            {customer.paymentMethod}
-                                        </td>
-                                        <td className="order-text order-column fade-color">
-                                            <div>
-                                                <span>
-                                                    {new Date(
-                                                        customer.createdAt
-                                                    ).toLocaleDateString(
-                                                        "de-DE"
-                                                    )}
-                                                </span>
-                                                <br />
-                                                <span className="small text-end">
-                                                    {new Date(
-                                                        customer.createdAt
-                                                    ).toLocaleTimeString(
-                                                        "en-GB",
-                                                        { hour12: true }
-                                                    )}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td className="order-text order-column fade-color">
-                                            ${customer.amount}
-                                        </td>
-                                        <td className="order-column order-text ">
-                                            {customer.statusText}
-                                            {/* <div className="status">
+                                            </td>
+                                            <td className="order-column fade-color">
+                                                {customer.user.email}
+                                            </td>
+                                            <td className="order-text order-column fade-color text-capitalize">
+                                                {customer.paymentMethod}
+                                            </td>
+                                            <td className="order-text order-column fade-color">
+                                                <div>
+                                                    <span>
+                                                        {new Date(
+                                                            customer.createdAt
+                                                        ).toLocaleDateString(
+                                                            "de-DE"
+                                                        )}
+                                                    </span>
+                                                    <br />
+                                                    <span className="small text-end">
+                                                        {new Date(
+                                                            customer.createdAt
+                                                        ).toLocaleTimeString(
+                                                            "en-GB",
+                                                            { hour12: true }
+                                                        )}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td className="order-text order-column fade-color">
+                                                ${customer.amount}
+                                            </td>
+                                            <td className="order-column order-text ">
+                                                {customer.statusText}
+                                                {/* <div className="status">
                                                 {customer.isAvailable ? (
                                                     <span className="low-stock rounded-pill">
                                                         Active
@@ -152,20 +164,21 @@ const CustomerPayment = () => {
                                                     </span>
                                                 )}
                                             </div> */}
-                                        </td>
+                                            </td>
 
-                                        <td>
-                                            <div className="action d-flex gap-2">
-                                                <Link>
-                                                    <BsEye />
-                                                </Link>
-                                                <Link>
-                                                    <FiEdit />
-                                                </Link>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
+                                            <td>
+                                                <div className="action d-flex gap-2">
+                                                    <Link>
+                                                        <BsEye />
+                                                    </Link>
+                                                    <Link>
+                                                        <FiEdit />
+                                                    </Link>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>

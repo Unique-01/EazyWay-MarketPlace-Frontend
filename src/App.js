@@ -55,6 +55,8 @@ import { DashboardStatProvider } from "features/Merchant/context/DashboardStatCo
 import { MerchantOrderProvider } from "features/Merchant/context/MerchantOrderContext";
 import { PaymentProvider } from "features/Merchant/context/PaymentContext";
 import Contact from "pages/Contact/Contact";
+import ResendEmailVerify from "features/Auth/Login/ResendEmailVerify";
+import MerchantAccountSettings from "features/Merchant/pages/AccountSettings";
 
 const stripePK = process.env.REACT_APP_STRIPE_PK;
 // console.log("Stripe key:", stripePK);
@@ -106,6 +108,12 @@ function App() {
                                                                     path="signup/verify_email"
                                                                     element={
                                                                         <EmailVerification />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="resend-otp"
+                                                                    element={
+                                                                        <ResendEmailVerify />
                                                                     }
                                                                 />
                                                                 <Route
@@ -307,6 +315,12 @@ function App() {
                                                                         path="payments"
                                                                         element={
                                                                             <CustomerPayment />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path="account_settings"
+                                                                        element={
+                                                                            <MerchantAccountSettings />
                                                                         }
                                                                     />
                                                                 </Route>

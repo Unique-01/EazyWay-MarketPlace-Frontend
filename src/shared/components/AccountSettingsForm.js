@@ -7,10 +7,15 @@ import config from "config";
 import ButtonLoading from "shared/components/ButtonLoading";
 import HandleApiError from "shared/components/HandleApiError";
 import { NotificationContext } from "shared/context/NotificationContext";
+import Select from "react-select";
+import ProductCategoryContext from "shared/context/ProductCategoryContext";
 
-const AccountSettingsForm = () => {
+const AccountSettingsForm = ({ merchant = false }) => {
     const { user, loading, set_user } = useContext(AuthContext);
     const { showNotification } = useContext(NotificationContext);
+    const { categories } = useContext(ProductCategoryContext);
+    const [categoryOptions, setCategoryOptions] = useState([]);
+    const [selectedCategoryOptions, setSelectedCategoryOptions] = useState([]);
     const [submitLoading, setSubmitLoading] = useState(false);
     const [error, setError] = useState("");
     const [formData, setFormData] = useState({
@@ -18,19 +23,44 @@ const AccountSettingsForm = () => {
         lastName: "",
         telephone: "",
         image: "",
+        username: "",
+        storeName: "",
+        businessAddress: "",
+        businessCategory: [],
     });
     const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
         if (!loading) {
-            console.log(user);
             setFormData((prevFormData) => ({
                 ...prevFormData,
                 ...user,
                 image: user.image ? user.image.playback_url : "",
             }));
+            console.log(user)
         }
     }, [loading, user]);
+
+    useEffect(() => {
+        const formattedOptions = categories.map((category) => ({
+            value: category._id,
+            label: category.title,
+        }));
+        setCategoryOptions(formattedOptions);
+
+        const preselectedCategories = formattedOptions.filter((option) =>
+            formData.businessCategory.includes(option.value)
+        );
+        setSelectedCategoryOptions(preselectedCategories);
+    }, [categories, formData]);
+
+    const handleSelectChange = (selected) => {
+        setSelectedCategoryOptions(selected);
+        setFormData({
+            ...formData,
+            businessCategory: selected.map((item) => item.value),
+        });
+    };
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,11 +82,17 @@ const AccountSettingsForm = () => {
         formDataToSend.append("lastName", formData.lastName);
         formDataToSend.append("username", formData.username);
         formDataToSend.append("telephone", formData.telephone);
+        formDataToSend.append("username", formData.username);
+        formDataToSend.append("storeName", formData.storeName);
+        formDataToSend.append("businessAddress", formData.businessAddress);
+        formDataToSend.append("businessCategory", formData.businessCategory);
         formDataToSend.append("intendedFileName", "image");
 
         if (selectedImage) {
             formDataToSend.append("intendedFile", selectedImage);
         }
+
+        console.log(formData,formDataToSend)
         try {
             const response = await apiClient.put(
                 `${config.API_BASE_URL}/user`,
@@ -112,7 +148,7 @@ const AccountSettingsForm = () => {
                             />
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label
                                 htmlFor="telephone"
                                 className="form-label billing-label">
@@ -127,6 +163,91 @@ const AccountSettingsForm = () => {
                                 disabled={submitLoading}
                             />
                         </div>
+                        {merchant && (
+                            <div>
+                                <div className="mb-2">
+                                    <label
+                                        htmlFor="username"
+                                        className="form-label billing-label">
+                                        Username
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control input"
+                                        name="username"
+                                        value={formData.username}
+                                        onChange={handleInputChange}
+                                        disabled={submitLoading}
+                                    />
+                                </div>
+                                <div className="mb-2">
+                                    <label
+                                        htmlFor="storeName"
+                                        className="form-label billing-label">
+                                        Store Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control input"
+                                        name="storeName"
+                                        value={formData.storeName}
+                                        onChange={handleInputChange}
+                                        disabled={submitLoading}
+                                    />
+                                </div>
+                                <div className="mb-2">
+                                    <label
+                                        htmlFor="businessAddress"
+                                        className="form-label billing-label">
+                                        Business Address
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control input"
+                                        name="businessAddress"
+                                        value={formData.businessAddress}
+                                        onChange={handleInputChange}
+                                        disabled={submitLoading}
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="businessAddress"
+                                        className="form-label billing-label">
+                                        Business Category
+                                    </label>
+                                    <Select
+                                        isMulti
+                                        value={selectedCategoryOptions}
+                                        onChange={handleSelectChange}
+                                        options={categoryOptions}
+                                        placeholder="Business Categories"
+                                        className={`m-0 p-0 text-start business-category-select`}
+                                        required
+                                        // styles={{
+                                        //     control: (baseStyles, state) => {
+                                        //         const borderColor = errors.businessCategory
+                                        //             ? "red"
+                                        //             : state.isFocused
+                                        //             ? "#00b207"
+                                        //             : baseStyles.borderColor;
+
+                                        //         return {
+                                        //             ...baseStyles,
+                                        //             borderColor,
+                                        //             boxShadow: state.isFocused
+                                        //                 ? "none"
+                                        //                 : baseStyles.boxShadow,
+                                        //             "&:hover": {
+                                        //                 borderColor,
+                                        //             },
+                                        //         };
+                                        //     },
+                                        // }}
+                                    />
+                                </div>
+                            </div>
+                        )}
                         <button
                             className="btn-primary btn text-white rounded-pill fw-semibold p-3"
                             style={{ fontSize: "13px" }}

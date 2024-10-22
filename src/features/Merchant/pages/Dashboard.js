@@ -48,6 +48,7 @@ const MerchantDashboard = () => {
                         <TopSellingProduct
                             productList={topSellingProducts}
                             itemsPerPage={5}
+                            loading={statLoading}
                         />
                     </div>
                     <div className="col-lg-4">

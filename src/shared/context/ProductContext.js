@@ -1,14 +1,12 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import config from "config";
-import { AuthContext } from "./AuthContext";
 
 const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { user, loading: userLoading } = useContext(AuthContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [moreLoading, setMoreLoading] = useState(false);
     const [hasNextPage, setHasNextPage] = useState(false);
@@ -30,7 +28,7 @@ export const ProductProvider = ({ children }) => {
         };
 
         fetchProducts();
-    }, [user, userLoading]);
+    }, []);
 
     const loadMore = async () => {
         setMoreLoading(true);

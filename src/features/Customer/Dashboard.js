@@ -16,7 +16,6 @@ const CustomerDashBoard = () => {
     useEffect(() => {
         if (!orderLoading) {
             setOrderList(orders);
-            console.log(orders);
         }
     }, [orderLoading, orders]);
 

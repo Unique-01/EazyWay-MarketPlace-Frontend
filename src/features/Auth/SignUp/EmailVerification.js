@@ -31,7 +31,6 @@ const EmailVerification = () => {
         } finally {
             setLoading(false);
         }
-        navigate("/signup/success");
     };
 
     return (

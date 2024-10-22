@@ -8,6 +8,7 @@ import { MdArrowForwardIos } from "react-icons/md";
 import FormattedDate from "shared/components/FormattedDate";
 import { useCustomerOrder } from "../context/OrderContext";
 import ButtonLoading from "shared/components/ButtonLoading";
+import Loading from "shared/components/Loading";
 
 const OrderTable = ({
     orderList,
@@ -30,6 +31,10 @@ const OrderTable = ({
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
+    if(!orderList){
+        return <Loading/>
+    }
 
     return (
         <div className="order-table">

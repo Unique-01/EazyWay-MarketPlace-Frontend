@@ -7,9 +7,10 @@ import { Link } from "react-router-dom";
 import FormattedDate from "shared/components/FormattedDate";
 import { useMerchantOrder } from "features/Merchant/context/MerchantOrderContext";
 import ButtonLoading from "shared/components/ButtonLoading";
+import Loading from "shared/components/Loading";
 
 const MerchantOrderTable = ({ orderList, itemsPerPage, full = true }) => {
-    const { moreLoading, hasNextPage, loadMore } = useMerchantOrder();
+    const { moreLoading, hasNextPage, loadMore,loading:orderLoading } = useMerchantOrder();
     const [currentPage, setCurrentPage] = useState(1);
     const totalItems = orderList.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -71,7 +72,8 @@ const MerchantOrderTable = ({ orderList, itemsPerPage, full = true }) => {
                             </tr>
                         </thead>
                         <tbody className="body mt-5 pt-5">
-                            {currentOrders.map((order, index) => (
+
+                            {orderLoading ? <Loading/> : currentOrders.map((order, index) => (
                                 <tr
                                     className="align-middle px-0"
                                     key={order._id}>

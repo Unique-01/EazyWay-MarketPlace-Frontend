@@ -77,7 +77,7 @@ const CheckoutForm = ({ clientSecret, carts }) => {
                         <div className="alert alert-danger mt-3">{error}</div>
                     )}
 
-                    {clientSecret && <PaymentElement />}
+                    {clientSecret ? <PaymentElement /> : <Loading />}
 
                     <button
                         className="btn btn-primary text-white w-100 mt-3 fw-semibold"
@@ -155,12 +155,12 @@ const CheckoutWrapper = ({ stripePromise }) => {
 
     const options = { clientSecret };
 
-    return (
-        clientSecret && (
-            <Elements stripe={stripePromise} options={options}>
-                <CheckoutForm clientSecret={clientSecret} carts={carts} />
-            </Elements>
-        )
+    return clientSecret ? (
+        <Elements stripe={stripePromise} options={options}>
+            <CheckoutForm clientSecret={clientSecret} carts={carts} />
+        </Elements>
+    ) : (
+        <Loading />
     );
 };
 

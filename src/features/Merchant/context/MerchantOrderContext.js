@@ -19,33 +19,59 @@ export const MerchantOrderProvider = ({ children }) => {
     const [moreLoading, setMoreLoading] = useState(false);
     const [hasNextPage, setHasNextPage] = useState(false);
 
+    // const fetchOrders = useCallback(async () => {
+    //     if (!userLoading && user && user.privilege === "merchant") {
+    //         try {
+    //             const response = await apiClient.get(
+    //                 `${config.API_BASE_URL}/product/order/merchant`
+    //             );
+
+    //             setCurrentPage(response.data.data.page);
+    //             setHasNextPage(response.data.data.hasNextPage);
+
+    //             const orderResponse = response.data.data.docs;
+    //             const sortedOrders = [...orderResponse].sort(
+    //                 (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    //             );
+    //             console.log(sortedOrders);
+    //             setOrders(sortedOrders);
+    //         } catch (error) {
+    //             console.error("Error fetching orders:", error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     }
+    // }, [userLoading, user]);
+
+    // useEffect(() => {
+    //     fetchOrders();
+    // }, [fetchOrders]);
     const fetchOrders = useCallback(async () => {
-        if (!userLoading && user && user.privilege === "merchant") {
-            try {
-                const response = await apiClient.get(
-                    `${config.API_BASE_URL}/product/order/merchant`
-                );
+        try {
+            const response = await apiClient.get(
+                `${config.API_BASE_URL}/product/order/merchant`
+            );
 
-                setCurrentPage(response.data.data.page);
-                setHasNextPage(response.data.data.hasNextPage);
+            setCurrentPage(response.data.data.page);
+            setHasNextPage(response.data.data.hasNextPage);
 
-                const orderResponse = response.data.data.docs;
-                const sortedOrders = [...orderResponse].sort(
-                    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-                );
-                console.log(sortedOrders);
-                setOrders(sortedOrders);
-            } catch (error) {
-                console.error("Error fetching orders:", error);
-            } finally {
-                setLoading(false);
-            }
+            const orderResponse = response.data.data.docs;
+            const sortedOrders = [...orderResponse].sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+            setOrders(sortedOrders);
+        } catch (error) {
+            console.error("Error fetching orders:", error);
+        } finally {
+            setLoading(false);
         }
-    }, [userLoading, user]);
+    }, []);
 
     useEffect(() => {
-        fetchOrders();
-    }, [fetchOrders]);
+        if (!userLoading && user && user.privilege === "merchant") {
+            fetchOrders();
+        }
+    }, [fetchOrders, userLoading, user]);
 
     const loadMore = async () => {
         setMoreLoading(true);

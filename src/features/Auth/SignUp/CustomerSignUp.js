@@ -6,7 +6,6 @@ import { useEmail } from "shared/context/EmailContext";
 import HandleApiError from "shared/components/HandleApiError";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-console.log(API_BASE_URL);
 
 const CustomerSignUp = () => {
     const navigate = useNavigate();

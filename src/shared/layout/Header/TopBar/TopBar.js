@@ -32,10 +32,10 @@ const TopBar = () => {
                 <div className="d-flex justify-content-between align-items-center gap-4">
                     {user && user.privilege === "merchant" ? (
                         <>
-                            <Link to="/wishlist">
+                            <Link to="/merchant/account_settings">
                                 <CiSettings />
                             </Link>
-                            <Link to="/shopping_cart">
+                            <Link to="/">
                                 <FaRegBell />
                             </Link>
                         </>

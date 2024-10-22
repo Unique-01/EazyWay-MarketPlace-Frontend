@@ -60,8 +60,6 @@ const OTPVerification = ({ onSubmit, onResendOTP, length, loading, error }) => {
                             Submit {loading && <ButtonLoading />}
                         </button>
 
-                        {error && <p className="text-danger">{error}</p>}
-
                         {/* Resend OTP button */}
                         <p className="mt-3 no-account">
                             Didn't receive the code?{" "}

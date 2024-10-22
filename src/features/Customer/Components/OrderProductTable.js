@@ -1,4 +1,3 @@
-import CartItems from "features/Products/products.json";
 import "./OrderProduct.css";
 
 const OrderProductTable = ({ orderProduct }) => {

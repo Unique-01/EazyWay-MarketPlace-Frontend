@@ -12,11 +12,15 @@ import config from "config";
 import ConfirmDeleteModal from "shared/components/ConfirmDelete";
 import MerchantProductContext from "shared/context/MerchantProductContext";
 import ButtonLoading from "shared/components/ButtonLoading";
+import Loading from "shared/components/Loading";
 
 const MerchantProductTable = ({ productList, itemsPerPage }) => {
-    const { moreLoading, hasNextPage, loadMore } = useContext(
-        MerchantProductContext
-    );
+    const {
+        moreLoading,
+        hasNextPage,
+        loadMore,
+        loading: productLoading,
+    } = useContext(MerchantProductContext);
     const [showModal, setShowModal] = useState(false);
     const [itemToDelete, setItemToDelete] = useState({});
     const { showNotification } = useContext(NotificationContext);
@@ -108,86 +112,95 @@ const MerchantProductTable = ({ productList, itemsPerPage }) => {
                             </tr>
                         </thead>
                         <tbody className="body mt-5 pt-5">
-                            {currentProducts.map((product, index) => (
-                                <tr className="align-middle px-0" key={index}>
-                                    <td className="ps-4 order-column">
-                                        <span className="d-flex  gap-2 align-items-center">
-                                            <input
-                                                type="checkbox"
-                                                className="form-check-input shadow-none"
-                                                id="select"
-                                            />
-                                            <div className="d-inline-flex align-items-center gap-1 ">
-                                                {product.image.length > 0 && (
-                                                    <img
-                                                        src={
-                                                            product.image[0].url
-                                                        }
-                                                        alt={product.title}
-                                                        className="img-fluid rounded"
-                                                        style={{
-                                                            maxWidth: "50px",
-                                                        }}
-                                                    />
-                                                )}
-                                                <div className="order-text fw-normal">
-                                                    <span className="item-name">
-                                                        {product.title}
-                                                    </span>
-                                                    <br />
-                                                    <span className="other-product fade-color">
-                                                        +{" "}
-                                                        {
-                                                            product.variations
-                                                                .length
-                                                        }{" "}
-                                                        Variant(s)
-                                                    </span>
+                            {productLoading ? (
+                                <Loading />
+                            ) : (
+                                currentProducts.map((product, index) => (
+                                    <tr
+                                        className="align-middle px-0"
+                                        key={index}>
+                                        <td className="ps-4 order-column">
+                                            <span className="d-flex  gap-2 align-items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    className="form-check-input shadow-none"
+                                                    id="select"
+                                                />
+                                                <div className="d-inline-flex align-items-center gap-1 ">
+                                                    {product.image.length >
+                                                        0 && (
+                                                        <img
+                                                            src={
+                                                                product.image[0]
+                                                                    .url
+                                                            }
+                                                            alt={product.title}
+                                                            className="img-fluid rounded"
+                                                            style={{
+                                                                maxWidth:
+                                                                    "50px",
+                                                            }}
+                                                        />
+                                                    )}
+                                                    <div className="order-text fw-normal">
+                                                        <span className="item-name">
+                                                            {product.title}
+                                                        </span>
+                                                        <br />
+                                                        <span className="other-product fade-color">
+                                                            +{" "}
+                                                            {
+                                                                product
+                                                                    .variations
+                                                                    .length
+                                                            }{" "}
+                                                            Variant(s)
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </span>
-                                    </td>
-                                    <td
-                                        className="order-column"
-                                        style={{
-                                            color: "#5C59E8",
-                                            fontWeight: "600",
-                                        }}>
-                                        {product.sku}
-                                    </td>
-                                    <td className="order-text order-column fade-color">
-                                        {product.category.title}
-                                    </td>
-                                    <td className="order-text order-column">
-                                        {product.quantity}
-                                    </td>
-                                    <td className="order-text order-column fade-color">
-                                        ${product.amount}
-                                    </td>
-                                    <td className="">
-                                        <div className="merchant-product-status">
-                                            {product.availType ===
-                                            "published" ? (
-                                                product.quantity <= 20 ? (
-                                                    <span className="text-danger rounded-pill">
-                                                        Low Stock
+                                            </span>
+                                        </td>
+                                        <td
+                                            className="order-column"
+                                            style={{
+                                                color: "#5C59E8",
+                                                fontWeight: "600",
+                                            }}>
+                                            {product.sku}
+                                        </td>
+                                        <td className="order-text order-column fade-color">
+                                            {product.category.title}
+                                        </td>
+                                        <td className="order-text order-column">
+                                            {product.quantity}
+                                        </td>
+                                        <td className="order-text order-column fade-color">
+                                            ${product.amount}
+                                        </td>
+                                        <td className="">
+                                            <div className="merchant-product-status">
+                                                {product.availType ===
+                                                "published" ? (
+                                                    product.quantity <= 20 ? (
+                                                        <span className="text-danger rounded-pill">
+                                                            Low Stock
+                                                        </span>
+                                                    ) : (
+                                                        <span className="in-stock rounded-pill">
+                                                            In Stock
+                                                        </span>
+                                                    )
+                                                ) : product.availType ===
+                                                  "in-review" ? (
+                                                    <span className="low-stock rounded-pill">
+                                                        In review
                                                     </span>
                                                 ) : (
-                                                    <span className="in-stock rounded-pill">
-                                                        In Stock
+                                                    <span className="bg-light text-secondary rounded-pill">
+                                                        Draft
                                                     </span>
-                                                )
-                                            ) : product.availType ===
-                                              "in-review" ? (
-                                                <span className="low-stock rounded-pill">
-                                                    In review
-                                                </span>
-                                            ) : (
-                                                <span className="bg-light text-secondary rounded-pill">
-                                                    Draft
-                                                </span>
-                                            )}
-                                            {/* {product.quantity <= 20 ? (
+                                                )}
+                                                {/* {product.quantity <= 20 ? (
                                                 <span className="low-stock rounded-pill">
                                                     Low Stock
                                                 </span>
@@ -196,34 +209,35 @@ const MerchantProductTable = ({ productList, itemsPerPage }) => {
                                                     In Stock
                                                 </span>
                                             )} */}
-                                        </div>
-                                    </td>
-                                    <td className="order-column fade-color">
-                                        <FormattedDate
-                                            date={product.createdAt}
-                                        />
-                                    </td>
-                                    <td>
-                                        <div className="action d-flex gap-2">
-                                            <Link
-                                                to={`/merchant/products/${product._id}`}>
-                                                <BsEye />
-                                            </Link>
-                                            <Link
-                                                to={`/merchant/products/${product._id}/edit`}>
-                                                <RiPencilLine />
-                                            </Link>
-                                            <button
-                                                className="border-0 bg-white text-danger"
-                                                onClick={() =>
-                                                    handleDelete(product)
-                                                }>
-                                                <FaRegTrashAlt />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
+                                            </div>
+                                        </td>
+                                        <td className="order-column fade-color">
+                                            <FormattedDate
+                                                date={product.createdAt}
+                                            />
+                                        </td>
+                                        <td>
+                                            <div className="action d-flex gap-2">
+                                                <Link
+                                                    to={`/merchant/products/${product._id}`}>
+                                                    <BsEye />
+                                                </Link>
+                                                <Link
+                                                    to={`/merchant/products/${product._id}/edit`}>
+                                                    <RiPencilLine />
+                                                </Link>
+                                                <button
+                                                    className="border-0 bg-white text-danger"
+                                                    onClick={() =>
+                                                        handleDelete(product)
+                                                    }>
+                                                    <FaRegTrashAlt />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
