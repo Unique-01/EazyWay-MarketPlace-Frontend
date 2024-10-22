@@ -53,7 +53,7 @@ const LoginForm = ({ onSubmit, loading, error }) => {
                                     disabled={loading}
                                 />
                                 <div className="d-flex justify-content-between px-0">
-                                    <div className="">
+                                    {/* <div className="">
                                         <input
                                             type="checkbox"
                                             className="form-check-input"
@@ -64,11 +64,12 @@ const LoginForm = ({ onSubmit, loading, error }) => {
                                             htmlFor="remember">
                                             Remember Me
                                         </label>
-                                    </div>
+                                    </div> */}
+                                    {/* <Link to="/resend-otp">Verify Email</Link> */}
                                     <Link
                                         to="/reset_password"
                                         className="forget-password">
-                                        Forget Password
+                                        Forgotten Password?
                                     </Link>
                                 </div>
                                 <button
@@ -84,6 +85,14 @@ const LoginForm = ({ onSubmit, loading, error }) => {
                                     to="/signup/customer"
                                     className="text-black fw-semibold">
                                     Register
+                                </Link>
+                            </p>
+                            <p className="no-account mt-3">
+                                Email not verified?{" "}
+                                <Link
+                                    to="/resend-otp"
+                                    className="text-black fw-semibold">
+                                    Verify
                                 </Link>
                             </p>
                         </div>

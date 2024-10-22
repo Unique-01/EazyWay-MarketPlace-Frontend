@@ -54,6 +54,9 @@ import { CustomerOrderProvider } from "features/Customer/context/OrderContext";
 import { DashboardStatProvider } from "features/Merchant/context/DashboardStatContext";
 import { MerchantOrderProvider } from "features/Merchant/context/MerchantOrderContext";
 import { PaymentProvider } from "features/Merchant/context/PaymentContext";
+import Contact from "pages/Contact/Contact";
+import ResendEmailVerify from "features/Auth/Login/ResendEmailVerify";
+import MerchantAccountSettings from "features/Merchant/pages/AccountSettings";
 
 const stripePK = process.env.REACT_APP_STRIPE_PK;
 // console.log("Stripe key:", stripePK);
@@ -108,6 +111,12 @@ function App() {
                                                                     }
                                                                 />
                                                                 <Route
+                                                                    path="resend-otp"
+                                                                    element={
+                                                                        <ResendEmailVerify />
+                                                                    }
+                                                                />
+                                                                <Route
                                                                     path="login"
                                                                     element={
                                                                         <LoginOverview />
@@ -150,6 +159,30 @@ function App() {
                                                                         <PasswordResetSuccess />
                                                                     }
                                                                 />
+                                                                <Route
+                                                                    path="reset_password"
+                                                                    element={
+                                                                        <PasswordResetOverview />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/verification"
+                                                                    element={
+                                                                        <PasswordResetVerification />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/newPassword"
+                                                                    element={
+                                                                        <PasswordResetNewPassword />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/success"
+                                                                    element={
+                                                                        <PasswordResetSuccess />
+                                                                    }
+                                                                />
 
                                                                 <Route
                                                                     element={
@@ -165,6 +198,12 @@ function App() {
                                                                         path="checkout"
                                                                         element={
                                                                             <CheckoutPage />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path="contact"
+                                                                        element={
+                                                                            <Contact />
                                                                         }
                                                                     />
                                                                     <Route
@@ -300,6 +339,12 @@ function App() {
                                                                         path="payments"
                                                                         element={
                                                                             <CustomerPayment />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path="account_settings"
+                                                                        element={
+                                                                            <MerchantAccountSettings />
                                                                         }
                                                                     />
                                                                 </Route>

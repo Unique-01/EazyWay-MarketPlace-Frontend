@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import RecentOrder from "./Components/OrderTable";
 // import OrderList from "./order.json";
 import { useCustomerOrder } from "./context/OrderContext";
+// import OrderList from "./order.json";
 
 const CustomerDashBoard = () => {
     const { user, loading } = useContext(AuthContext);
@@ -16,7 +17,6 @@ const CustomerDashBoard = () => {
     useEffect(() => {
         if (!orderLoading) {
             setOrderList(orders);
-            console.log(orders);
         }
     }, [orderLoading, orders]);
 
@@ -69,6 +69,7 @@ const CustomerDashBoard = () => {
                                 <p className="profile-info">
                                     {user.extras && user.extras.email}
                                 </p>
+                                
                             </div>
                             <div>
                                 <p className="profile-info-head">

@@ -8,9 +8,11 @@ import Loading from "shared/components/Loading";
 import { Pagination } from "react-bootstrap";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
+import ButtonLoading from "shared/components/ButtonLoading";
 
 const ProductList = () => {
-    const { products, loading } = useContext(ProductContext);
+    const { products, loading, moreLoading, hasNextPage, loadMore } =
+        useContext(ProductContext);
     const [productList, setProductList] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [sortOption, setSortOption] = useState("latest");
@@ -132,6 +134,16 @@ const ProductList = () => {
                             </Pagination.Next>
                         </Pagination>
                     </div>
+                    {totalPages === currentPage && (
+                        <div className="text-center mb-2">
+                            <button
+                                className="btn btn-primary text-white"
+                                onClick={loadMore}
+                                disabled={moreLoading || !hasNextPage}>
+                                Load More {moreLoading && <ButtonLoading />}
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

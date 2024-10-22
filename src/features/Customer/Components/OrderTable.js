@@ -6,6 +6,9 @@ import { Pagination } from "react-bootstrap";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
 import FormattedDate from "shared/components/FormattedDate";
+import { useCustomerOrder } from "../context/OrderContext";
+import ButtonLoading from "shared/components/ButtonLoading";
+import Loading from "shared/components/Loading";
 
 const OrderTable = ({
     orderList,
@@ -14,6 +17,7 @@ const OrderTable = ({
     full = false,
     limit,
 }) => {
+    const { moreLoading, hasNextPage, loadMore } = useCustomerOrder();
     const [currentPage, setCurrentPage] = useState(1);
     const totalPages = Math.ceil(orderList.length / itemsPerPage);
 
@@ -28,6 +32,10 @@ const OrderTable = ({
         setCurrentPage(pageNumber);
     };
 
+    if(!orderList){
+        return <Loading/>
+    }
+
     return (
         <div className="order-table">
             <div className="border rounded">
@@ -35,6 +43,13 @@ const OrderTable = ({
                     <h5 className="text-black fw-semibold text-capitalize">
                         {heading}
                     </h5>
+                    {!full && (
+                        <Link
+                            to="/customer/order_history"
+                            className="poppins small">
+                            View All
+                        </Link>
+                    )}
                     {!full && (
                         <Link
                             to="/customer/order_history"
@@ -71,6 +86,16 @@ const OrderTable = ({
                                             ${order.amount}&nbsp;(
                                             {order.carts.length} Products)
                                         </td>
+                                        <td className="">{order.itemId}</td>
+                                        <td className="">
+                                            <FormattedDate
+                                                date={order.createdAt}
+                                            />
+                                        </td>
+                                        <td>
+                                            ${order.amount}&nbsp;(
+                                            {order.carts.length} Products)
+                                        </td>
                                         <td className="orderStatus">
                                             {order.isCompleted ? (
                                                 <span className="order-completed rounded-pill">
@@ -90,6 +115,12 @@ const OrderTable = ({
                                                         View
                                                     </Link>
                                                 )}
+                                                {full && (
+                                                    <Link
+                                                        to={`/customer/order_history/${order._id}`}>
+                                                        View
+                                                    </Link>
+                                                )}
                                                 <CiSaveDown1
                                                     style={{ fontSize: "20px" }}
                                                 />
@@ -102,29 +133,41 @@ const OrderTable = ({
                 </div>
             </div>
             {full && (
-                <div className="mt-3">
-                    <Pagination>
-                        <Pagination.Prev
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                            disabled={currentPage === 1}>
-                            <MdArrowBackIosNew />
-                        </Pagination.Prev>
+                <>
+                    <div className="mt-3">
+                        <Pagination>
+                            <Pagination.Prev
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                                disabled={currentPage === 1}>
+                                <MdArrowBackIosNew />
+                            </Pagination.Prev>
 
-                        {Array.from({ length: totalPages }, (_, idx) => (
-                            <Pagination.Item
-                                key={idx + 1}
-                                active={idx + 1 === currentPage}
-                                onClick={() => handlePageChange(idx + 1)}>
-                                {idx + 1}
-                            </Pagination.Item>
-                        ))}
-                        <Pagination.Next
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                            disabled={currentPage === totalPages}>
-                            <MdArrowForwardIos />
-                        </Pagination.Next>
-                    </Pagination>
-                </div>
+                            {Array.from({ length: totalPages }, (_, idx) => (
+                                <Pagination.Item
+                                    key={idx + 1}
+                                    active={idx + 1 === currentPage}
+                                    onClick={() => handlePageChange(idx + 1)}>
+                                    {idx + 1}
+                                </Pagination.Item>
+                            ))}
+                            <Pagination.Next
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}>
+                                <MdArrowForwardIos />
+                            </Pagination.Next>
+                        </Pagination>
+                    </div>
+                    {totalPages === currentPage && (
+                        <div className="text-center mb-2">
+                            <button
+                                className="btn btn-primary text-white"
+                                onClick={loadMore}
+                                disabled={moreLoading || !hasNextPage}>
+                                Load More {moreLoading && <ButtonLoading />}
+                            </button>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     );

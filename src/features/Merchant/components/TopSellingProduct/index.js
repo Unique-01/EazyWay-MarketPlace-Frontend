@@ -2,8 +2,9 @@ import "./TopSellingProduct.css";
 import { useState } from "react";
 import MerchantPagination from "../MerchantPagination";
 import { VscSettings } from "react-icons/vsc";
+import Loading from "shared/components/Loading";
 
-const TopSellingProduct = ({ productList, itemsPerPage }) => {
+const TopSellingProduct = ({ productList, itemsPerPage, loading }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const totalItems = productList.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -57,69 +58,82 @@ const TopSellingProduct = ({ productList, itemsPerPage }) => {
                             </tr>
                         </thead>
                         <tbody className="body mt-5 pt-5">
-                            {currentProduct.map((product, index) => (
-                                <tr className="align-middle px-0" key={index}>
-                                    <td className="ps-4">
-                                        <div className="d-inline-flex align-items-center gap-3 ">
-                                            {product.product.image &&
-                                            product.product.image.length > 0 ? (
-                                                <img
-                                                    src={
-                                                        product.product.image[0]
-                                                            .url
-                                                    }
-                                                    alt={product.product.title}
-                                                    className="img-fluid"
-                                                    style={{ maxWidth: "50px" }}
-                                                />
-                                            ) : (
-                                                ""
-                                            )}
-                                            <div className="product-text fw-normal">
-                                                <span className="item-name">
-                                                    {product.product.title}
-                                                </span>
-                                                <br />
-                                                <span className="sku">
-                                                    SKU: {product.product.sku}
-                                                </span>
+                            {loading ? (
+                                <Loading />
+                            ) : (
+                                currentProduct.map((product, index) => (
+                                    <tr
+                                        className="align-middle px-0"
+                                        key={index}>
+                                        <td className="ps-4">
+                                            <div className="d-inline-flex align-items-center gap-3 ">
+                                                {product.product.image &&
+                                                product.product.image.length >
+                                                    0 ? (
+                                                    <img
+                                                        src={
+                                                            product.product
+                                                                .image[0].url
+                                                        }
+                                                        alt={
+                                                            product.product
+                                                                .title
+                                                        }
+                                                        className="img-fluid"
+                                                        style={{
+                                                            maxWidth: "50px",
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    ""
+                                                )}
+                                                <div className="product-text fw-normal">
+                                                    <span className="item-name">
+                                                        {product.product.title}
+                                                    </span>
+                                                    <br />
+                                                    <span className="sku">
+                                                        SKU:{" "}
+                                                        {product.product.sku}
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td className="product-text product-column">
-                                        {product.salesCount}
-                                    </td>
-                                    <td className="product-text product-column">
-                                        ${product.salesAmount}
-                                    </td>
-                                    <td className="product-text product-column">
-                                        ${product.product.amount}
-                                    </td>
-                                    <td className="product-column">
-                                        <div className="merchant-product-status">
-                                            {product.product.availType ===
-                                            "published" ? (
-                                                product.product.quantity <=
-                                                20 ? (
-                                                    <span className="text-danger rounded-pill">
-                                                        Low Stock
+                                        </td>
+                                        <td className="product-text product-column">
+                                            {product.salesCount}
+                                        </td>
+                                        <td className="product-text product-column">
+                                            ${product.salesAmount}
+                                        </td>
+                                        <td className="product-text product-column">
+                                            ${product.product.amount}
+                                        </td>
+                                        <td className="product-column">
+                                            <div className="merchant-product-status">
+                                                {product.product.availType ===
+                                                "published" ? (
+                                                    product.product.quantity <=
+                                                    20 ? (
+                                                        <span className="text-danger rounded-pill">
+                                                            Low Stock
+                                                        </span>
+                                                    ) : (
+                                                        <span className="in-stock rounded-pill">
+                                                            In Stock
+                                                        </span>
+                                                    )
+                                                ) : product.product
+                                                      .availType ===
+                                                  "in-review" ? (
+                                                    <span className="low-stock rounded-pill">
+                                                        In review
                                                     </span>
                                                 ) : (
-                                                    <span className="in-stock rounded-pill">
-                                                        In Stock
+                                                    <span className="bg-light text-secondary rounded-pill">
+                                                        Draft
                                                     </span>
-                                                )
-                                            ) : product.product.availType ===
-                                              "in-review" ? (
-                                                <span className="low-stock rounded-pill">
-                                                    In review
-                                                </span>
-                                            ) : (
-                                                <span className="bg-light text-secondary rounded-pill">
-                                                    Draft
-                                                </span>
-                                            )}
-                                            {/* {product.quantity <= 20 ? (
+                                                )}
+                                                {/* {product.quantity <= 20 ? (
                                                 <span className="low-stock rounded-pill">
                                                     Low Stock
                                                 </span>
@@ -128,10 +142,11 @@ const TopSellingProduct = ({ productList, itemsPerPage }) => {
                                                     In Stock
                                                 </span>
                                             )} */}
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>

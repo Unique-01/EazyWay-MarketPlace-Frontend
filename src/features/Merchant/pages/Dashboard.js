@@ -30,7 +30,7 @@ const MerchantDashboard = () => {
 
     useEffect(() => {
         if (!orderLoading) {
-            setOrderList(orders);
+            setOrderList(orders.slice(0, 8));
         }
     }, [orderLoading, orders]);
 
@@ -48,6 +48,7 @@ const MerchantDashboard = () => {
                         <TopSellingProduct
                             productList={topSellingProducts}
                             itemsPerPage={5}
+                            loading={statLoading}
                         />
                     </div>
                     <div className="col-lg-4">
@@ -75,6 +76,7 @@ const MerchantDashboard = () => {
                     <MerchantOrderTable
                         orderList={orderList}
                         itemsPerPage={4}
+                        full={false}
                     />
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { GoChecklist } from "react-icons/go";
 import { FaChartLine } from "react-icons/fa";
@@ -16,8 +16,10 @@ import { AuthContext } from "shared/context/AuthContext";
 
 const SideNav = ({ onCollapse, isOpen }) => {
     const { logout } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleLogout = () => {
+        navigate("/");
         logout();
     };
     const handleCollapse = () => {
@@ -95,7 +97,7 @@ const SideNav = ({ onCollapse, isOpen }) => {
                         <AiOutlineDollar className="nav-icon" />
                         <span className="">Payment</span>
                     </NavLink>
-                    <NavLink to="/merchant/settings" className="nav-link w-100">
+                    <NavLink to="/merchant/account_settings" className="nav-link w-100">
                         <IoMdSettings className="nav-icon" />
                         <span className="">Settings</span>
                     </NavLink>
