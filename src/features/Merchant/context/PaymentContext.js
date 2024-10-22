@@ -34,7 +34,7 @@ export const PaymentProvider = ({ children }) => {
                 );
                 setPayment(sortedPayment);
             } catch (error) {
-                console.error("Error fetching orders:", error);
+                console.error("Error fetching payments:", error);
             } finally {
                 setLoading(false);
             }
