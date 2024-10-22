@@ -59,9 +59,17 @@ const TestimonialCarousel = () => {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 3,
                     slidesToScroll: 2,
-                      initialSlide: 2
+                    initialSlide: 2,
+                },
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    initialSlide: 2,
                 },
             },
             {
@@ -76,7 +84,9 @@ const TestimonialCarousel = () => {
 
     return (
         <div className="py-5 text-dark">
-            <h4 className=" ps-2 testimonial-heading poppins">Client Testimonials</h4>
+            <h4 className=" ps-2 testimonial-heading poppins">
+                Client Testimonials
+            </h4>
             <Slider {...settings}>
                 {testimonials.map((testimonial, index) => (
                     <div className="px-2 pt-4" key={index}>

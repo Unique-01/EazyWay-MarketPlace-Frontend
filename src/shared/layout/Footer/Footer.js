@@ -7,8 +7,13 @@ import Discover from "assets/images/Discover.svg";
 import Mastercard from "assets/images/Mastercard.svg";
 import SecurePayment from "assets/images/SecurePayment.svg";
 import Visa from "assets/images/Visa.svg";
+import { useAuth } from "shared/context/AuthContext";
+import { useContext } from "react";
+import ProductCategoryContext from "shared/context/ProductCategoryContext";
 
 const Footer = () => {
+    const { user } = useAuth();
+    const { categories } = useContext(ProductCategoryContext);
     return (
         <>
             <Outlet />
@@ -24,12 +29,12 @@ const Footer = () => {
                                         alt="EazyWay MarketPlace"
                                         className="app-logo"
                                     />
-                                    <p className="text-secondary">
+                                    {/* <p className="text-secondary">
                                         Morbi cursus porttitor enim lobortis
                                         molestie.
                                         <br /> Duis gravida turpis dui, eget
                                         bibendum magna congue nec.
-                                    </p>
+                                    </p> */}
                                 </div>
                             </div>
                             <div className="col-lg-8 ">
@@ -38,16 +43,36 @@ const Footer = () => {
                                         <p className="text-white nav-link">
                                             My Account
                                         </p>
-                                        <Link to="" className="nav-link">
+                                        <Link
+                                            to={
+                                                user
+                                                    ? user.privilege === "buyer"
+                                                        ? "/customer"
+                                                        : "/merchant"
+                                                    : "/login"
+                                            }
+                                            className="nav-link">
                                             My Account
                                         </Link>
-                                        <Link to="" className="nav-link">
+                                        <Link
+                                            to={
+                                                user
+                                                    ? user.privilege === "buyer"
+                                                        ? "/customer/order_history"
+                                                        : "merchant/order_history"
+                                                    : "/login"
+                                            }
+                                            className="nav-link">
                                             Order History
                                         </Link>
-                                        <Link to="" className="nav-link">
+                                        <Link
+                                            to="/shopping_cart"
+                                            className="nav-link">
                                             Shopping Cart
                                         </Link>
-                                        <Link to="" className="nav-link">
+                                        <Link
+                                            to="/wishlist"
+                                            className="nav-link">
                                             Wishlist
                                         </Link>
                                     </nav>
@@ -55,7 +80,9 @@ const Footer = () => {
                                         <p className="text-white nav-link">
                                             Helps
                                         </p>
-                                        <Link to="" className="nav-link">
+                                        <Link
+                                            to="/contact"
+                                            className="nav-link">
                                             Contact
                                         </Link>
                                         <Link to="" className="nav-link">
@@ -75,24 +102,33 @@ const Footer = () => {
                                         <Link to="" className="nav-link">
                                             About
                                         </Link>
-                                        <Link to="" className="nav-link">
+                                        <Link
+                                            to="/products"
+                                            className="nav-link">
                                             Shop
                                         </Link>
-                                        <Link to="" className="nav-link">
+                                        <Link
+                                            to="/products"
+                                            className="nav-link">
                                             Product
-                                        </Link>
-                                        <Link to="" className="nav-link">
-                                            Track Order
                                         </Link>
                                     </nav>
                                     <nav className="nav col-md-3 col-5 footer-nav flex-column">
                                         <p className="text-white nav-link">
                                             Categories
                                         </p>
-                                        <Link to="" className="nav-link">
-                                            Fruits & Vegetables
-                                        </Link>
-                                        <Link to="" className="nav-link">
+                                        {categories &&
+                                            categories
+                                                .slice(0, 4)
+                                                .map((category, index) => (
+                                                    <Link
+                                                        to={`/products?categoryId=${category._id}`}
+                                                        className="nav-link">
+                                                        {category.title}
+                                                    </Link>
+                                                ))}
+
+                                        {/* <Link to="" className="nav-link">
                                             Frozen Food
                                         </Link>
                                         <Link to="" className="nav-link">
@@ -100,21 +136,21 @@ const Footer = () => {
                                         </Link>
                                         <Link to="" className="nav-link">
                                             Beauty & Body
-                                        </Link>
+                                        </Link> */}
                                     </nav>
                                 </div>
                             </div>
                             <div className="mt-4 mt-lg-0 footer-contact">
                                 <a
                                     className="text-white border-bottom border-primary pb-2"
-                                    href="tel:+234 779 8499 895">
-                                    +234 779 8499 895
+                                    href="tel:+18127273010">
+                                    +18127273010
                                 </a>
                                 <span className="px-3 text-secondary">or</span>
                                 <a
-                                    href="mailto:hello@gmail.com"
+                                    href="mailto:deazywaymarket@gmail.com"
                                     className="text-white border-bottom border-primary pb-2">
-                                    hello@gmail.com
+                                    deazywaymarket@gmail.com
                                 </a>
                             </div>
                         </div>

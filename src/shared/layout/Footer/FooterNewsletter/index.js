@@ -12,11 +12,7 @@ const Subscribe = () => {
                         <h4 className="fw-semibold">
                             Subscribe our Newsletter
                         </h4>
-                        <p className="text-secondary">
-                            Pellentesque eu nibh eget mauris congue mattis
-                            mattis nec tellus.
-                            <br /> Phasellus imperdiet elit eu magna.
-                        </p>
+                        
                     </div>
                     <div className="d-flex flex-wrap  align-items-center justify-content-between gap-md-5 gap-3 ">
                         <form>
