@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import Loading from "shared/components/Loading";
 import TabComponent from "features/Products/components/TabComponent";
 import "./ProductDetail.css";
-import StarRating from "shared/components/StarRating";
+// import StarRating from "shared/components/StarRating";
 import QuantitySelector from "shared/components/QuantitySelector";
 import { ReactComponent as ShoppingBasket } from "assets/icons/shopping-basket.svg";
 import { FaRegHeart } from "react-icons/fa";
@@ -69,7 +69,7 @@ const ProductDetail = () => {
                     <div>
                         <h3 className="product-detail-name d-inline-flex align-items-center gap-1">
                             {product.title}
-                            <span
+                            {/* <span
                                 className={`status rounded-pill p-1 ${
                                     product.status === "available"
                                         ? "text-primary available"
@@ -78,11 +78,11 @@ const ProductDetail = () => {
                                 {product.status === "available"
                                     ? "Available"
                                     : "Unavailable"}
-                            </span>
+                            </span> */}
                         </h3>
-                        <div>
+                        {/* <div>
                             <StarRating rating={product.rating} />
-                        </div>
+                        </div> */}
                         <div className="mt-3">
                             <span className="poppins fw-medium text-primary">
                                 ${product.amount}

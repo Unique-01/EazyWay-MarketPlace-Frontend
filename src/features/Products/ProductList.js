@@ -9,6 +9,7 @@ import { Pagination } from "react-bootstrap";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
 import ButtonLoading from "shared/components/ButtonLoading";
+import { useLocation } from "react-router-dom";
 
 const ProductList = () => {
     const { products, loading, moreLoading, hasNextPage, loadMore } =
@@ -17,6 +18,9 @@ const ProductList = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [sortOption, setSortOption] = useState("latest");
     const itemsPerPage = 10;
+    const location = useLocation();
+    const query = new URLSearchParams(location.search);
+    const categoryId = query.get("categoryId");
 
     useEffect(() => {
         let filteredProducts = [...products];
@@ -42,6 +46,16 @@ const ProductList = () => {
 
         setProductList(filteredProducts);
     }, [products, selectedCategory, sortOption]);
+
+    useEffect(() => {
+        if (categoryId) {
+            setProductList(
+                products.filter(
+                    (product) => product.category.title === categoryId
+                )
+            );
+        }
+    }, [categoryId, products]);
 
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);

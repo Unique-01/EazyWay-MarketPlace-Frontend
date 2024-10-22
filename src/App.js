@@ -80,7 +80,206 @@ function App() {
                                                             <AxiosSetup />
                                                             <Header />
                                                             <Routes>
+                                                                {/* <Route
+                                                                    path="signup"
+                                                                    element={
+                                                                        <SignUpOverview />
+                                                                    }
+                                                                />
                                                                 <Route
+                                                                    path="signup/customer"
+                                                                    element={
+                                                                        <CustomerSignUp />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="signup/merchant"
+                                                                    element={
+                                                                        <MerchantSignUp />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="signup/success"
+                                                                    element={
+                                                                        <SignUpSuccess />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="signup/verify_email"
+                                                                    element={
+                                                                        <EmailVerification />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="resend-otp"
+                                                                    element={
+                                                                        <ResendEmailVerify />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="login"
+                                                                    element={
+                                                                        <LoginOverview />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="login/customer"
+                                                                    element={
+                                                                        <CustomerLogin />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="login/merchant"
+                                                                    element={
+                                                                        <MerchantLogin />
+                                                                    }
+                                                                />
+
+                                                                <Route
+                                                                    path="reset_password"
+                                                                    element={
+                                                                        <PasswordResetOverview />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/verification"
+                                                                    element={
+                                                                        <PasswordResetVerification />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/newPassword"
+                                                                    element={
+                                                                        <PasswordResetNewPassword />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/success"
+                                                                    element={
+                                                                        <PasswordResetSuccess />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password"
+                                                                    element={
+                                                                        <PasswordResetOverview />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/verification"
+                                                                    element={
+                                                                        <PasswordResetVerification />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/newPassword"
+                                                                    element={
+                                                                        <PasswordResetNewPassword />
+                                                                    }
+                                                                />
+                                                                <Route
+                                                                    path="reset_password/success"
+                                                                    element={
+                                                                        <PasswordResetSuccess />
+                                                                    }
+                                                                /> */}
+
+                                                                <Route
+                                                                    element={
+                                                                        <Footer />
+                                                                    }>
+                                                                    <Route
+                                                                        path="/"
+                                                                        element={
+                                                                            <HomePage />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path="checkout"
+                                                                        element={
+                                                                            <CheckoutPage />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path="contact"
+                                                                        element={
+                                                                            <Contact />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path="shopping_cart"
+                                                                        element={
+                                                                            <ShoppingCart />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path="checkout/payment"
+                                                                        element={
+                                                                            <PaymentForm
+                                                                                stripePromise={
+                                                                                    stripePromise
+                                                                                }
+                                                                            />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path="checkout/success"
+                                                                        element={
+                                                                            <CheckoutSuccess />
+                                                                        }
+                                                                    />
+                                                                    {/* Customer Dashboard */}
+                                                                    <Route
+                                                                        path="customer"
+                                                                        element={
+                                                                            <CustomerLayout />
+                                                                        }>
+                                                                        <Route
+                                                                            index
+                                                                            element={
+                                                                                <CustomerDashBoard />
+                                                                            }
+                                                                        />
+                                                                        <Route
+                                                                            path="order_history"
+                                                                            element={
+                                                                                <CustomerOrderHistory />
+                                                                            }
+                                                                        />
+                                                                        <Route
+                                                                            path="order_history/:orderId"
+                                                                            element={
+                                                                                <CustomerOrderDetails />
+                                                                            }
+                                                                        />
+                                                                        <Route
+                                                                            path="account_settings"
+                                                                            element={
+                                                                                <CustomerAccountSettings />
+                                                                            }
+                                                                        />
+                                                                    </Route>
+                                                                    {/* Products features */}
+                                                                    <Route
+                                                                        path="products"
+                                                                        element={
+                                                                            <ProductList />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path="products/:productId"
+                                                                        element={
+                                                                            <ProductDetail />
+                                                                        }
+                                                                    />
+                                                                    {/* WishList Page */}
+                                                                    <Route
+                                                                        path="wishlist"
+                                                                        element={
+                                                                            <WishList />
+                                                                        }
+                                                                    />
+                                                                            <Route
                                                                     path="signup"
                                                                     element={
                                                                         <SignUpOverview />
@@ -183,102 +382,6 @@ function App() {
                                                                         <PasswordResetSuccess />
                                                                     }
                                                                 />
-
-                                                                <Route
-                                                                    element={
-                                                                        <Footer />
-                                                                    }>
-                                                                    <Route
-                                                                        path="/"
-                                                                        element={
-                                                                            <HomePage />
-                                                                        }
-                                                                    />
-                                                                    <Route
-                                                                        path="checkout"
-                                                                        element={
-                                                                            <CheckoutPage />
-                                                                        }
-                                                                    />
-                                                                    <Route
-                                                                        path="contact"
-                                                                        element={
-                                                                            <Contact />
-                                                                        }
-                                                                    />
-                                                                    <Route
-                                                                        path="shopping_cart"
-                                                                        element={
-                                                                            <ShoppingCart />
-                                                                        }
-                                                                    />
-                                                                    <Route
-                                                                        path="checkout/payment"
-                                                                        element={
-                                                                            <PaymentForm
-                                                                                stripePromise={
-                                                                                    stripePromise
-                                                                                }
-                                                                            />
-                                                                        }
-                                                                    />
-                                                                    <Route
-                                                                        path="checkout/success"
-                                                                        element={
-                                                                            <CheckoutSuccess />
-                                                                        }
-                                                                    />
-                                                                    {/* Customer Dashboard */}
-                                                                    <Route
-                                                                        path="customer"
-                                                                        element={
-                                                                            <CustomerLayout />
-                                                                        }>
-                                                                        <Route
-                                                                            index
-                                                                            element={
-                                                                                <CustomerDashBoard />
-                                                                            }
-                                                                        />
-                                                                        <Route
-                                                                            path="order_history"
-                                                                            element={
-                                                                                <CustomerOrderHistory />
-                                                                            }
-                                                                        />
-                                                                        <Route
-                                                                            path="order_history/:orderId"
-                                                                            element={
-                                                                                <CustomerOrderDetails />
-                                                                            }
-                                                                        />
-                                                                        <Route
-                                                                            path="account_settings"
-                                                                            element={
-                                                                                <CustomerAccountSettings />
-                                                                            }
-                                                                        />
-                                                                    </Route>
-                                                                    {/* Products features */}
-                                                                    <Route
-                                                                        path="products"
-                                                                        element={
-                                                                            <ProductList />
-                                                                        }
-                                                                    />
-                                                                    <Route
-                                                                        path="products/:productId"
-                                                                        element={
-                                                                            <ProductDetail />
-                                                                        }
-                                                                    />
-                                                                    {/* WishList Page */}
-                                                                    <Route
-                                                                        path="wishlist"
-                                                                        element={
-                                                                            <WishList />
-                                                                        }
-                                                                    />
                                                                 </Route>
                                                                 {/* 404 Page */}
                                                                 <Route

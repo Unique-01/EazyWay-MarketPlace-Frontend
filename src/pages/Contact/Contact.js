@@ -57,15 +57,13 @@ const Contact = () => {
                             <div>
                                 <PiEnvelope className="icon" />
                                 <p className="small mt-3">
-                                    Proxy@gmail.com <br /> Help.proxy@gmail.com
+                                    deazywaymarket@gmail.com
                                 </p>
                             </div>
                             <hr />
                             <div>
                                 <FiPhoneCall className="icon" />
-                                <p className="small mt-3">
-                                    (219) 555-0114 <br /> (219) 555-0114
-                                </p>
+                                <p className="small mt-3">+18127273010 </p>
                             </div>
                         </div>
                     </div>

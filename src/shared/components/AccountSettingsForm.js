@@ -105,7 +105,6 @@ const AccountSettingsForm = ({ merchant = false }) => {
             );
             set_user(response.data.data);
             showNotification("Profile Updated Successfully");
-            showNotification("Profile Updated Successfully");
         } catch (err) {
             HandleApiError(err, setError);
         } finally {
