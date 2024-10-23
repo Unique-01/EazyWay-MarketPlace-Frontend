@@ -2,23 +2,23 @@ import { NavLink, Link } from "react-router-dom";
 import "./Navbar.css";
 import { FaBars } from "react-icons/fa6";
 import { SearchIcon } from "assets/icons";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "shared/context/AuthContext";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-    const { isAuthenticated, user, logout } = useContext(AuthContext);
-    const [showLogoutAlert, setShowLogoutAlert] = useState(false);
-    const navigate = useNavigate();
+    const { isAuthenticated } = useContext(AuthContext);
+    // const [showLogoutAlert, setShowLogoutAlert] = useState(false);
+    // const navigate = useNavigate();
 
-    const handleLogout = () => {
-        logout();
-        setShowLogoutAlert(true);
-        setTimeout(() => {
-            setShowLogoutAlert(false);
-            navigate("/");
-        }, 3000);
-    };
+    // const handleLogout = () => {
+    //     logout();
+    //     setShowLogoutAlert(true);
+    //     setTimeout(() => {
+    //         setShowLogoutAlert(false);
+    //         navigate("/");
+    //     }, 3000);
+    // };
     return (
         <div>
             <nav
@@ -59,11 +59,11 @@ const Navbar = () => {
                                     Shop
                                 </NavLink>
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <NavLink to="/blog" className="nav-link">
                                     Blog
                                 </NavLink>
-                            </li>
+                            </li> */}
                             <li className="nav-item">
                                 <NavLink to="/about" className="nav-link">
                                     About Us
@@ -95,14 +95,14 @@ const Navbar = () => {
                     </div>
                 </div>
             </nav>
-            {showLogoutAlert && (
+            {/* {showLogoutAlert && (
                 <div
                     class="alert alert-primary text-center p-2 fw-medium  "
                     style={{ fontSize: "14px" }}
                     role="alert">
                     Logout Successful!
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
