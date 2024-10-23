@@ -21,6 +21,7 @@ const ProductList = () => {
     const location = useLocation();
     const query = new URLSearchParams(location.search);
     const categoryId = query.get("categoryId");
+    const searchQuery = query.get("q");
 
     useEffect(() => {
         let filteredProducts = [...products];
@@ -56,6 +57,19 @@ const ProductList = () => {
             );
         }
     }, [categoryId, products]);
+
+    useEffect(() => {
+        if (searchQuery) {
+            setProductList(
+                products.filter(
+                    (product) =>
+                        product.title.includes(searchQuery) ||
+                        product.category.title.includes(searchQuery)
+                )
+            );
+        }
+    }, [searchQuery, products]);
+
 
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);

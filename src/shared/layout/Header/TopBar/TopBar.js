@@ -1,14 +1,21 @@
 import "./TopBar.css";
 import AppLogo from "assets/images/eazyWay-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CartIcon, SearchIcon, UserIcon, WishListIcon } from "assets/icons";
 import { AuthContext } from "shared/context/AuthContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CiSettings } from "react-icons/ci";
 import { FaRegBell } from "react-icons/fa6";
 
 const TopBar = () => {
     const { user } = useContext(AuthContext);
+    const [searchQuery, setSearchQuery] = useState();
+    const navigate = useNavigate();
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        navigate(`/products?q=${searchQuery}`);
+    };
     return (
         <div className="container">
             <div className="d-flex justify-content-between align-items-center px-lg-3">
@@ -20,10 +27,13 @@ const TopBar = () => {
                     />
                 </div>
                 <div className="d-none d-md-block">
-                    <form className=" d-flex align-items-center justify-content-between search-form rounded-pill p-1 px-3">
+                    <form
+                        onSubmit={handleSearch}
+                        className=" d-flex align-items-center justify-content-between search-form rounded-pill p-1 px-3">
                         <input
                             type="text"
                             placeholder="Search"
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             className="form-control search-input border-0 shadow-none opacity"
                         />
                         <SearchIcon />
