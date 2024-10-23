@@ -70,6 +70,7 @@ const ProductList = () => {
         }
     }, [searchQuery, products]);
 
+
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
     };
