@@ -3,7 +3,7 @@ import CategoryCard from "shared/components/CategoryCard";
 import "./Home.css";
 import { HiArrowRight } from "react-icons/hi";
 import ProductCard from "shared/components/ProductCard";
-import Testimonial from "pages/Home/components/Testimonial";
+// import Testimonial from "pages/Home/components/Testimonial";
 import CategoriesSidebar from "./components/CategoriesSidebar";
 import { useContext, useEffect, useState } from "react";
 import ProductCategoryContext from "shared/context/ProductCategoryContext";
@@ -78,11 +78,11 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-            <div className="home-testimonial">
+            {/* <div className="home-testimonial">
                 <div className="container">
                     <Testimonial />
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
